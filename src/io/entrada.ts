@@ -1,4 +1,5 @@
 import promptSync from "prompt-sync";
+
 export default class Entrada {
     public receberNumero(mensagem: string): number {
         let prompt = promptSync();

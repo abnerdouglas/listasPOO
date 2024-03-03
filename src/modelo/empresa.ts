@@ -1,23 +1,25 @@
+import CadastroListaClientes from "../negocio/create/cadastroListaClientes"
 import Cliente from "./cliente"
 import Produto from "./produto"
-import Servico from "./servico"
 
-export default class Empresa{
+export default class Empresa {
     private clientes: Array<Cliente>
     private produtos: Array<Produto>
-    private servicos: Array<Servico>
+    private cadastro: Array<CadastroListaClientes>
+
     constructor(){
         this.clientes = []
         this.produtos = []
-        this.servicos = []
+        this.cadastro = []
     }
     public get getClientes(){
-        return this.clientes
+        return this.clientes 
     }
     public get getProdutos(){
         return this.produtos
     }
-    public get getServicos(){
-        return this.servicos
+    public get getLista(){
+        return this.cadastro
     }
+    
 }
