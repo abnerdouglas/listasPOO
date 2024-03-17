@@ -1,20 +1,22 @@
 import Cliente from "../../modelo/cliente";
+import Listagem from "./listagem";
 
-export default class ListagemTop10PioresConsumidores {
+export default class ListagemTop10PioresConsumidores extends Listagem{
     private clientes: Array<Cliente>;
 
     constructor(clientes: Array<Cliente>) {
+        super()
         this.clientes = clientes;
     }
 
     public listar(): void {
-        console.log(`\nLISTA DOS 10 CLIENTES QUE MENOS(-) CONSUMIRAM PRODUTOS:\n`);
-
         const top10Clientes = this.listarTop10CPioresClientes();
 
         if (top10Clientes.length === 0) {
-            console.log("Nenhum cliente foi cadastrado ainda.\n");
+            return;
         } else {
+            console.log(`\nLISTA DOS 10 CLIENTES QUE MENOS(-) CONSUMIRAM PRODUTOS:\n`);
+
             top10Clientes.forEach((cliente, index) => {
                 console.log(`--------------------------------------`);
                 console.log(`Posição: ${index + 1}`);

@@ -1,8 +1,8 @@
 export default class Produto {
-    public nome!: string
-    public preco!: string
-    public marca!: string
-    public genero!: string
+    public nome: string
+    public preco: string
+    public marca: string
+    public genero: string
 
     constructor(nome: string,  marca: string, preco: string, genero: string){
         this.nome = nome

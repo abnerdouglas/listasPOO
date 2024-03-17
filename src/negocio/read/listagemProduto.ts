@@ -1,18 +1,21 @@
 import Cliente from "../../modelo/cliente";
 import Produto from "../../modelo/produto";
+import Listagem from "./listagem";
 
-export default class ListagemProduto {
+export default class ListagemProdutos extends Listagem{
     private produtos: Array<Produto>
     private clientes: Array<Cliente>
     constructor(produtos: Array<Produto>, clientes: Array<Cliente>) {
+        super()
         this.produtos = produtos
         this.clientes = clientes
     }
     public listar(): void {
-        console.log(`\nLISTA DE TODOS OS PRODUTOS:\n`);
         if (this.produtos.length == 0) {
             console.log("Nenhum produto foi cadastrado ainda.\n");
         } else {
+            console.log(`\nLISTA DE TODOS OS PRODUTOS:\n`);
+            
             this.produtos.forEach(produto => {
                 console.log(`--------------------------------------`);
                 console.log(`Nome do produto: ${produto.nome}`);

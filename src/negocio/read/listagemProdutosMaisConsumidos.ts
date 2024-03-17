@@ -1,13 +1,20 @@
 import Cliente from "../../modelo/cliente";
+import Listagem from "./listagem";
 
-export default class ListagemProdutosMaisConsumidos {
+export default class ListagemProdutosMaisConsumidos extends Listagem {
     private clientes: Array<Cliente>;
 
     constructor(clientes: Array<Cliente>) {
+        super()
         this.clientes = clientes;
     }
+    
+    public listar(): void {}
 
     public listarMaisConsumidos(n: number): void {
+        if (this.clientes.length === 0) {
+            return;
+        }
     
         const frequencia: Map<string, number> = new Map();
 

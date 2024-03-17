@@ -1,13 +1,21 @@
 import Cliente from "../../modelo/cliente";
+import Listagem from "./listagem";
 
-export default class ListagemProdutosMaisConsumidosPorGenero {
+export default class ListagemProdutosMaisConsumidosPorGenero extends Listagem {
     private clientes: Array<Cliente>;
 
     constructor(clientes: Array<Cliente>) {
+        super()
         this.clientes = clientes;
     }
 
+    public listar(): void {}
+
     public listarMaisConsumidosPorGenero(genero: string): void {
+        if (this.clientes.length === 0) {
+            return;
+        }
+        
         console.log(`\n`)
         console.log(`LISTA DOS PRODUTOS MAIS CONSUMUIDOS PELO GÊNERO ${genero}:`);
         console.log(`--------------------------------------------------`)

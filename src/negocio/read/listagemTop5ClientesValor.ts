@@ -1,20 +1,22 @@
 import Cliente from "../../modelo/cliente";
+import Listagem from "./listagem";
 
-export default class ListagemTop5ClientesValor {
+export default class ListagemTop5ClientesValor extends Listagem {
     private clientes: Array<Cliente>;
     
     constructor(clientes: Array<Cliente>) {
+        super()
         this.clientes = clientes;
     }
 
     public listar(): void {
-        console.log(`\nLISTA DOS 5 CLIENTES QUE MAIS CONSUMIRAM EM VALOR:\n`);
-
         const top5Clientes = this.listarTop5Clientes();
 
         if (top5Clientes.length === 0) {
-            console.log("Nenhum cliente foi cadastrado ainda.\n");
+            return;
         } else {
+            console.log(`\nLISTA DOS 5 CLIENTES QUE MAIS CONSUMIRAM EM VALOR:\n`);
+
             top5Clientes.forEach((cliente, index) => {
                 console.log(`--------------------------------------`);
                 console.log(`Posição: ${index + 1}`);
@@ -22,7 +24,7 @@ export default class ListagemTop5ClientesValor {
                 console.log(`Nome social: ${cliente.nomeSocial}`);
                 console.log(`CPF: ${cliente.getCpf.getValor}`);
                 console.log(`Gênero: ${cliente.genero}`);
-                console.log(`Valor total: ${this.calcularValorTotalConsumido(cliente).toFixed(2)}`);
+                console.log(`Valor total: R$${this.calcularValorTotalConsumido(cliente).toFixed(2)}`);
                 console.log(`--------------------------------------`);
             });
             console.log(`\n`);

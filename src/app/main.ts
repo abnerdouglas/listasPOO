@@ -1,13 +1,9 @@
 import Entrada from "../io/entrada";
-import Empresa from "../modelo/empresa"
-import AtualizarCliente from "../negocio/update/atualizarCliente";
+import Empresa from "../modelo/empresa" 
 import CadastroCliente from "../negocio/create/cadastroCliente";
-import ExcluirCliente from "../negocio/delete/excluirCliente";
 import ListagemClientes from "../negocio/read/listagemClientes";
 import CadastroProduto from "../negocio/create/cadastroProduto";
-import ListagemProduto from "../negocio/read/listagemProduto";
-import AtualizarProduto from "../negocio/update/atualizarProduto";
-import ExcluirProduto from "../negocio/delete/excluirProduto";
+import AtualizacaoProduto from "../negocio/update/atualizacaoProduto";
 import ListagemTop10Clientes from "../negocio/read/listagemTop10Clientes";
 import ListagemPorGenero from "../negocio/read/listagemPorGenero";
 import ListagemProdutosMaisConsumidos from "../negocio/read/listagemProdutosMaisConsumidos";
@@ -15,11 +11,18 @@ import ListagemProdutosMaisConsumidosPorGenero from "../negocio/read/listagemPro
 import ListagemTop10PioresConsumidores from "../negocio/read/listagemTop10PioresConsumidores";
 import ListagemTop5ClientesValor from "../negocio/read/listagemTop5ClientesValor";
 import CadastroListaClientes from "../negocio/create/cadastroListaClientes";
+import AtualizacaoCliente from "../negocio/update/atualizacaoCliente";
+import ExclusaoCliente from "../negocio/delete/exclusaoCliente";
+import ExclusaoProduto from "../negocio/delete/exclusaoProduto";
+import CadastroServico from "../negocio/create/cadastroServico";
+import ListagemProdutos from "../negocio/read/listagemProduto";
+import ListagemServicos from "../negocio/read/listagemServicos";
+import AtualizacaoServico from "../negocio/update/atualizacaoServico";
+import ExclusaoServico from "../negocio/delete/exclusaoServico";
 
-console.log(`Bem-vindo ao cadastro de clientes do Grupo World Beauty`)
+console.log(`\nBem-vindo ao cadastro de clientes, produtos e serviços do Grupo World Beauty!`)
 let empresa = new Empresa()
 let execucao = true
-
 
 while (execucao) {
     console.log(`\n======== Opções ========`);
@@ -31,12 +34,16 @@ while (execucao) {
     console.log(`6 - Listar todos os produtos`)
     console.log(`7 - Atualizar um produto`)
     console.log(`8 - Excluir um produto`)
-    console.log(`9 - Cadastrar 30 clientes e 30 produtos`)
+    console.log(`9 - Cadastrar um serviço`)
+    console.log(`10 - Listar todos os serviços`)
+    console.log(`11 - Atualizar um serviço`)
+    console.log(`12 - Excluir um serviço`)
+    console.log(`13 - Cadastrar 30 clientes e 30 produtos`)
     console.log(`0 - Sair`);
-    console.log(`========================`)
+    console.log(`========================\n`)
 
     let entrada = new Entrada()
-    let opcao = entrada.receberNumero(`\nPor favor, escolha uma opção: `)
+    let opcao = entrada.receberNumero(`Por favor, escolha uma opção: `)
     
     switch (opcao) {
         case 1:
@@ -61,11 +68,11 @@ while (execucao) {
             top5MaioresGastos.listar()
             break;
         case 3:
-            let atualizacaoCliente = new AtualizarCliente(empresa.getClientes)
+            let atualizacaoCliente = new AtualizacaoCliente(empresa.getClientes)
             atualizacaoCliente.atualizar()
             break;
         case 4:
-            let exclusaoCliente = new ExcluirCliente(empresa.getClientes)
+            let exclusaoCliente = new ExclusaoCliente(empresa.getClientes)
             exclusaoCliente.excluir()
             break;
         case 5:
@@ -73,7 +80,7 @@ while (execucao) {
             cadastroProduto.cadastrar()
             break;
         case 6:
-            let listagemProduto = new ListagemProduto(empresa.getProdutos, empresa.getClientes)
+            let listagemProduto = new ListagemProdutos(empresa.getProdutos, empresa.getClientes)
             listagemProduto.listar()
 
             let maisConsumidos = new ListagemProdutosMaisConsumidos(empresa.getClientes)
@@ -84,14 +91,30 @@ while (execucao) {
             maisConsumidosPorGenero.listarMaisConsumidosPorGenero('F')
             break;
         case 7:
-            let atualizacaoProduto = new AtualizarProduto(empresa.getProdutos)
+            let atualizacaoProduto = new AtualizacaoProduto(empresa.getProdutos)
             atualizacaoProduto.atualizar()
             break;
         case 8:
-            let exclusaoProduto = new ExcluirProduto(empresa.getProdutos)
+            let exclusaoProduto = new ExclusaoProduto(empresa.getProdutos)
             exclusaoProduto.excluir()
             break;
         case 9:
+            let cadastroServico = new CadastroServico(empresa.getServicos, empresa.getClientes)
+            cadastroServico.cadastrar()
+            break;
+        case 10:
+            let listagemServico = new ListagemServicos(empresa.getServicos, empresa.getClientes)
+            listagemServico.listar()
+            break;
+        case 11:
+            let atualizacaoServico = new AtualizacaoServico(empresa.getServicos)
+            atualizacaoServico.atualizar()
+            break;
+        case 12:
+            let exclusaoServico = new ExclusaoServico(empresa.getServicos)
+            exclusaoServico.excluir()
+            break;
+        case 13:
             let clientesConfigurados = new CadastroListaClientes(empresa.getClientes, empresa.getProdutos)
             clientesConfigurados.lista()
             break;

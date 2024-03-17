@@ -1,13 +1,15 @@
 import Entrada from "../../io/entrada"
 import Cliente from "../../modelo/cliente"
 import Produto from "../../modelo/produto"
+import Cadastro from "./cadastro"
 
-export default class CadastroProduto  {
+export default class CadastroProduto extends Cadastro{
     private produtos: Array<Produto>
     private entrada: Entrada
     private clientes: Array<Cliente>;
 
     constructor(produtos: Array<Produto>, clientes: Array<Cliente>) {
+        super()
         this.produtos = produtos
         this.clientes = clientes;
         this.entrada = new Entrada()
@@ -20,11 +22,16 @@ export default class CadastroProduto  {
         let preco = this.entrada.receberTexto(`Informe o preço: `)
         let genero = this.entrada.receberTexto(`Informe o principal gênero consumidor: `)
 
-        console.log("\nClientes disponíveis:");
-        this.clientes.forEach((cliente, index) => {
-             console.log(`${index + 1}. ${cliente.nome}`);
+        if(this.clientes.length > 0){
+            console.log("\nClientes disponíveis:");
+            this.clientes.forEach((cliente, index) => {
+                console.log(`${index + 1}. ${cliente.nome}`);
          });
- 
+        } else {
+            console.log(`Não há clientes cadastrados disponíveis para serem associados. Cadastro de Produto Concluído.`)
+            return;
+        }
+
         let escolhaCliente = this.entrada.receberNumero(`Escolha o cliente através do número: `);
  
         if (escolhaCliente < 1 || escolhaCliente > this.clientes.length || isNaN(escolhaCliente)) {
@@ -39,6 +46,6 @@ export default class CadastroProduto  {
         clienteEscolhido.registrarProdutoConsumido(produto);
  
         this.produtos.push(produto);
-        console.log(`\nCadastro concluído :)\n`);
+        console.log(`\nCadastro de Produto Concluído :)\n`);
     }
 }

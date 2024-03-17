@@ -1,19 +1,26 @@
 import Cliente from "../../modelo/cliente";
+import Listagem from "./listagem";
 
-export default class ListagemPorGenero {
+export default class ListagemPorGenero extends Listagem{
     private clientes: Array<Cliente>;
 
     constructor(clientes: Array<Cliente>) {
+        super()
         this.clientes = clientes;
     }
+    public listar(): void {}
     
     public listarPorGenero(genero: string): void {
-        console.log(`\nLISTA DE CLIENTES DO GÊNERO ${genero}:`);
         const clientesPorGenero = this.clientes.filter(cliente => cliente.genero === genero);
 
-        if (clientesPorGenero.length === 0) {
+        if (this.clientes.length === 0){
+            return;
+        }
+        else if (clientesPorGenero.length === 0) {
             console.log(`Não há clientes do gênero ${genero} cadastrados.\n`);
         } else {
+            console.log(`\nLISTA DE CLIENTES DO GÊNERO ${genero}:`);
+
             clientesPorGenero.forEach(cliente => {
                 console.log(`--------------------------------------`);
                 console.log(`Nome: ${cliente.nome}`);
