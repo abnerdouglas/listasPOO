@@ -4,7 +4,7 @@ type props = {
     tema: string
 }
 
-export default class FormularioCadastroCliente extends Component<props> {
+export default class FormularioCadastroProduto extends Component<props> {
     
     render() {
         let estiloBotao = `btn waves-effect waves-light ${this.props.tema}`
@@ -13,22 +13,22 @@ export default class FormularioCadastroCliente extends Component<props> {
                 <form className="col s12">
                     <div className="row">
                         <div className="input-field col s6">
-                            <input id="first_name" type="text" className="validate" />
-                            <label htmlFor="first_name">nome</label>
+                            <input id="nome-produto" type="text" className="validate" />
+                            <label htmlFor="nome-produto">Nome</label>
                         </div>
                         <div className="input-field col s6">
-                            <input id="last_name" type="text" className="validate" />
-                            <label htmlFor="last_name">sobrenome</label>
+                            <input id="marca-produto" type="text" className="validate" />
+                            <label htmlFor="marca-produto">Marca</label>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s6">
-                            <input id="telefone" type="text" className="validate" />
-                            <label htmlFor="telefone">telefone</label>
+                            <input id="preco-produto" type="text" className="validate" />
+                            <label htmlFor="preco-produto">Preço(R$)</label>
                         </div>
                         <div className="input-field col s6">
-                            <input id="email" type="email" className="validate" />
-                            <label htmlFor="email">e-mail</label>
+                            <input id="genero-produto" type="email" className="validate" />
+                            <label htmlFor="genero-produto">Principal Gênero Consumidor</label>
                         </div>
                     </div>
                     <div className="row">
