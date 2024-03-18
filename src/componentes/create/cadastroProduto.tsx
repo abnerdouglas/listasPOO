@@ -4,13 +4,14 @@ type props = {
     tema: string
 }
 
-export default class FormularioCadastroProduto extends Component<props> {
-    
+export default class CadastroProduto extends Component<props> {
+
     render() {
         let estiloBotao = `btn waves-effect waves-light ${this.props.tema}`
         return (
-            <div className="row">
+            <div className="container">
                 <form className="col s12">
+                <h5><strong>Cadastro Produto</strong></h5>
                     <div className="row">
                         <div className="input-field col s6">
                             <input id="nome-produto" type="text" className="validate" />
@@ -33,7 +34,7 @@ export default class FormularioCadastroProduto extends Component<props> {
                     </div>
                     <div className="row">
                         <div className="col s12">
-                            <button className={estiloBotao} type="submit" name="action">Submit
+                            <button className={estiloBotao} type="submit" name="action">Enviar
                                 <i className="material-icons right">send</i>
                             </button>
                         </div>

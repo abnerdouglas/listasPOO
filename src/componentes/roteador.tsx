@@ -1,9 +1,11 @@
 import { Component } from "react";
 import BarraNavegacao from "./barraNavegacao";
-import FormularioCadastroServico from "./cadastro/formularioCadastroServico";
-import FormularioCadastroProduto from "./cadastro/formularioCadastroProduto";
-import FormularioCadastroCliente from "./cadastro/formularioCadastroCliente";
-import Home from "./home";
+import ListagemClientes from "./read/listagemCliente";
+import CadastroCliente from "./create/cadastroCliente";
+import CadastroProduto from "./create/cadastroProduto";
+import CadastroServico from "./create/cadastroServico";
+import ListagemProdutos from "./read/listagemProduto";
+import ListagemServicos from "./read/listagemServico";
 
 type State = {
     tela: string
@@ -13,7 +15,7 @@ export default class Roteador extends Component<{}, State> {
     constructor(props: {} | Readonly<{}>) {
         super(props)
         this.state = {
-            tela: 'Clientes'
+            tela: 'Cadastro Cliente'
         }
         this.selecionarView = this.selecionarView.bind(this)
     }
@@ -32,37 +34,51 @@ export default class Roteador extends Component<{}, State> {
             <BarraNavegacao
                 seletorView={this.selecionarView}
                 tema="purple lighten-4"
-                botoes={['Home', 'Clientes', 'Produtos','Servicos']}
+                botoes={['Cadastro Cliente', 'Cadastro Produto','Cadastro Servico', 'Lista de Clientes', 'Lista de Produtos', 'Lista de Servicos']}
             />
         );
 
         switch (tela) {
-            case 'Clientes':
+            case 'Cadastro Cliente':
                 return (
                     <>
                         {barraNavegacao}
-                        <FormularioCadastroCliente tema="purple lighten-4" /> 
+                        <CadastroCliente tema="purple lighten-4" /> 
                     </>
                 );
-            case 'Produtos':
+            case 'Cadastro Produto':
                 return (
                     <>
                         {barraNavegacao}
-                        <FormularioCadastroProduto tema="purple lighten-4" />
+                        <CadastroProduto tema="purple lighten-4" />
                     </>
                 );
-            case 'Servicos':
+            case 'Cadastro Servico':
                 return (
                     <>
                         {barraNavegacao}
-                        <FormularioCadastroServico tema="purple lighten-4" />
+                        <CadastroServico tema="purple lighten-4" />
                     </>
                 );
-            default:
+            case 'Lista de Clientes':
                 return (
                     <>
                         {barraNavegacao}
-                        <Home tema="purple lighten-4" />
+                        <ListagemClientes/>
+                    </>
+                );
+            case 'Lista de Produtos':
+                return (
+                    <>
+                        {barraNavegacao}
+                        <ListagemProdutos/>
+                    </>
+                );
+            case 'Lista de Servicos':
+                return (
+                    <>
+                        {barraNavegacao}
+                        <ListagemServicos/>
                     </>
                 );
         }

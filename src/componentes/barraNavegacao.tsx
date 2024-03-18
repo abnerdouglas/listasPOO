@@ -38,12 +38,14 @@ export default class BarraNavegacao extends Component<props> {
         return (
             <>
                 <nav className={estilo}>
-                    <div className="nav-wrapper">
-                        <a className="brand-logo">WB</a>
-                        <a data-target="mobile-menu" className="sidenav-trigger"><i className="material-icons">menu</i></a>
-                        <ul className="right hide-on-med-and-down">
-                            {this.gerarListaBotoes()}
-                        </ul>
+                    <div className="container">
+                        <div className="nav-wrapper">
+                            <a className="brand-logo">WB</a>
+                            <a data-target="mobile-menu" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+                            <ul className="right hide-on-med-and-down">
+                                {this.gerarListaBotoes()}
+                            </ul>
+                        </div>
                     </div>
                 </nav>
                 <ul className="sidenav" id="mobile-menu">
