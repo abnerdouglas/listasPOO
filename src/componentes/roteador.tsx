@@ -1,11 +1,11 @@
 import { Component } from "react";
 import BarraNavegacao from "./barraNavegacao";
-import ListagemClientes from "./read/listagemCliente";
-import CadastroCliente from "./create/cadastroCliente";
-import CadastroProduto from "./create/cadastroProduto";
-import CadastroServico from "./create/cadastroServico";
-import ListagemProdutos from "./read/listagemProduto";
-import ListagemServicos from "./read/listagemServico";
+import ListagemClientes from "./clientes/listagemCliente";
+import CadastroCliente from "./clientes/cadastroCliente";
+import CadastroProduto from "./produtos/cadastroProduto";
+import CadastroServico from "./servicos/cadastroServico";
+import ListagemProdutos from "./produtos/listagemProduto";
+import ListagemServicos from "./servicos/listagemServico";
 
 type State = {
     tela: string

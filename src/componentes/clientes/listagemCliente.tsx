@@ -14,7 +14,7 @@ type State = {
   clientes: Cliente[];
 };
 
-class ListagemClientes extends Component<{}, State> {
+export default class ListagemClientes extends Component<{}, State> {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -37,7 +37,6 @@ class ListagemClientes extends Component<{}, State> {
           telefone: '(11) 9876-5432',
           genero: 'Feminino'
         },
-        // Adicione mais clientes conforme necessário
       ]
     };
   }
@@ -94,4 +93,4 @@ class ListagemClientes extends Component<{}, State> {
   }
 }
 
-export default ListagemClientes;
+
