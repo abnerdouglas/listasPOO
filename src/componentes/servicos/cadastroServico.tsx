@@ -29,7 +29,7 @@ export default class CadastroServico extends Component<props> {
                         </div>
                         <div className="input-field col s6">
                             <input id="genero-servico" type="text" className="validate" />
-                            <label htmlFor="genero-servico"> Principal Gênero Consumidor</label>
+                            <label htmlFor="genero-servico"> Gênero Consumidor</label>
                         </div>
                     </div>
                     <div className="row">

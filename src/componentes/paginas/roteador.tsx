@@ -1,11 +1,14 @@
 import { Component } from "react";
-import BarraNavegacao from "./barraNavegacao";
-import ListagemClientes from "./clientes/listagemCliente";
-import CadastroCliente from "./clientes/cadastroCliente";
-import CadastroProduto from "./produtos/cadastroProduto";
-import CadastroServico from "./servicos/cadastroServico";
-import ListagemProdutos from "./produtos/listagemProduto";
-import ListagemServicos from "./servicos/listagemServico";
+import BarraNavegacao from "../layout/barraNavegacao";
+import ListagemClientes from "../clientes/listagemCliente";
+import CadastroCliente from "../clientes/cadastroCliente";
+import CadastroProduto from "../produtos/cadastroProduto";
+import CadastroServico from "../servicos/cadastroServico";
+import ListagemProdutos from "../produtos/listagemProduto";
+import ListagemServicos from "../servicos/listagemServico";
+import ListagemClientesPorGenero from "../clientes/listagemClientesPorGenero";
+import './styles.css';
+
 
 type State = {
     tela: string
@@ -33,8 +36,8 @@ export default class Roteador extends Component<{}, State> {
         const barraNavegacao = (
             <BarraNavegacao
                 seletorView={this.selecionarView}
-                tema="purple lighten-4"
-                botoes={['Cadastro Cliente', 'Cadastro Produto','Cadastro Servico', 'Lista de Clientes', 'Lista de Produtos', 'Lista de Servicos']}
+                tema="purple lighten"
+                botoes={['Cadastro Cliente', 'Cadastro Produto', 'Cadastro Servico', 'Lista de Clientes', 'Lista de Produtos', 'Lista de Servicos']}
             />
         );
 
@@ -43,42 +46,57 @@ export default class Roteador extends Component<{}, State> {
                 return (
                     <>
                         {barraNavegacao}
-                        <CadastroCliente tema="purple lighten-4" /> 
+                        <div className="container-wrapper">
+                            <CadastroCliente tema="purple lighten" />
+                        </div>
                     </>
                 );
             case 'Cadastro Produto':
                 return (
                     <>
                         {barraNavegacao}
-                        <CadastroProduto tema="purple lighten-4" />
+                        <div className="container-wrapper">
+                            <CadastroProduto tema="purple lighten" />
+                        </div>
                     </>
                 );
             case 'Cadastro Servico':
                 return (
                     <>
                         {barraNavegacao}
-                        <CadastroServico tema="purple lighten-4" />
+                        <div className="container-wrapper">
+                            <CadastroServico tema="purple lighten" />
+                        </div>
                     </>
                 );
             case 'Lista de Clientes':
                 return (
                     <>
                         {barraNavegacao}
-                        <ListagemClientes/>
+                        <div className="container-wrapper">
+                            <ListagemClientes />
+                        </div>
+                        <div className="container-wrapper">
+                            <ListagemClientesPorGenero />
+                        </div>
                     </>
                 );
             case 'Lista de Produtos':
                 return (
                     <>
                         {barraNavegacao}
-                        <ListagemProdutos/>
+                        <div className="container-wrapper">
+                            <ListagemProdutos />
+                        </div>
                     </>
                 );
             case 'Lista de Servicos':
                 return (
                     <>
                         {barraNavegacao}
-                        <ListagemServicos/>
+                        <div className="container-wrapper">
+                            <ListagemServicos />
+                        </div>
                     </>
                 );
         }

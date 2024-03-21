@@ -24,17 +24,27 @@ export default class CadastroCliente extends Component<props> {
                     </div>
                     <div className="row">
                         <div className="input-field col s6">
-                            <input id="cpf-cliente" type="text" className="validate" />
+                            <input id="cpf-cliente" type="text" className="validate"/>
                             <label htmlFor="cpf-cliente">CPF</label>
                         </div>
                         <div className="input-field col s6">
-                            <input id="rgs-cliente" type="text" className="validate" />
-                            <label htmlFor="rgs-cliente">RG</label>
+                            <input id="cpf-data" type="date" className="validate" />
+                            <label htmlFor="cpf-data">Data Emissão CPF</label>
                         </div>
                     </div>
                     <div className="row">
                         <div className="input-field col s6">
-                            <input id="tel-cliente" type="text" className="validate" />
+                            <input id="rg-cliente" type="text" className="validate" />
+                            <label htmlFor="rg-cliente">RG</label>
+                        </div>
+                        <div className="input-field col s6">
+                            <input id="rg-data" type="date" className="validate" />
+                            <label htmlFor="rg-data">Data Emissão RG</label>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="input-field col s6">
+                            <input id="tel-cliente" type="tel" className="validate" />
                             <label htmlFor="tel-cliente">Telefone</label>
                         </div>
                         <div className="input-field col s6">

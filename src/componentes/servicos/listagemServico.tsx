@@ -24,7 +24,7 @@ class ListagemServicos extends Component<{}, State> {
           descricao: 'Corte Social na tesoura',
           duracao: '45',
           preco: '120.00',
-          genero: 'Masculino'
+          genero: 'masculino'
         },
         {
           id: 2,
@@ -32,7 +32,7 @@ class ListagemServicos extends Component<{}, State> {
           descricao: 'Massagem nas costas',
           duracao: '50',
           preco: '180.00',
-          genero: 'Masculino'
+          genero: 'masculino'
         }
       ]
     };
@@ -51,16 +51,16 @@ class ListagemServicos extends Component<{}, State> {
   render() {
     return (
         <div className="container">
-        <h5><strong>Listagem dos Servicos</strong></h5>
-        <div className="table-responsive">
-          <table className="table">
+        <h5><strong>Listagem dos Serviços</strong></h5>
+        <hr />
+          <table className="bordered striped centered highlight responsive-table">
             <thead>
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Descrição</th>
-                <th scope="col">Duração</th>
-                <th scope="col">Preço</th>
+                <th scope="col">Duração(min)</th>
+                <th scope="col">Preço(R$)</th>
                 <th scope="col">Gênero</th>
                 <th scope="col">Ações</th>
               </tr>
@@ -75,15 +75,14 @@ class ListagemServicos extends Component<{}, State> {
                   <td>{servico.preco}</td>
                   <td>{servico.genero}</td>
                   <td>
-                  <button className="btn btn-primary btn-sm" onClick={() => this.handleEditarCliente(servico.id)}>Editar</button>
-                    <button className="btn btn-danger btn-sm ms-2" onClick={() => this.handleExcluirCliente(servico.id)}>Excluir</button>
+                  <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(servico.id)}>Editar</button>
+                    <button className="btn btn-small red" onClick={() => this.handleExcluirCliente(servico.id)}>Excluir</button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </div>
     );
   }
 }

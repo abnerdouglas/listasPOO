@@ -22,14 +22,14 @@ class ListagemProdutos extends Component<{}, State> {
           nome: 'Perfume',
           marca: 'Boticário',
           preco: '120.00',
-          genero: 'Masculino'
+          genero: 'masculino'
         },
         {
           id: 2,
           nome: 'Creme de Barbear',
           marca: 'Gilette',
           preco: '50.00',
-          genero: 'Masculino'
+          genero: 'masculino'
         }
       ]
     };
@@ -49,14 +49,14 @@ class ListagemProdutos extends Component<{}, State> {
     return (
         <div className="container">
         <h5><strong>Listagem dos Produtos</strong></h5>
-        <div className="table-responsive">
-          <table className="table">
+        <hr />
+          <table className="bordered striped centered highlight responsive-table">
             <thead>
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Marca</th>
-                <th scope="col">Preço</th>
+                <th scope="col">Preço(R$)</th>
                 <th scope="col">Gênero</th>
                 <th scope="col">Ações</th>
               </tr>
@@ -70,15 +70,14 @@ class ListagemProdutos extends Component<{}, State> {
                   <td>{produto.preco}</td>
                   <td>{produto.genero}</td>
                   <td>
-                    <button className="btn btn-primary btn-sm" onClick={() => this.handleEditarCliente(produto.id)}>Editar</button>
-                    <button className="btn btn-danger btn-sm ms-2" onClick={() => this.handleExcluirCliente(produto.id)}>Excluir</button>
+                    <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(produto.id)}>Editar</button>
+                    <button className="btn btn-small red" onClick={() => this.handleExcluirCliente(produto.id)}>Excluir</button>
                     </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </div>
     );
   }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import 'materialize-css/dist/css/materialize.min.css'
 
 type Cliente = {
   id: number;
@@ -54,9 +55,9 @@ export default class ListagemClientes extends Component<{}, State> {
   render() {
     return (
       <div className="container">
-        <h5><strong>Visualizar Clientes</strong></h5>
-        <div className="table-responsive">
-          <table className="table">
+        <h5><strong>Listagem Clientes</strong></h5>
+        <hr />
+          <table className="bordered striped centered highlight responsive-table">
             <thead>
               <tr>
                 <th scope="col">ID</th>
@@ -80,15 +81,14 @@ export default class ListagemClientes extends Component<{}, State> {
                   <td>{cliente.telefone}</td>
                   <td>{cliente.genero}</td>
                   <td>
-                    <button className="btn btn-primary btn-sm" onClick={() => this.handleEditarCliente(cliente.id)}>Editar</button>
-                    <button className="btn btn-danger btn-sm ms-2" onClick={() => this.handleExcluirCliente(cliente.id)}>Excluir</button>
+                    <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(cliente.id)}>Editar</button>
+                    <button className="btn btn-small red" onClick={() => this.handleExcluirCliente(cliente.id)}>Excluir</button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </div>
     );
   }
 }
