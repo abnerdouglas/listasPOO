@@ -1,46 +1,35 @@
-# Getting Started with Create React App
+# Desenvolvimento de GUI com HTML, MaterializeCSS e React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este projeto consiste na implementação de uma interface gráfica de usuário (GUI) utilizando HTML, MaterializeCSS e React. O objetivo é modernizar o sistema desenvolvido para o grupo WB na atv01, adicionando uma GUI responsiva e amigável tanto para navegadores comuns quanto para dispositivos móveis.
 
-## Available Scripts
+## Funcionalidades
 
-In the project directory, you can run:
+- Desenvolvimento de diversas telas utilizando HTML e MaterializeCSS para a estilização.
+- Utilização da biblioteca React para a criação de componentes de classe, seguindo a regra estabelecida pela equipe de desenvolvimento.
+- Implementação de transições entre as telas para uma experiência de usuário mais fluída.
 
-### `npm start`
+## Roteador (Roteamento de Telas)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+A classe `Roteador` é responsável por controlar o roteamento entre as diferentes telas da aplicação. Ela permite que o usuário navegue entre as telas de cadastro e listagem de clientes, produtos e serviços.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Funcionamento
 
-### `npm test`
+- Ao clicar nos botões da barra de navegação, o usuário pode alternar entre as diferentes telas disponíveis.
+- Cada tela é renderizada condicionalmente com base no estado atual da aplicação.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Componentes Importantes
 
-### `npm run build`
+- `BarraNavegacao`: Componente de barra de navegação que exibe os botões de navegação entre as telas.
+- `CadastroCliente`, `CadastroProduto`, `CadastroServico`: Componentes de cadastro para clientes, produtos e serviços, respectivamente.
+- `ListagemClientes`, `ListagemProdutos`, `ListagemServicos`: Componentes de listagem para clientes, produtos e serviços, respectivamente.
+- Outros componentes relacionados à análise de dados, como `ListagemClientesPorGenero`, `ListagemTop10Clientes`, `ListagemProdutosMaisConsumidos`, etc.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Instruções de Execução
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Clone o repositório: `git clone https://github.com/abnerdouglas/listasPOO/tree/atv02`
+2. Instale as dependências: `npm install`
+3. Execute o projeto: `npm start`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Certifique-se de possuir o Node.js e o npm instalados em sua máquina.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
