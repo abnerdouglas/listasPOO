@@ -26,7 +26,7 @@ A classe `Roteador` é responsável por controlar o roteamento entre as diferent
 
 ## Instruções de Execução
 
-1. Clone o repositório: `git clone https://github.com/abnerdouglas/listasPOO/tree/atv02`
+1. Clone o repositório: `git clone -b atv02 https://github.com/abnerdouglas/listasPOO.git`
 2. Instale as dependências: `npm install`
 3. Execute o projeto: `npm start`
 
