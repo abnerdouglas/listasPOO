@@ -7,13 +7,14 @@ type Servico = {
   duracao: number;
   preco: number;
   genero: string;
+  quantidade: number
 };
 
 type State = {
   servicos: Servico[];
 };
 
-export default class ListagemServicos extends Component<{}, State> {
+export default class ListagemServicosMaisConsumidos extends Component<{}, State> {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -24,7 +25,8 @@ export default class ListagemServicos extends Component<{}, State> {
           descricao: 'Corte Social na tesoura',
           duracao: 45,
           preco: 120.00,
-          genero: 'masculino'
+          genero: 'masculino',
+          quantidade: 5
         },
         {
           id: 2,
@@ -32,7 +34,8 @@ export default class ListagemServicos extends Component<{}, State> {
           descricao: 'Massagem nas costas',
           duracao: 50,
           preco: 180.00,
-          genero: 'masculino'
+          genero: 'masculino',
+          quantidade: 10
         }
       ]
     };
@@ -51,7 +54,7 @@ export default class ListagemServicos extends Component<{}, State> {
   render() {
     return (
         <div className="container">
-        <h5><strong>Listagem dos Serviços</strong></h5>
+        <h5><strong>Listagem dos Serviços MAIS Consumidos</strong></h5>
         <hr />
           <table className="bordered striped centered highlight responsive-table">
             <thead>
@@ -62,6 +65,7 @@ export default class ListagemServicos extends Component<{}, State> {
                 <th scope="col">Duração(min)</th>
                 <th scope="col">Preço(R$)</th>
                 <th scope="col">Gênero</th>
+                <th scope="col">Quantidade Consumo</th>
                 <th scope="col">Ações</th>
               </tr>
             </thead>
@@ -74,6 +78,7 @@ export default class ListagemServicos extends Component<{}, State> {
                   <td>{servico.duracao}</td>
                   <td>{servico.preco}</td>
                   <td>{servico.genero}</td>
+                  <td>{servico.quantidade}</td>
                   <td>
                   <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(servico.id)}>Editar</button>
                     <button className="btn btn-small red" onClick={() => this.handleExcluirCliente(servico.id)}>Excluir</button>

@@ -96,8 +96,8 @@ export default class ListagemClientesPorGenero extends Component<{}, State> {
               </tbody>
             </table>
           </div>
-      
-          <div>
+                
+          <div style={{marginTop:50}}>
             <h6>Gênero Feminino</h6>
             <table className="bordered striped centered highlight responsive-table">
               <thead>

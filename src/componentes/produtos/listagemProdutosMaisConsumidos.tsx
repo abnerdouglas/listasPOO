@@ -6,13 +6,14 @@ type Produto = {
   marca: string;
   preco: number;
   genero: string;
+  quantidade: number
 };
 
 type State = {
   produtos: Produto[];
 };
 
-export default class ListagemProdutos extends Component<{}, State> {
+export default class ListagemProdutosMaisConsumidos extends Component<{}, State> {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -22,14 +23,16 @@ export default class ListagemProdutos extends Component<{}, State> {
           nome: 'Perfume',
           marca: 'Boticário',
           preco: 120.00,
-          genero: 'masculino'
+          genero: 'masculino',
+          quantidade: 12
         },
         {
           id: 2,
           nome: 'Creme de Barbear',
           marca: 'Gilette',
           preco: 50.00,
-          genero: 'masculino'
+          genero: 'masculino',
+          quantidade: 6
         }
       ]
     };
@@ -48,7 +51,7 @@ export default class ListagemProdutos extends Component<{}, State> {
   render() {
     return (
         <div className="container">
-        <h5><strong>Listagem dos Produtos</strong></h5>
+        <h5><strong>Listagem dos Produtos MAIS Consumidos</strong></h5>
         <hr />
           <table className="bordered striped centered highlight responsive-table">
             <thead>
@@ -58,6 +61,7 @@ export default class ListagemProdutos extends Component<{}, State> {
                 <th scope="col">Marca</th>
                 <th scope="col">Preço(R$)</th>
                 <th scope="col">Gênero</th>
+                <th scope="col">Quantidade de Consumo</th>
                 <th scope="col">Ações</th>
               </tr>
             </thead>
@@ -69,6 +73,7 @@ export default class ListagemProdutos extends Component<{}, State> {
                   <td>{produto.marca}</td>
                   <td>{produto.preco}</td>
                   <td>{produto.genero}</td>
+                  <td>{produto.quantidade}</td>
                   <td>
                     <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(produto.id)}>Editar</button>
                     <button className="btn btn-small red" onClick={() => this.handleExcluirCliente(produto.id)}>Excluir</button>

@@ -8,6 +8,12 @@ import ListagemProdutos from "../produtos/listagemProduto";
 import ListagemServicos from "../servicos/listagemServico";
 import ListagemClientesPorGenero from "../clientes/listagemClientesPorGenero";
 import './styles.css';
+import ListagemTop10Clientes from "../clientes/listagemTop10Clientes";
+import ListagemProdutosMaisConsumidos from "../produtos/listagemProdutosMaisConsumidos";
+import ListagemServicosMaisConsumidos from "../servicos/listagemServicosMaisConsumidos";
+import ListagemProdutosMaisConsumidosPorGenero from "../produtos/listagemProdutosMaisConsumidosPorGenero";
+import ListagemTop10PioresClientes from "../clientes/listagemTop10PioresClientes";
+import ListagemTop5ClientesEmValor from "../clientes/listagemTop5ClientesEmValor";
 
 
 type State = {
@@ -79,6 +85,15 @@ export default class Roteador extends Component<{}, State> {
                         <div className="container-wrapper">
                             <ListagemClientesPorGenero />
                         </div>
+                        <div className="container-wrapper">
+                            <ListagemTop10Clientes/>
+                        </div>
+                        <div className="container-wrapper">
+                            <ListagemTop10PioresClientes/>
+                        </div>
+                        <div className="container-wrapper">
+                            <ListagemTop5ClientesEmValor/>
+                        </div>
                     </>
                 );
             case 'Lista de Produtos':
@@ -88,6 +103,12 @@ export default class Roteador extends Component<{}, State> {
                         <div className="container-wrapper">
                             <ListagemProdutos />
                         </div>
+                        <div className="container-wrapper">
+                            <ListagemProdutosMaisConsumidos/>
+                        </div>
+                        <div className="container-wrapper">
+                            <ListagemProdutosMaisConsumidosPorGenero/>
+                        </div>
                     </>
                 );
             case 'Lista de Servicos':
@@ -96,6 +117,9 @@ export default class Roteador extends Component<{}, State> {
                         {barraNavegacao}
                         <div className="container-wrapper">
                             <ListagemServicos />
+                        </div>
+                        <div className="container-wrapper">
+                            <ListagemServicosMaisConsumidos/>
                         </div>
                     </>
                 );
