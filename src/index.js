@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
-import Roteador from './componentes/roteador';
+import Roteador from './componentes/paginas/roteador';
 
 ReactDOM.render(
   <React.StrictMode>
