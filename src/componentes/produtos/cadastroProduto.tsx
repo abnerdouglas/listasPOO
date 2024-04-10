@@ -1,13 +1,11 @@
-import { Component } from "react";
 
-type props = {
+type Props = {
     tema: string
 }
 
-export default class CadastroProduto extends Component<props> {
-
-    render() {
-        let estiloBotao = `btn waves-effect waves-light ${this.props.tema}`
+const CadastroProduto = ({tema}:Props) => {
+    let estiloBotao = `btn waves-effect waves-light ${tema}`
+    
         return (
             <div className="container">
                 <form className="col s12">
@@ -42,5 +40,5 @@ export default class CadastroProduto extends Component<props> {
                 </form>
             </div>
         )
-    }
 }
+export default CadastroProduto;
