@@ -1,11 +1,11 @@
-# Desenvolvimento de GUI com HTML, MaterializeCSS e React
+# Desenvolvimento de GUI - Componentes de Função
 
-Este projeto consiste na implementação de uma interface gráfica de usuário (GUI) utilizando HTML, MaterializeCSS e React. O objetivo é modernizar o sistema desenvolvido para o grupo WB na atv01, adicionando uma GUI responsiva e amigável tanto para navegadores comuns quanto para dispositivos móveis.
+Este projeto consiste na implementação de uma interface gráfica de usuário (GUI) utilizando HTML, MaterializeCSS e React. O objetivo é modernizar o sistema desenvolvido para o grupo WB na atv02, adicionando uma GUI responsiva e amigável tanto para navegadores comuns quanto para dispositivos móveis, porém agora utilizando componentes de função.
 
 ## Funcionalidades
 
 - Desenvolvimento de diversas telas utilizando HTML e MaterializeCSS para a estilização.
-- Utilização da biblioteca React para a criação de componentes de classe, seguindo a regra estabelecida pela equipe de desenvolvimento.
+- Utilização da biblioteca React para a criação de componentes funcionais com hooks, seguindo a regra estabelecida pela equipe de desenvolvimento.
 - Implementação de transições entre as telas para uma experiência de usuário mais fluída.
 
 ## Roteador (Roteamento de Telas)
@@ -26,7 +26,7 @@ A classe `Roteador` é responsável por controlar o roteamento entre as diferent
 
 ## Instruções de Execução
 
-1. Clone o repositório: `git clone -b atv02 https://github.com/abnerdouglas/listasPOO.git`
+1. Clone o repositório: `git clone -b atv03 https://github.com/abnerdouglas/listasPOO.git`
 2. Instale as dependências: `npm install`
 3. Execute o projeto: `npm start`
 
