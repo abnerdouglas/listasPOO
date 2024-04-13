@@ -1,4 +1,4 @@
-# Desenvolvimento de GUI com HTML, MaterializeCSS e React
+# Desenvolvimento de GUI -  Componentes de Classe
 
 Este projeto consiste na implementação de uma interface gráfica de usuário (GUI) utilizando HTML, MaterializeCSS e React. O objetivo é modernizar o sistema desenvolvido para o grupo WB na atv01, adicionando uma GUI responsiva e amigável tanto para navegadores comuns quanto para dispositivos móveis.
 
