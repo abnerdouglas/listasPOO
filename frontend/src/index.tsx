@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Roteador from './componentes/paginas/roteador';
+import Painel from './componentes/painel';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Roteador />
+    <Painel textoApp='Cadastros' />
   </React.StrictMode>,
   document.getElementById('root')
 );
+
 reportWebVitals();
