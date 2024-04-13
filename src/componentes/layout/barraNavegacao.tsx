@@ -1,55 +1,50 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import { Component } from "react";
+import React, { useEffect, useState } from "react";
 import 'materialize-css/dist/css/materialize.min.css'
 import M from 'materialize-css'
 
-type props = {
+type Props = {
     tema: string,
     botoes: string[],
-    seletorView: Function
+    seletorView: (valor: string, e: React.MouseEvent<HTMLAnchorElement>) => void
 }
 
-export default class BarraNavegacao extends Component<props> {
-    constructor(props: props | Readonly<props>) {
-        super(props)
-        this.gerarListaBotoes = this.gerarListaBotoes.bind(this)
-    }
+const BarraNavegacao: React.FC<Props> = ({ tema, botoes, seletorView }) => {
+    const [navInitialized, setNavInitialized] = useState(false);
 
-    componentDidMount() {
-        document.addEventListener('DOMContentLoaded', function () {
+    useEffect(() => {
+        if (!navInitialized) {
             let elems = document.querySelectorAll('.sidenav');
-            M.Sidenav.init(elems)
-        });
-    }
-
-    gerarListaBotoes() {
-        if (this.props.botoes.length <= 0) {
-            return <></>
-        } else {
-            let lista = this.props.botoes.map(valor =>
-                <li key={valor}><a onClick={(e) => this.props.seletorView(valor, e)}>{valor}</a></li>
-            )
-            return lista
+            M.Sidenav.init(elems);
+            setNavInitialized(true);
         }
-    }
+    }, [navInitialized]);
 
-    render() {
-        let estilo = `${this.props.tema}`
-        return (
-            <>
-                <nav className={estilo}>
-                        <div className="nav-wrapper row">
-                            <a className="brand-logo">Grupo WB</a>
-                            <a data-target="mobile-menu" className="sidenav-trigger"><i className="material-icons">menu</i></a>
-                            <ul className="right hide-on-med-and-down">
-                                {this.gerarListaBotoes()}
-                            </ul>
-                        </div>
-                </nav>
-                <ul className="sidenav" id="mobile-menu">
-                    {this.gerarListaBotoes()}
-                </ul>
-            </>
-        )
-    }
-}
+    const gerarListaBotoes = () => {
+        if (botoes.length <= 0) {
+            return null;
+        } else {
+            return botoes.map(valor =>
+                <li key={valor}><a onClick={(e) => seletorView(valor, e)}>{valor}</a></li>
+            );
+        }
+    };
+
+    return (
+        <>
+            <nav className={tema}>
+                <div className="nav-wrapper row">
+                    <a className="brand-logo">Grupo WB</a>
+                    <a data-target="mobile-menu" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+                    <ul className="right hide-on-med-and-down">
+                        {gerarListaBotoes()}
+                    </ul>
+                </div>
+            </nav>
+            <ul className="sidenav" id="mobile-menu">
+                {gerarListaBotoes()}
+            </ul>
+        </>
+    );
+};
+
+export default BarraNavegacao;

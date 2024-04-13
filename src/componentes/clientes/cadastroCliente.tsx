@@ -1,53 +1,74 @@
+import React, { useState } from 'react';
 
-type Props = {
-    tema: string;
-};
+const CadastroCliente = ({ tema }) => {
+    const [clientes, setClientes] = useState({
+        nome: '',
+        nomeSocial: '',
+        cpf: '',
+        dataEmissaoCPF: '',
+        rg: '',
+        dataEmissaoRG: '',
+        telefone: '',
+        genero: ''
+    });
 
-const CadastroCliente = ({ tema }: Props) => {
-    let estiloBotao = `btn waves-effect waves-light ${tema}`;
+    const [estiloBotao, setEstiloBotao] = useState(`btn waves-effect waves-light ${tema}`);
+
+    const handleChange = (e) => {
+        const { id, value } = e.target;
+        setClientes(prevInputs => ({
+            ...prevInputs,
+            [id]: value
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log('Dados do formulário:', clientes);
+    };
 
     return (
         <div className="container">
-            <form className="col s12">
+            <form className="col s12" onSubmit={handleSubmit}>
                 <h5><strong>Cadastro Cliente</strong></h5>
                 <div className="row">
                     <div className="input-field col s6">
-                        <input id="nome-cliente" type="text" className="validate" />
-                        <label htmlFor="nome-cliente">Nome</label>
+                        <input id="nome" type="text" className="validate" value={clientes.nome} onChange={handleChange} />
+                        <label htmlFor="nome">Nome</label>
                     </div>
                     <div className="input-field col s6">
-                        <input id="nome-social" type="text" className="validate" />
-                        <label htmlFor="nome-social">Nome Social</label>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="input-field col s6">
-                        <input id="cpf-cliente" type="text" className="validate"/>
-                        <label htmlFor="cpf-cliente">CPF</label>
-                    </div>
-                    <div className="input-field col s6">
-                        <input id="cpf-data" type="date" className="validate" />
-                        <label htmlFor="cpf-data">Data Emissão CPF</label>
+                        <input id="nomeSocial" type="text" className="validate" value={clientes.nomeSocial} onChange={handleChange} />
+                        <label htmlFor="nomeSocial">Nome Social</label>
                     </div>
                 </div>
                 <div className="row">
                     <div className="input-field col s6">
-                        <input id="rg-cliente" type="text" className="validate" />
-                        <label htmlFor="rg-cliente">RG</label>
+                        <input id="cpf" type="text" className="validate" value={clientes.cpf} onChange={handleChange} />
+                        <label htmlFor="cpf">CPF</label>
                     </div>
                     <div className="input-field col s6">
-                        <input id="rg-data" type="date" className="validate" />
-                        <label htmlFor="rg-data">Data Emissão RG</label>
+                        <input id="dataEmissaoCPF" type="date" className="validate" value={clientes.dataEmissaoCPF} onChange={handleChange} />
+                        <label htmlFor="dataEmissaoCPF">Data Emissão CPF</label>
                     </div>
                 </div>
                 <div className="row">
                     <div className="input-field col s6">
-                        <input id="tel-cliente" type="tel" className="validate" />
-                        <label htmlFor="tel-cliente">Telefone</label>
+                        <input id="rg" type="text" className="validate" value={clientes.rg} onChange={handleChange} />
+                        <label htmlFor="rg">RG</label>
                     </div>
                     <div className="input-field col s6">
-                        <input id="genero-cliente" type="text" className="validate" />
-                        <label htmlFor="genero-cliente">Gênero</label>
+                        <input id="dataEmissaoRG" type="date" className="validate" value={clientes.dataEmissaoRG} onChange={handleChange} />
+                        <label htmlFor="dataEmissaoRG">Data Emissão RG</label>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="input-field col s6">
+                        <input id="telefone" type="tel" className="validate" value={clientes.telefone} onChange={handleChange} />
+                        <label htmlFor="telefone">Telefone</label>
+                    </div>
+                    <div className="input-field col s6">
+                        <input id="genero" type="text" className="validate" value={clientes.genero} onChange={handleChange} />
+                        <label htmlFor="genero">Gênero</label>
                     </div>
                 </div>
                 <div className="row">
