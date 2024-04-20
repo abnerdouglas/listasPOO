@@ -1,4 +1,4 @@
-## Integração Front-end e Back-end
+# Integração Front-end e Back-end
 Este projeto consiste em uma atividade prática para treinar habilidades de desenvolvimento e integração entre front-end e back-end utilizando a arquitetura REST. O pré-projeto back-end fornece um micro-serviço desenvolvido em Java, acessível através de rotas RESTful. O objetivo é criar uma aplicação front-end capaz de se comunicar com o back-end para realizar operações CRUD (listar, cadastrar, atualizar e excluir) clientes.
 
 ## Requisitos
