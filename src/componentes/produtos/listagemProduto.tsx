@@ -9,7 +9,7 @@ type Produto = {
 };
 
 const ListagemProdutos: React.FC = () => {
-  const [produtos, setProdutos] = useState<Produto[]>([
+  const [produtos] = useState<Produto[]>([
     {
       id: 1,
       nome: 'Perfume',

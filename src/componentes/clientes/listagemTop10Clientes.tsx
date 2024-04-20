@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 
 type Cliente = {
@@ -13,7 +13,7 @@ type Cliente = {
 };
 
 const ListagemTop10Clientes = () => {
-  const [clientes, setClientes] = useState<Cliente[]>([
+  const [clientes] = useState<Cliente[]>([
     {
       id: 1,
       nome: 'João Silva',

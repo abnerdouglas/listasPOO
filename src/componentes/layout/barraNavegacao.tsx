@@ -24,7 +24,7 @@ const BarraNavegacao: React.FC<Props> = ({ tema, botoes, seletorView }) => {
             return null;
         } else {
             return botoes.map(valor =>
-                <li key={valor}><a onClick={(e) => seletorView(valor, e)}>{valor}</a></li>
+                <li key={valor}><a href="/" onClick={(e) => seletorView(valor, e)}>{valor}</a></li>
             );
         }
     };
@@ -33,8 +33,8 @@ const BarraNavegacao: React.FC<Props> = ({ tema, botoes, seletorView }) => {
         <>
             <nav className={tema}>
                 <div className="nav-wrapper row">
-                    <a className="brand-logo">Grupo WB</a>
-                    <a data-target="mobile-menu" className="sidenav-trigger"><i className="material-icons">menu</i></a>
+                    <a href='/' className="brand-logo">Grupo WB</a>
+                    <a href='/' data-target="mobile-menu" className="sidenav-trigger"><i className="material-icons">menu</i></a>
                     <ul className="right hide-on-med-and-down">
                         {gerarListaBotoes()}
                     </ul>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const CadastroCliente = ({ tema }) => {
     const [clientes, setClientes] = useState({
@@ -11,8 +11,6 @@ const CadastroCliente = ({ tema }) => {
         telefone: '',
         genero: ''
     });
-
-    const [estiloBotao, setEstiloBotao] = useState(`btn waves-effect waves-light ${tema}`);
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -73,7 +71,7 @@ const CadastroCliente = ({ tema }) => {
                 </div>
                 <div className="row">
                     <div className="col s12">
-                        <button className={estiloBotao} type="submit" name="action">Enviar
+                        <button className={`btn waves-effect waves-light ${tema}`} type="submit" name="action">Enviar
                             <i className="material-icons right">send</i>
                         </button>
                     </div>

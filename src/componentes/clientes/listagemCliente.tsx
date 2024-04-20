@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import 'materialize-css/dist/css/materialize.min.css';
 
 type Cliente = {

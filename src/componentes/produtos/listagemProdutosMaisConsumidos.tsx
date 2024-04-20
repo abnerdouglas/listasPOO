@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 type Produto = {
   id: number;
@@ -10,7 +10,7 @@ type Produto = {
 };
 
 const ListagemProdutosMaisConsumidos = () => {
-  const [produtos, setProdutos] = useState<Produto[]>([
+  const [produtos] = useState<Produto[]>([
     {
       id: 1,
       nome: 'Perfume',

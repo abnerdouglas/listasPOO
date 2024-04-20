@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import BarraNavegacao from "../layout/barraNavegacao";
+import { useState } from "react";
 import ListagemClientes from "../clientes/listagemCliente";
 import CadastroCliente from "../clientes/cadastroCliente";
 import CadastroProduto from "../produtos/cadastroProduto";
@@ -13,6 +12,7 @@ import ListagemServicosMaisConsumidos from "../servicos/listagemServicosMaisCons
 import ListagemProdutosMaisConsumidosPorGenero from "../produtos/listagemProdutosMaisConsumidosPorGenero";
 import ListagemTop10PioresClientes from "../clientes/listagemTop10PioresClientes";
 import ListagemTop5ClientesEmValor from "../clientes/listagemTop5ClientesEmValor";
+import BarraNavegacao from "../layout/barraNavegacao";
 
 const Roteador = () => {
     const [tela, setTela] = useState('Cadastro Cliente');
