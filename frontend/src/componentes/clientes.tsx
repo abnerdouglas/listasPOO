@@ -10,6 +10,19 @@ interface Cliente {
     nome: string;
     sobreNome: string;
     email: string;
+    endereco: {
+        estado: string;
+        cidade: string;
+        bairro: string;
+        rua: string;
+        numero: string;
+        codigoPostal: string;
+        informacoesAdicionais: string;
+    };
+    telefones: {
+        ddd: string;
+        numero: string;
+    };
 }
 
 interface State {
@@ -92,10 +105,34 @@ class Clientes extends Component<{}, State> {
                         <li className="collection-header"><h4>Clientes</h4></li>
                         {clientes.map(cliente => (
                             <li className="collection-item avatar" key={cliente.id}>
-                                <i className="material-icons circle">person</i>
-                                <span className="title">Nome: {cliente.nome}</span>
-                                <p> Sobrenome: {cliente.sobreNome}</p>
-                                <p> Email: {cliente.email}</p>
+                                <i className="material-icons circle purple lighten">person</i>
+
+                                <h6><strong> Nome:  </strong> {cliente.nome}</h6>
+
+                                <h6><strong> Sobrenome: </strong> {cliente.sobreNome}</h6>
+
+                                <h6><strong> Email: </strong> {cliente.email}</h6>
+
+                                <h6><strong> Estado: </strong> {cliente.endereco ? cliente.endereco.estado : ''}</h6>
+
+                                <h6><strong> Cidade: </strong> {cliente.endereco ? cliente.endereco.cidade : ''}</h6>
+
+                                <h6><strong> Estado: </strong> {cliente.endereco ? cliente.endereco.estado : ''}</h6>
+
+                                <h6><strong> Bairro: </strong> {cliente.endereco ? cliente.endereco.bairro : ''}</h6>
+
+                                <h6><strong> Rua: </strong> {cliente.endereco ? cliente.endereco.rua : ''}</h6>
+
+                                <h6><strong> Número: </strong> {cliente.endereco ? cliente.endereco.numero : ''}</h6>
+
+                                <h6><strong> Código Postal: </strong> {cliente.endereco ? cliente.endereco.codigoPostal : ''}</h6>
+
+                                <h6><strong> Informações Adicionais: </strong> {cliente.endereco ? cliente.endereco.informacoesAdicionais : ''}</h6>
+
+                                {Array.isArray(cliente.telefones) && cliente.telefones.map((telefone, index) => (
+                                    <h6 key={index}> <strong> Telefone: </strong> ({telefone.ddd}) {telefone.numero}</h6>
+                                ))}
+
                                 <div className="secondary-content">
                                     <a href="/" onClick={(e) => this.excluirLocal(cliente.id, e)}>
                                         <i className="material-icons">block</i>
@@ -128,7 +165,21 @@ class Clientes extends Component<{}, State> {
                                                 clienteEditando: { ...clienteEditando, email: e.target.value }
                                             })}
                                         />
-                                        <button className="btn waves-effect waves-light teal accent-3" onClick={() => this.atualizarCliente(clienteEditando)}>Salvar</button>
+                                        <input
+                                            type="text"
+                                            value={clienteEditando.endereco.estado}
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => this.setState({
+                                                clienteEditando: { ...clienteEditando, endereco: { ...clienteEditando.endereco, estado: e.target.value } }
+                                            })}
+                                        />
+                                        <input
+                                            type="text"
+                                            value={clienteEditando.endereco.cidade}
+                                            onChange={(e: ChangeEvent<HTMLInputElement>) => this.setState({
+                                                clienteEditando: { ...clienteEditando, endereco: { ...clienteEditando.endereco, cidade: e.target.value } }
+                                            })}
+                                        />
+                                        <button className="btn purple lighten" onClick={() => this.atualizarCliente(clienteEditando)}>Salvar</button>
                                     </div>
                                 )}
                             </li>

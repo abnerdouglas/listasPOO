@@ -23,11 +23,11 @@ class Menu extends Component<props> {
         return (
             <div>
                 <div className="fixed-action-btn">
-                    <a className="btn-floating btn-large teal accent-3">
+                    <a className="btn-floating btn-large purple lighten">
                         <i className="material-icons">person_add</i>
                     </a>
                     <ul>
-                        <Botao nome="cadastrar" icon="add" selecionarBotao={this.props.selecionarBotao} />
+                        <Botao nome="cadastrar" icon="add" selecionarBotao={this.props.selecionarBotao}/>
                         <Botao nome="clientes" icon="people" selecionarBotao={this.props.selecionarBotao} />
                     </ul>
                 </div>

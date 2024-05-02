@@ -11,7 +11,7 @@ class Barra extends Component<props> {
             <>
                 <div className="navbar-fixed">
                     <nav>
-                        <div className="nav-wrapper teal accent-3" >
+                        <div className="nav-wrapper purple lighten" >
                             <a href="!#" className="brand-logo center">{this.props.textoApp}</a>
                         </div>
                     </nav>
