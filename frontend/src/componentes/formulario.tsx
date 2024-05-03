@@ -4,7 +4,6 @@ import CadastradorCliente from "../cadastradores/cadastradorCliente";
 class FormularioCliente extends Component {
     private nome!: string;
     private sobreNome!: string;
-    private email!: string;
     private endereco: {
         cidade: string;
         estado: string;
@@ -34,7 +33,6 @@ class FormularioCliente extends Component {
         super(props);
         this.capturarNome = this.capturarNome.bind(this);
         this.capturarSobreNome = this.capturarSobreNome.bind(this);
-        this.capturarEmail = this.capturarEmail.bind(this);
         this.capturarEnderecoCidade = this.capturarEnderecoCidade.bind(this);
         this.capturarEnderecoEstado = this.capturarEnderecoEstado.bind(this);
         this.capturarEnderecoBairro = this.capturarEnderecoBairro.bind(this);
@@ -59,10 +57,6 @@ class FormularioCliente extends Component {
 
     public capturarSobreNome(evento: any) {
         this.sobreNome = evento.target.value;
-    }
-
-    public capturarEmail(evento: any) {
-        this.email = evento.target.value;
     }
 
     public capturarEnderecoCidade( evento: any) {
@@ -106,7 +100,6 @@ class FormularioCliente extends Component {
         let cliente = {
             nome: this.nome,
             sobreNome: this.sobreNome,
-            email: this.email,
             endereco: {
                 cidade: this.endereco.cidade,
                 estado: this.endereco.estado,
@@ -144,11 +137,6 @@ class FormularioCliente extends Component {
                                     <div className="input-field col s6">
                                         <input onChange={this.capturarSobreNome} id="sobreNome" type="text" className="validate" maxLength={30} />
                                         <label htmlFor="sobreNome">Sobrenome</label>
-                                    </div>
-
-                                    <div className="input-field col s6">
-                                        <input onChange={this.capturarEmail} id="email" type="text" className="validate" maxLength={30} />
-                                        <label htmlFor="email">Email</label>
                                     </div>
 
                                     <div className="input-field col s6">

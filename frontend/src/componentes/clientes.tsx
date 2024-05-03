@@ -10,7 +10,6 @@ interface Cliente {
     id: string;
     nome: string;
     sobreNome: string;
-    email: string;
     endereco: {
         estado: string;
         cidade: string;
@@ -112,8 +111,6 @@ class Clientes extends Component<{}, State> {
 
                                 <h6><strong> Sobrenome: </strong> {cliente.sobreNome}</h6>
 
-                                <h6><strong> Email: </strong> {cliente.email}</h6>
-
                                 <h6><strong> Estado: </strong> {cliente.endereco ? cliente.endereco.estado : ''}</h6>
 
                                 <h6><strong> Cidade: </strong> {cliente.endereco ? cliente.endereco.cidade : ''}</h6>
@@ -163,16 +160,6 @@ class Clientes extends Component<{}, State> {
                                                 value={clienteEditando.sobreNome}
                                                 onChange={(e: ChangeEvent<HTMLInputElement>) => this.setState({
                                                     clienteEditando: { ...clienteEditando, sobreNome: e.target.value }
-                                                })}
-                                            />
-                                        </div>
-                                        <div className="input-field">
-                                            <input
-                                                type="text"
-                                                placeholder="Edite o email"
-                                                value={clienteEditando.email}
-                                                onChange={(e: ChangeEvent<HTMLInputElement>) => this.setState({
-                                                    clienteEditando: { ...clienteEditando, email: e.target.value }
                                                 })}
                                             />
                                         </div>
