@@ -1,0 +1,8 @@
+.edit-client-background {
+    background-color: #f0f0f0; /* Cor de fundo desejada */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 5px; /* Borda arredondada */
+}
+.button-spacing {
+    margin-left: 10px;
+}

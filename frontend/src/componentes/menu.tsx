@@ -27,7 +27,7 @@ class Menu extends Component<props> {
                         <i className="material-icons">person_add</i>
                     </a>
                     <ul>
-                        <Botao nome="cadastrar" icon="add" selecionarBotao={this.props.selecionarBotao}/>
+                        <Botao nome="cadastrar" icon="add" selecionarBotao={this.props.selecionarBotao} />
                         <Botao nome="clientes" icon="people" selecionarBotao={this.props.selecionarBotao} />
                     </ul>
                 </div>

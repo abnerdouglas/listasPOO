@@ -22,7 +22,7 @@ class Botao extends Component<props> {
         return (
             <li>
                 <a className="btn-floating teal accent-3" onClick={this.capturarClique}>
-                    <i className="material-icons">{this.props.icon}</i>
+                    <i className="material-icons purple lighten">{this.props.icon}</i>
                 </a>
             </li>
         )
