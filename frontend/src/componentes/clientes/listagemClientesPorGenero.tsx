@@ -20,24 +20,7 @@ export default class ListagemClientesPorGenero extends Component<{}, State> {
     super(props);
     this.state = {
       clientes: [
-        {
-          id: 1,
-          nome: 'Benedito',
-          nomeSocial: 'Seu Benedito',
-          cpf: '123.456.789-00',
-          rg: '9876543-21',
-          telefone: '(11) 1234-5673',
-          genero: 'masculino'
-        },
-        {
-          id: 2,
-          nome: 'Ana Júlia',
-          nomeSocial: 'O ana júliaaaaa',
-          cpf: '123.456.789-00',
-          rg: '9876543-21',
-          telefone: '(11) 1234-5673',
-          genero: 'feminino'
-        }
+        
       ]
     };
   }

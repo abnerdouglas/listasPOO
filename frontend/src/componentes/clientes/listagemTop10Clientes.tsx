@@ -20,24 +20,7 @@ export default class ListagemTop10Clientes extends Component<{}, State> {
     super(props);
     this.state = {
       clientes: [
-        {
-          id: 1,
-          nome: 'João Silva',
-          nomeSocial: 'Joãozinho da Silva',
-          cpf: '123.456.789-00',
-          rg: '9876543-21',
-          telefone: '(11) 1234-5678',
-          genero: 'Masculino'
-        },
-        {
-          id: 2,
-          nome: 'Maria Oliveira',
-          nomeSocial: 'Maria da Silva Oliveira',
-          cpf: '987.654.321-00',
-          rg: '1234567-89',
-          telefone: '(11) 9876-5432',
-          genero: 'Feminino'
-        },
+        
       ]
     };
   }

@@ -1,7 +1,7 @@
 import { Component } from "react";
 import BarraNavegacao from "../layout/barraNavegacao";
 import ListagemClientes from "../clientes/listagemCliente";
-import CadastroCliente from "../clientes/cadastroCliente";
+import CadastroCliente from "../clientes/formularioCliente";
 import CadastroProduto from "../produtos/cadastroProduto";
 import CadastroServico from "../servicos/cadastroServico";
 import ListagemProdutos from "../produtos/listagemProduto";
@@ -53,7 +53,7 @@ export default class Roteador extends Component<{}, State> {
                     <>
                         {barraNavegacao}
                         <div className="container-wrapper">
-                            <CadastroCliente tema="purple lighten" />
+                            <CadastroCliente  />
                         </div>
                     </>
                 );

@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import org.springframework.hateoas.RepresentationModel;
 
@@ -27,13 +26,24 @@ public class Cliente extends RepresentationModel<Cliente> {
 	
 	@Column
 	private String nome;
+
 	@Column
-	private String sobreNome;
+	private String nomeSocial;
+
 	@Column
-	private String email;
-	
-	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-	private Endereco endereco;
+	private String cpf;
+
+	@Column
+	private String dataEmissaoCpf;
+
+	@Column
+	private String rg;
+
+	@Column
+	private String dataEmissaoRg;
+
+	@Column
+	private String genero;
 	
 	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Telefone> telefones = new ArrayList<>();
