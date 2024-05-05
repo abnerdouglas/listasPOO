@@ -52,7 +52,7 @@ public class Wbbackend {
 
 			//cliente1
 			Cliente cliente1 = new Cliente();
-			cliente1.setNome("Pedro Alcântara de Bragança e Bourbon");
+			cliente1.setNome("Pedro Alcântara");
 			cliente1.setNomeSocial("Dom Pedro");
 			cliente1.setCpf("532285423-45");
 			cliente1.setDataEmissaoCpf("21/10/1994");
@@ -67,7 +67,7 @@ public class Wbbackend {
 
 			//cliente2
 			Cliente cliente2 = new Cliente();
-			cliente2.setNome("Teresa Cristina de Bourbon-Duas Sicílias");
+			cliente2.setNome("Teresa Cristina");
 			cliente2.setNomeSocial("Mãe dos Brasileiros");
 			cliente2.setCpf("122285423-45");
 			cliente2.setDataEmissaoCpf("28/10/1990");
@@ -82,7 +82,7 @@ public class Wbbackend {
 
 			//cliente3
 			Cliente cliente3 = new Cliente();
-			cliente3.setNome("Isabel Cristina Leopoldina Augusta Gonzaga de Bourbon e Bragança");
+			cliente3.setNome("Isabel Cristina");
 			cliente3.setNomeSocial("Pricesa Isabel");
 			cliente3.setCpf("922282421-95");
 			cliente3.setDataEmissaoCpf("13/07/2000");
@@ -97,7 +97,7 @@ public class Wbbackend {
 
 			//cliente4
 			Cliente cliente4 = new Cliente();
-			cliente4.setNome("Leopoldina Teresa Gonzaga de Bragança e Bourbon-Duas Sicílias");
+			cliente4.setNome("Leopoldina Teresa");
 			cliente4.setNomeSocial("Pricesa Leopoldina");
 			cliente4.setCpf("112285223-45");
 			cliente4.setDataEmissaoCpf("21/10/1934");
