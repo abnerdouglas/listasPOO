@@ -1,9 +1,6 @@
 import { Component } from "react";
 import BarraNavegacao from "../layout/barraNavegacao";
 import ListagemClientes from "../clientes/listagemCliente";
-import CadastroCliente from "../clientes/formularioCliente";
-import CadastroProduto from "../produtos/cadastroProduto";
-import CadastroServico from "../servicos/cadastroServico";
 import ListagemProdutos from "../produtos/listagemProduto";
 import ListagemServicos from "../servicos/listagemServico";
 import ListagemClientesPorGenero from "../clientes/listagemClientesPorGenero";
@@ -14,6 +11,9 @@ import ListagemServicosMaisConsumidos from "../servicos/listagemServicosMaisCons
 import ListagemProdutosMaisConsumidosPorGenero from "../produtos/listagemProdutosMaisConsumidosPorGenero";
 import ListagemTop10PioresClientes from "../clientes/listagemTop10PioresClientes";
 import ListagemTop5ClientesEmValor from "../clientes/listagemTop5ClientesEmValor";
+import FormularioCliente from "../clientes/formularioCliente";
+import FormularioProduto from "../produtos/formularioProduto";
+import FormularioServico from "../servicos/formularioServico";
 
 
 type State = {
@@ -24,7 +24,7 @@ export default class Roteador extends Component<{}, State> {
     constructor(props: {} | Readonly<{}>) {
         super(props)
         this.state = {
-            tela: 'Cadastro Cliente'
+            tela: 'Formulário Cliente'
         }
         this.selecionarView = this.selecionarView.bind(this)
     }
@@ -43,35 +43,35 @@ export default class Roteador extends Component<{}, State> {
             <BarraNavegacao
                 seletorView={this.selecionarView}
                 tema="purple lighten"
-                botoes={['Cadastro Cliente', 'Cadastro Produto', 'Cadastro Servico', 'Lista de Clientes', 'Lista de Produtos', 'Lista de Servicos']}
+                botoes={['Formulário Cliente', 'Formulário Produto', 'Formulário Serviço', 'Lista de Clientes', 'Lista de Produtos', 'Lista de Serviços']}
             />
         );
 
         switch (tela) {
-            case 'Cadastro Cliente':
+            case 'Formulário Cliente':
                 return (
                     <>
                         {barraNavegacao}
                         <div className="container-wrapper">
-                            <CadastroCliente  />
+                            <FormularioCliente />
                         </div>
                     </>
                 );
-            case 'Cadastro Produto':
+            case 'Formulário Produto':
                 return (
                     <>
                         {barraNavegacao}
                         <div className="container-wrapper">
-                            <CadastroProduto tema="purple lighten" />
+                            <FormularioProduto />
                         </div>
                     </>
                 );
-            case 'Cadastro Servico':
+            case 'Formulário Serviço':
                 return (
                     <>
                         {barraNavegacao}
                         <div className="container-wrapper">
-                            <CadastroServico tema="purple lighten" />
+                            <FormularioServico />
                         </div>
                     </>
                 );
@@ -111,7 +111,7 @@ export default class Roteador extends Component<{}, State> {
                         </div>
                     </>
                 );
-            case 'Lista de Servicos':
+            case 'Lista de Serviços':
                 return (
                     <>
                         {barraNavegacao}

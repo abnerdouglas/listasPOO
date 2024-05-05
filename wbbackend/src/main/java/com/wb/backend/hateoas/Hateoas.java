@@ -1,4 +1,4 @@
-package com.wb.wbbackend.hateoas;
+package com.wb.backend.hateoas;
 
 import java.util.List;
 

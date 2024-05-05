@@ -1,4 +1,4 @@
-package com.wb.wbbackend.entidades;
+package com.wb.backend.entidades;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

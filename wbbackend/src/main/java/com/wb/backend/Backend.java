@@ -1,4 +1,4 @@
-package com.wb.wbbackend;
+package com.wb.backend;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,12 +10,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
 
-import com.wb.wbbackend.entidades.Cliente;
-import com.wb.wbbackend.entidades.Telefone;
-import com.wb.wbbackend.repositorios.RepositorioCliente;
+import com.wb.backend.entidades.Cliente;
+import com.wb.backend.entidades.Produto;
+import com.wb.backend.entidades.Telefone;
+import com.wb.backend.repositorios.RepositorioCliente;
+import com.wb.backend.repositorios.RepositorioProduto;
 
 @SpringBootApplication
-public class WbbackendApplication {
+public class Backend {
 
 	public static void main(String[] args) {
 		// Propriedades
@@ -24,18 +26,21 @@ public class WbbackendApplication {
 		propriedades.put("spring.jpa.show-sql", "true");
 		
 		// Inicialização de propriedades em código
-		SpringApplication app = new SpringApplication(WbbackendApplication.class);
+		SpringApplication app = new SpringApplication(Backend.class);
 		app.setDefaultProperties(propriedades);
         app.run(args);
         
         // Forma padrão para iniciar a aplicação
-		//SpringApplication.run(WbbackendApplication.class, args);
+		//SpringApplication.run(Backend.class, args);
 	}
 
 	@Component
 	public static class Runner implements ApplicationRunner {
 		@Autowired
-		public RepositorioCliente repositorio;
+		public RepositorioCliente repositorioCliente;
+
+		@Autowired
+		public RepositorioProduto repositorioProduto;
 
 		@Override
 		public void run(ApplicationArguments args) throws Exception {
@@ -54,7 +59,7 @@ public class WbbackendApplication {
 			telefone.setDdd("21");
 			telefone.setNumero("22152622");
 			cliente1.getTelefones().add(telefone);
-			repositorio.save(cliente1);
+			repositorioCliente.save(cliente1);
 
 			//cliente2
 			Cliente cliente2 = new Cliente();
@@ -70,7 +75,7 @@ public class WbbackendApplication {
 			telefone.setDdd("21");
 			telefone.setNumero("22152622");
 			cliente2.getTelefones().add(telefone);
-			repositorio.save(cliente2);
+			repositorioCliente.save(cliente2);
 
 			Cliente cliente3 = new Cliente();
 			cliente3.setNome("Isabel Cristina Leopoldina Augusta Gonzaga de Bourbon e Bragança");
@@ -85,7 +90,7 @@ public class WbbackendApplication {
 			telefone.setDdd("21");
 			telefone.setNumero("22152622");
 			cliente3.getTelefones().add(telefone);
-			repositorio.save(cliente3);
+			repositorioCliente.save(cliente3);
 
 			Cliente cliente4 = new Cliente();
 			cliente4.setNome("Leopoldina Teresa Gonzaga de Bragança e Bourbon-Duas Sicílias");
@@ -100,7 +105,40 @@ public class WbbackendApplication {
 			telefone.setDdd("21");
 			telefone.setNumero("22152622");
 			cliente4.getTelefones().add(telefone);
-			repositorio.save(cliente4);
+			repositorioCliente.save(cliente4);
+
+			//produto1
+			Produto produto1 = new Produto();
+			produto1.setNome("Shampoo");
+			produto1.setMarca("Dove");
+			produto1.setPreco("R$49,99");
+			produto1.setGeneroConsumidor("Masculino");
+			repositorioProduto.save(produto1);
+
+			//produto2
+			Produto produto2 = new Produto();
+			produto2.setNome("Gel Modelador");
+			produto2.setMarca("Alpha");
+			produto2.setPreco("R$59,99");
+			produto2.setGeneroConsumidor("Masculino");
+			repositorioProduto.save(produto2);
+
+			//produto3
+			Produto produto3 = new Produto();
+			produto3.setNome("Perfume");
+			produto3.setMarca("Boticário");
+			produto3.setPreco("R$259,99");
+			produto3.setGeneroConsumidor("Feminino");
+			repositorioProduto.save(produto3);
+
+			//produt4
+			Produto produto4 = new Produto();
+			produto4.setNome("Protetor Solar");
+			produto4.setMarca("Nivea Sun");
+			produto4.setPreco("R$39,99");
+			produto4.setGeneroConsumidor("Feminino");
+			repositorioProduto.save(produto4);
+
 
 		}
 	}

@@ -1,8 +1,8 @@
-package com.wb.wbbackend.comparadores;
+package com.wb.backend.comparadores;
 
 import java.util.Comparator;
 
-import com.wb.wbbackend.entidades.Telefone;
+import com.wb.backend.entidades.Telefone;
 
 public class ComparadorTelefone implements Comparator<Telefone> {
 

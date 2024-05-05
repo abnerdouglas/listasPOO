@@ -1,9 +1,9 @@
-package com.wb.wbbackend.verificadores;
+package com.wb.backend.verificadores;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.wb.wbbackend.entidades.Telefone;
+import com.wb.backend.entidades.Telefone;
 
 @Component
 public class VerificadorTelefoneNulo implements Verificador<Telefone> {

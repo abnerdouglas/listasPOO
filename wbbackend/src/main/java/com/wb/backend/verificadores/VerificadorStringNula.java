@@ -1,4 +1,4 @@
-package com.wb.wbbackend.verificadores;
+package com.wb.backend.verificadores;
 
 import org.springframework.stereotype.Component;
 

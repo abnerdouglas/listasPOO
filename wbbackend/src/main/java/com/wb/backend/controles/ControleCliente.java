@@ -1,4 +1,4 @@
-package com.wb.wbbackend.controles;
+package com.wb.backend.controles;
 
 import java.util.List;
 
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wb.wbbackend.atualizadores.AtualizadorCliente;
-import com.wb.wbbackend.entidades.Cliente;
-import com.wb.wbbackend.hateoas.HateoasCliente;
-import com.wb.wbbackend.repositorios.RepositorioCliente;
+import com.wb.backend.atualizadores.AtualizadorCliente;
+import com.wb.backend.entidades.Cliente;
+import com.wb.backend.hateoas.HateoasCliente;
+import com.wb.backend.repositorios.RepositorioCliente;
 
 @CrossOrigin
 @RestController

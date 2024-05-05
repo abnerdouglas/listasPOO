@@ -1,9 +1,9 @@
-package com.wb.wbbackend.repositorios;
+package com.wb.backend.repositorios;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.wb.wbbackend.entidades.Cliente;
+import com.wb.backend.entidades.Cliente;
 
 @Repository
 public interface RepositorioCliente extends JpaRepository<Cliente, Long> {

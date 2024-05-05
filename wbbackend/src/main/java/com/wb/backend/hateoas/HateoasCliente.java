@@ -1,4 +1,4 @@
-package com.wb.wbbackend.hateoas;
+package com.wb.backend.hateoas;
 
 import java.util.List;
 
@@ -6,8 +6,8 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;
 
-import com.wb.wbbackend.controles.ControleCliente;
-import com.wb.wbbackend.entidades.Cliente;
+import com.wb.backend.controles.ControleCliente;
+import com.wb.backend.entidades.Cliente;
 
 @Component
 public class HateoasCliente implements Hateoas<Cliente> {

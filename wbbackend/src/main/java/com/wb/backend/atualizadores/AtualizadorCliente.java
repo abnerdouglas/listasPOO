@@ -1,11 +1,12 @@
-package com.wb.wbbackend.atualizadores;
+package com.wb.backend.atualizadores;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.wb.wbbackend.entidades.Cliente;
-import com.wb.wbbackend.entidades.Telefone;
-import com.wb.wbbackend.verificadores.VerificadorStringNula;
-import com.wb.wbbackend.verificadores.VerificadorTelefoneNulo;
+
+import com.wb.backend.entidades.Cliente;
+import com.wb.backend.entidades.Telefone;
+import com.wb.backend.verificadores.VerificadorStringNula;
+import com.wb.backend.verificadores.VerificadorTelefoneNulo;
 
 @Component
 public class AtualizadorCliente implements Atualizador<Cliente> {
