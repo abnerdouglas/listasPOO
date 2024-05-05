@@ -12,12 +12,14 @@ import org.springframework.stereotype.Component;
 
 import com.wb.backend.entidades.Cliente;
 import com.wb.backend.entidades.Produto;
+import com.wb.backend.entidades.Servico;
 import com.wb.backend.entidades.Telefone;
 import com.wb.backend.repositorios.RepositorioCliente;
 import com.wb.backend.repositorios.RepositorioProduto;
+import com.wb.backend.repositorios.RepositorioServico;
 
 @SpringBootApplication
-public class Backend {
+public class Wbbackend {
 
 	public static void main(String[] args) {
 		// Propriedades
@@ -26,7 +28,7 @@ public class Backend {
 		propriedades.put("spring.jpa.show-sql", "true");
 		
 		// Inicialização de propriedades em código
-		SpringApplication app = new SpringApplication(Backend.class);
+		SpringApplication app = new SpringApplication(Wbbackend.class);
 		app.setDefaultProperties(propriedades);
         app.run(args);
         
@@ -42,6 +44,9 @@ public class Backend {
 		@Autowired
 		public RepositorioProduto repositorioProduto;
 
+		@Autowired
+		public RepositorioServico repositorioServico;
+
 		@Override
 		public void run(ApplicationArguments args) throws Exception {
 
@@ -54,7 +59,6 @@ public class Backend {
 			cliente1.setRg("309453852");
 			cliente1.setDataEmissaoRg("18/10/1994");
 			cliente1.setGenero("Masculino");
-
 			Telefone telefone = new Telefone();
 			telefone.setDdd("21");
 			telefone.setNumero("22152622");
@@ -70,13 +74,13 @@ public class Backend {
 			cliente2.setRg("909253852");
 			cliente2.setDataEmissaoRg("10/10/1990");
 			cliente2.setGenero("Feminino");
-			
 			telefone = new Telefone();
 			telefone.setDdd("21");
 			telefone.setNumero("22152622");
 			cliente2.getTelefones().add(telefone);
 			repositorioCliente.save(cliente2);
 
+			//cliente3
 			Cliente cliente3 = new Cliente();
 			cliente3.setNome("Isabel Cristina Leopoldina Augusta Gonzaga de Bourbon e Bragança");
 			cliente3.setNomeSocial("Pricesa Isabel");
@@ -85,13 +89,13 @@ public class Backend {
 			cliente3.setRg("309453851");
 			cliente3.setDataEmissaoRg("28/10/2000");
 			cliente3.setGenero("Feminino");
-
 			telefone = new Telefone();
 			telefone.setDdd("21");
 			telefone.setNumero("22152622");
 			cliente3.getTelefones().add(telefone);
 			repositorioCliente.save(cliente3);
 
+			//cliente4
 			Cliente cliente4 = new Cliente();
 			cliente4.setNome("Leopoldina Teresa Gonzaga de Bragança e Bourbon-Duas Sicílias");
 			cliente4.setNomeSocial("Pricesa Leopoldina");
@@ -100,7 +104,6 @@ public class Backend {
 			cliente4.setRg("509656852");
 			cliente4.setDataEmissaoRg("18/10/1934");
 			cliente4.setGenero("Feminino");
-
 			telefone = new Telefone();
 			telefone.setDdd("21");
 			telefone.setNumero("22152622");
@@ -139,6 +142,41 @@ public class Backend {
 			produto4.setGeneroConsumidor("Feminino");
 			repositorioProduto.save(produto4);
 
+			//servico1
+			Servico servico1 = new Servico();
+			servico1.setNome("Corte de Cabelo");
+			servico1.setDescricao("Corte Social");
+			servico1.setDuracao("45");
+			servico1.setPreco("R$60,00");
+			servico1.setGeneroConsumidor("Masculino");
+			repositorioServico.save(servico1);
+
+			//servico2
+			Servico servico2 = new Servico();
+			servico2.setNome("Manicure");
+			servico2.setDescricao("Serviço de beleza para os pés e as mãos");
+			servico2.setDuracao("120");
+			servico2.setPreco("R$150,00");
+			servico2.setGeneroConsumidor("Feminino");
+			repositorioServico.save(servico2);
+
+			//servico3
+			Servico servico3 = new Servico();
+			servico3.setNome("Massagem");
+			servico3.setDescricao("Serviço de relaxamento muscular de alta qualidade");
+			servico3.setDuracao("90");
+			servico3.setPreco("R$250,00");
+			servico3.setGeneroConsumidor("Feminino");
+			repositorioServico.save(servico3);
+
+			//servico4
+			Servico servico4 = new Servico();
+			servico4.setNome("Limpeza de pele");
+			servico4.setDescricao("Serviço de limpeza das impurezas do rosto");
+			servico4.setDuracao("60");
+			servico4.setPreco("R$180,00");
+			servico4.setGeneroConsumidor("Feminino");
+			repositorioServico.save(servico4);
 
 		}
 	}

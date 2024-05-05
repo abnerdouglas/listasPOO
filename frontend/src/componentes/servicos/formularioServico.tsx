@@ -5,8 +5,8 @@ class FormularioServico extends Component {
     private nome!: string;
     private descricao!: string;
     private duracao!: string;
+    private preco!: string;
     private generoConsumidor!: string;
-    
 
     constructor(props:any) {
         super(props);
@@ -14,6 +14,7 @@ class FormularioServico extends Component {
         this.capturarDescricao = this.capturarDescricao.bind(this);
         this.capturarDuracao = this.capturarDuracao.bind(this);
         this.capturarGeneroConsumidor = this.capturarGeneroConsumidor.bind(this);
+        this.capturarPreco = this.capturarPreco.bind(this);
         this.submeterFormulario = this.submeterFormulario.bind(this);
         this.cadastrarServico = this.cadastrarServico.bind(this);
     }
@@ -39,12 +40,17 @@ class FormularioServico extends Component {
         this.generoConsumidor = evento.target.value;
     }
 
+    public capturarPreco(evento: any) {
+        this.preco = evento.target.value;
+    }
+
     public submeterFormulario(evento: any) {
         evento.preventDefault();
         let servico = {
             nome: this.nome,
             descricao: this.descricao,
             duracao: this.duracao,
+            preco: this.preco,
             generoConsumidor: this.generoConsumidor
         };
         this.cadastrarServico(servico);
@@ -75,6 +81,11 @@ class FormularioServico extends Component {
                                     <div className="input-field col s6">
                                         <input onChange={this.capturarDuracao} id="duracao" type="text" className="validate" maxLength={30} />
                                         <label htmlFor="duracao">Duração(min)</label>
+                                    </div>
+
+                                    <div className="input-field col s6">
+                                        <input onChange={this.capturarPreco} id="preco" type="text" className="validate" maxLength={30} />
+                                        <label htmlFor="preco">Preço(R$)</label>
                                     </div>
 
                                     <div className="input-field col s6">
