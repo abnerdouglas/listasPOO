@@ -3,7 +3,7 @@ import Cadastrador from "./cadastrador";
 
 class CadastradorServico implements Cadastrador {
     cadastrar(objeto: Object): void {
-        fetch(URI.CADASTRAR_SERVICOS, {
+        fetch(URI.CADASTRAR_SERVICO, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

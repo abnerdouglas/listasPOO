@@ -5,10 +5,10 @@ interface Cliente {
     id: string;
 }
 
-export default class RemovedorCliente implements RemovedorRemoto {
+export default class RemovedorServico implements RemovedorRemoto {
     public remover(objeto: Cliente): void {
         let json = { id: objeto['id'] }
-        fetch(URI.DELETAR_CLIENTE, {
+        fetch(URI.DELETAR_SERVICO, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

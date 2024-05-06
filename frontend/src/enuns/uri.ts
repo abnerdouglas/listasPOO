@@ -10,7 +10,7 @@ export enum URI {
     ATUALIZAR_PRODUTO = 'http://localhost:32832/produto/atualizar',
 
     SERVICOS = 'http://localhost:32832/servicos',
-    DELETAR_SERVICOS = 'http://localhost:32832/servico/excluir',
-    CADASTRAR_SERVICOS = 'http://localhost:32832/servico/cadastrar',
-    ATUALIZAR_SERVICOS = 'http://localhost:32832/servico/atualizar'
+    DELETAR_SERVICO = 'http://localhost:32832/servico/excluir',
+    CADASTRAR_SERVICO = 'http://localhost:32832/servico/cadastrar',
+    ATUALIZAR_SERVICO = 'http://localhost:32832/servico/atualizar'
 }

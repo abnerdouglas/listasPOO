@@ -4,7 +4,7 @@ import 'materialize-css/dist/css/materialize.min.css'
 import AtualizadorCliente from "../../atualizadores/atualizadorCliente";
 import BuscadorClientes from "../../buscadores/buscadorCliente";
 import RemovedorCliente from "../../removedores/removedorCliente";
-import RemovedorClienteLocal from "../../removedores/removedorClienteLocal";
+import RemovedorClienteLocal from "../../removedores/local/removedorClienteLocal";
 
 interface Cliente {
     id: string;
@@ -104,6 +104,7 @@ class ListagemClientes extends Component<{}, State> {
         return (
             <div>
                 <h5><strong> Listagem de Clientes </strong></h5>
+                <hr />
                 <table className="striped">
                     <thead>
                         <tr>
@@ -218,7 +219,7 @@ class ListagemClientes extends Component<{}, State> {
                         <div className="input-field">
                             <input
                                 type="text"
-                                placeholder="Nome Social"
+                                placeholder="Data Emissão RG"
                                 value={clienteEditando?.dataEmissaoRg || ''}
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                     const novoClienteEditando = { ...clienteEditando!, dataEmissaoRg: e.target.value };
@@ -229,7 +230,7 @@ class ListagemClientes extends Component<{}, State> {
                         <div className="input-field">
                             <input
                                 type="text"
-                                placeholder="Nome Social"
+                                placeholder="Gênero"
                                 value={clienteEditando?.genero || ''}
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                     const novoClienteEditando = { ...clienteEditando!, genero: e.target.value };
@@ -240,7 +241,7 @@ class ListagemClientes extends Component<{}, State> {
                         <div className="input-field">
                             <input
                                 type="text"
-                                placeholder="Telefone"
+                                placeholder="Telefone DDD"
                                 value={clienteEditando?.telefones[0].ddd || ''}
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                     const novoClienteEditando = {
@@ -257,7 +258,7 @@ class ListagemClientes extends Component<{}, State> {
                         <div className="input-field">
                             <input
                                 type="text"
-                                placeholder="Telefone"
+                                placeholder="Telefone Número"
                                 value={clienteEditando?.telefones[0].numero || ''}
                                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
                                     const novoClienteEditando = {

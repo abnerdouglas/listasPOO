@@ -1,84 +1,195 @@
-import React, { Component } from 'react';
+import React, { ChangeEvent, Component } from "react";
+import M from 'materialize-css'; 
+import 'materialize-css/dist/css/materialize.min.css'
+import AtualizadorProduto from "../../atualizadores/atualizadorProduto";
+import BuscadorProdutos from "../../buscadores/buscadorProduto";
+import RemovedorProduto from "../../removedores/removedorProduto";
+import RemovedorProdutoLocal from "../../removedores/local/removedorProdutoLocal";
 
-type Produto = {
-  id: number;
-  nome: string;
-  marca: string;
-  preco: number;
-  genero: string;
-};
-
-type State = {
-  produtos: Produto[];
-};
-
-export default class ListagemProdutos extends Component<{}, State> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      produtos: [
-        {
-          id: 1,
-          nome: 'Perfume',
-          marca: 'Boticário',
-          preco: 120.00,
-          genero: 'masculino'
-        },
-        {
-          id: 2,
-          nome: 'Creme de Barbear',
-          marca: 'Gilette',
-          preco: 50.00,
-          genero: 'masculino'
-        }
-      ]
-    };
-  }
-
-  handleEditarCliente = (id: number) => {
-    // Lógica para editar o cliente com o ID fornecido
-    console.log('Editar cliente com ID:', id);
-  };
-
-  handleExcluirCliente = (id: number) => {
-    // Lógica para excluir o cliente com o ID fornecido
-    console.log('Excluir cliente com ID:', id);
-  };
-
-  render() {
-    return (
-        <div className="container">
-        <h5><strong>Listagem dos Produtos</strong></h5>
-        <hr />
-          <table className="bordered striped centered highlight responsive-table">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Marca</th>
-                <th scope="col">Preço(R$)</th>
-                <th scope="col">Gênero</th>
-                <th scope="col">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.produtos.map(produto => (
-                <tr key={produto.id}>
-                  <td>{produto.id}</td>
-                  <td>{produto.nome}</td>
-                  <td>{produto.marca}</td>
-                  <td>{produto.preco}</td>
-                  <td>{produto.genero}</td>
-                  <td>
-                    <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(produto.id)}>Editar</button>
-                    <button className="btn btn-small red" onClick={() => this.handleExcluirCliente(produto.id)}>Excluir</button>
-                    </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-    );
-  }
+interface Produto {
+    id: string;
+    nome: string;
+    marca: string;
+    preco: string;
+    generoConsumidor: string;  
 }
 
+interface State {
+    produtos: Produto[] | Object[] | any;
+    produtoEditando: Produto[] | null | any;
+}
+
+class ListagemProdutos extends Component<{}, State> {
+    modalRef: React.RefObject<HTMLDivElement>;
+
+    constructor(props: {}) {
+        super(props);
+        this.state = {
+            produtos: [],
+            produtoEditando: null
+        };
+        this.modalRef = React.createRef();
+        this.excluirLocal = this.excluirLocal.bind(this);
+        this.atualizarProduto = this.atualizarProduto.bind(this);
+    }
+
+    public atualizarProduto() {
+      const { produtoEditando } = this.state;
+      if (produtoEditando) {
+          let atualizadorProduto = new AtualizadorProduto();
+          atualizadorProduto.atualizar(produtoEditando);
+          
+          const modalInstance = M.Modal.getInstance(this.modalRef.current!);
+          modalInstance?.close();
+          
+          const produtosAtualizados = this.state.produtos.map(produto => {
+              if (produto.id === produtoEditando.id) {
+                  return produtoEditando;
+              } else {
+                  return produto;
+              }
+          });
+          this.setState({ 
+              produtos: produtosAtualizados,
+              produtoEditando: null 
+          });
+      }
+    }
+
+    public async buscarProdutos() {
+        let buscadorProdutos = new BuscadorProdutos();
+        const produtos = await buscadorProdutos.buscar();
+        this.setState({ produtos: produtos });
+    }
+
+    public excluirRemoto(idProduto: string) {
+        let removedor = new RemovedorProduto();
+        removedor.remover({ id: idProduto });
+    }
+
+    public excluirLocal(id: string, e: any) {
+        e.preventDefault();
+        let removedorLocal = new RemovedorProdutoLocal();
+        let produtos = removedorLocal.remover(this.state.produtos, id);
+        this.setState({
+            produtos : produtos
+        });
+        this.excluirRemoto(id);
+    }
+
+
+    public abrirModalEdicao(produto: Produto) {
+      this.setState({ produtoEditando: produto }, () => {
+          // Abrindo o modal de edição
+          const modalInstance = M.Modal.getInstance(this.modalRef.current!);
+          modalInstance?.open();
+      });
+    }
+
+    componentDidMount() {
+        this.buscarProdutos();
+        M.Modal.init(this.modalRef.current!);
+    }
+
+    render() {
+        const { produtos, produtoEditando } = this.state;
+
+        return (
+            <div>
+                <h5><strong> Listagem de Produtos </strong></h5>
+                <hr />
+                <table className="striped">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+
+                            <th>Marca</th>
+
+                            <th>Preço(R$)</th>
+
+                            <th>Gênero Consumidor</th>
+
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {produtos.map((produto: Produto) => (
+                            <tr key={produto.id}>
+
+                                <td>{produto.nome}</td>
+
+                                <td>{produto.marca}</td>
+
+                                <td>{produto.preco}</td>
+
+                                <td>{produto.generoConsumidor}</td>
+                               
+                                <td>
+                                    <button className="btn-small purple" onClick={() => this.abrirModalEdicao(produto)}>Editar</button>
+                                    <button className="btn-small red" onClick={(e) => this.excluirLocal(produto.id, e)}>Excluir</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+                 {/* Modal de Edição */}
+                 <div ref={this.modalRef} className="modal">
+                    <div className="modal-content">
+                        <h4>Editar Produto</h4>
+                        <div className="input-field">
+                            <input
+                                type="text"
+                                placeholder="Nome"
+                                value={produtoEditando?.nome || ''}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                    const novoClienteEditando = { ...produtoEditando!, nome: e.target.value };
+                                    this.setState({ produtoEditando: novoClienteEditando });
+                                }}
+                            />
+                        </div>
+                        <div className="input-field">
+                            <input
+                                type="text"
+                                placeholder="Marca"
+                                value={produtoEditando?.marca || ''}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                    const novoClienteEditando = { ...produtoEditando!, marca: e.target.value };
+                                    this.setState({ produtoEditando: novoClienteEditando });
+                                }}
+                            />
+                        </div>
+                        <div className="input-field">
+                            <input
+                                type="text"
+                                placeholder="Preço (R$)"
+                                value={produtoEditando?.preco || ''}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                    const novoClienteEditando = { ...produtoEditando!, preco: e.target.value };
+                                    this.setState({ produtoEditando: novoClienteEditando });
+                                }}
+                            />
+                        </div>
+                        <div className="input-field">
+                            <input
+                                type="text"
+                                placeholder="Gênero Consumidor"
+                                value={produtoEditando?.generoConsumidor || ''}
+                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                    const novoClienteEditando = { ...produtoEditando!, generoConsumidor: e.target.value };
+                                    this.setState({ produtoEditando: novoClienteEditando });
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <div className="modal-footer">
+                        <button className="btn purple lighten" onClick={() => this.atualizarProduto()}>Salvar</button>
+                        <button className="btn red lighten modal-close">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+export default ListagemProdutos;
