@@ -1,33 +1,44 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import BarraNavegacao from "../layout/barraNavegacao";
 import ListagemClientes from "../clientes/listagemCliente";
 import ListagemProdutos from "../produtos/listagemProduto";
 import ListagemServicos from "../servicos/listagemServico";
 import ListagemClientesPorGenero from "../clientes/listagemClientesPorGenero";
-import './styles.css';
-import ListagemTop10Clientes from "../clientes/listagemTop10Clientes";
+import ListagemTop10ClientesEmConsumo from "../clientes/listagemTop10ClientesEmConsumo";
 import ListagemProdutosMaisConsumidos from "../produtos/listagemProdutosMaisConsumidos";
 import ListagemServicosMaisConsumidos from "../servicos/listagemServicosMaisConsumidos";
 import ListagemProdutosMaisConsumidosPorGenero from "../produtos/listagemProdutosMaisConsumidosPorGenero";
-import ListagemTop10PioresClientes from "../clientes/listagemTop10PioresClientes";
+import Listagem10PioresClientes from "../clientes/listagem10PioresClientesEmConsumo";
 import ListagemTop5ClientesEmValor from "../clientes/listagemTop5ClientesEmValor";
 import FormularioCliente from "../clientes/formularioCliente";
 import FormularioProduto from "../produtos/formularioProduto";
 import FormularioServico from "../servicos/formularioServico";
-
+import './styles.css';
 
 type State = {
-    tela: string
+    tela: string;
 }
 
-export default class Roteador extends Component<{}, State> {
+class Roteador extends Component<{}, State> {
     constructor(props: {} | Readonly<{}>) {
         super(props)
         this.state = {
-            tela: 'Formulário Cliente'
+            tela: localStorage.getItem("currentScreen") || 'Formulário Cliente',
         }
         this.selecionarView = this.selecionarView.bind(this)
     }
+
+    componentDidMount() {
+        window.addEventListener("beforeunload", this.saveCurrentScreen);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("beforeunload", this.saveCurrentScreen);
+    }
+
+    saveCurrentScreen = () => {
+        localStorage.setItem("currentScreen", this.state.tela);
+    };
 
     selecionarView(novaTela: string, evento: React.MouseEvent) {
         evento.preventDefault();
@@ -39,6 +50,7 @@ export default class Roteador extends Component<{}, State> {
 
     render() {
         const { tela } = this.state;
+
         const barraNavegacao = (
             <BarraNavegacao
                 seletorView={this.selecionarView}
@@ -86,13 +98,13 @@ export default class Roteador extends Component<{}, State> {
                             <ListagemClientesPorGenero />
                         </div>
                         <div className="container-wrapper">
-                            <ListagemTop10Clientes/>
+                            <ListagemTop5ClientesEmValor />
                         </div>
                         <div className="container-wrapper">
-                            <ListagemTop10PioresClientes/>
+                            <ListagemTop10ClientesEmConsumo />
                         </div>
                         <div className="container-wrapper">
-                            <ListagemTop5ClientesEmValor/>
+                            <Listagem10PioresClientes />
                         </div>
                     </>
                 );
@@ -104,10 +116,10 @@ export default class Roteador extends Component<{}, State> {
                             <ListagemProdutos />
                         </div>
                         <div className="container-wrapper">
-                            <ListagemProdutosMaisConsumidos/>
+                            <ListagemProdutosMaisConsumidos />
                         </div>
                         <div className="container-wrapper">
-                            <ListagemProdutosMaisConsumidosPorGenero/>
+                            <ListagemProdutosMaisConsumidosPorGenero />
                         </div>
                     </>
                 );
@@ -119,10 +131,12 @@ export default class Roteador extends Component<{}, State> {
                             <ListagemServicos />
                         </div>
                         <div className="container-wrapper">
-                            <ListagemServicosMaisConsumidos/>
+                            <ListagemServicosMaisConsumidos />
                         </div>
                     </>
                 );
         }
     }
 }
+
+export default Roteador;

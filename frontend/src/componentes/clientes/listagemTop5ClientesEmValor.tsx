@@ -1,82 +1,102 @@
-import React, { Component } from 'react';
-import 'materialize-css/dist/css/materialize.min.css'
+import React, { Component } from "react";
+import 'materialize-css/dist/css/materialize.min.css';
+import BuscadorClientes from "../../buscadores/buscadorCliente";
+import RemovedorCliente from "../../removedores/removedorCliente";
+import RemovedorClienteLocal from "../../removedores/local/removedorClienteLocal";
 
-type Cliente = {
-  id: number;
-  nome: string;
-  nomeSocial: string;
-  cpf: string;
-  rg: string;
-  telefone: string;
-  genero: string;
-  valorConsumido: number;
-};
-
-type State = {
-  clientes: Cliente[];
-};
-
-export default class ListagemTop5ClientesEmValor extends Component<{}, State> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      clientes: [
-        
-      ]
+interface Cliente {
+    id: string;
+    nome: string;
+    nomeSocial: string;
+    cpf: string;
+    dataEmissaoCpf: string;
+    rg: string;
+    dataEmissaoRg: string;
+    genero: string;
+    telefones: {
+        ddd: string;
+        numero: string;
     };
-  }
-
-  handleEditarCliente = (id: number) => {
-    // Lógica para editar o cliente com o ID fornecido
-    console.log('Editar cliente com ID:', id);
-  };
-
-  handleExcluirCliente = (id: number) => {
-    // Lógica para excluir o cliente com o ID fornecido
-    console.log('Excluir cliente com ID:', id);
-  };
-
-  render() {
-    return (
-      <div className="container">
-        <h5><strong>Listagem dos 5 clientes que mais consumiram em valor</strong></h5>
-        <hr />
-          <table className="bordered striped centered highlight responsive-table">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Nome Social</th>
-                <th scope="col">CPF</th>
-                <th scope="col">RG</th>
-                <th scope="col">Telefone</th>
-                <th scope="col">Gênero</th>
-                <th scope="col">Valor Consumido</th>
-                <th scope="col">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.clientes.map(cliente => (
-                <tr key={cliente.id}>
-                  <td>{cliente.id}</td>
-                  <td>{cliente.nome}</td>
-                  <td>{cliente.nomeSocial || '-'}</td>
-                  <td>{cliente.cpf}</td>
-                  <td>{cliente.rg}</td>
-                  <td>{cliente.telefone}</td>
-                  <td>{cliente.genero}</td>
-                  <td>{cliente.valorConsumido}</td>
-                  <td>
-                    <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(cliente.id)}>Editar</button>
-                    <button className="btn btn-small red" onClick={() => this.handleExcluirCliente(cliente.id)}>Excluir</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-    );
-  }
+    valorConsumido: string; 
 }
 
+interface State {
+    clientes: Cliente[] | Object[] | any;
+}
 
+class ListagemTop5ClientesEmValor extends Component<{}, State> {
+    constructor(props: {}) {
+        super(props);
+        this.state = {
+            clientes: [],
+        };
+    }
+
+    public async buscarClientes() {
+        let buscadorClientes = new BuscadorClientes();
+        const clientes = await buscadorClientes.buscar();
+        // Ordenar os clientes pelo valor consumido em ordem decrescente
+        clientes.sort((a, b) => b.valorConsumido - a.valorConsumido);
+        // Pegar os 5 primeiros clientes
+        const top5Clientes = clientes.slice(0, 5);
+        this.setState({ clientes: top5Clientes });
+    }
+
+    public excluirRemoto(idCliente: string) {
+        let removedor = new RemovedorCliente();
+        removedor.remover({ id: idCliente });
+    }
+
+    public excluirLocal(id: string, e: any) {
+        e.preventDefault();
+        let removedorLocal = new RemovedorClienteLocal();
+        let clientes = removedorLocal.remover(this.state.clientes, id);
+        this.setState({
+            clientes: clientes
+        });
+        this.excluirRemoto(id);
+    }
+
+    componentDidMount() {
+        this.buscarClientes();
+    }
+
+    render() {
+        const { clientes } = this.state;
+
+        return (
+            <div>
+                <h5><strong>Listagem Dos 5 Clientes Que Mais Consumiram em Valor</strong></h5>
+                <hr />
+                {clientes.length === 0 ? (
+                    <p>Não existem clientes cadastrados.</p>
+                ) : (
+                <table className="striped">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>Valor Consumido</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {clientes.map((cliente: Cliente) => (
+                            <tr key={cliente.id}>
+                                <td>{cliente.nome}</td>
+                                <td>{cliente.cpf}</td>
+                                <td>{cliente.valorConsumido}</td>
+                                <td>
+                                    <button className="btn-small red" onClick={(e) => this.excluirLocal(cliente.id, e)}>Excluir</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                 )}
+            </div>
+        );
+    }
+}
+
+export default ListagemTop5ClientesEmValor;

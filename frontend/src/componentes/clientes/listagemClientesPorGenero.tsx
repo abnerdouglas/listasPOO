@@ -1,126 +1,131 @@
-import React, { Component } from 'react';
-import 'materialize-css/dist/css/materialize.min.css'
+import React, { Component } from "react";
+import 'materialize-css/dist/css/materialize.min.css';
+import BuscadorClientes from "../../buscadores/buscadorCliente";
+import RemovedorCliente from "../../removedores/removedorCliente";
+import RemovedorClienteLocal from "../../removedores/local/removedorClienteLocal";
 
-type Cliente = {
-  id: number;
-  nome: string;
-  nomeSocial?: string;
-  cpf: string;
-  rg: string;
-  telefone: string;
-  genero: string;
-};
+interface Cliente {
+    id: string;
+    nome: string;
+    nomeSocial: string;
+    cpf: string;
+    dataEmissaoCpf: string;
+    rg: string;
+    dataEmissaoRg: string;
+    genero: string;
+    telefones: {
+        ddd: string;
+        numero: string;
+    }[];
+}
 
-type State = {
-  clientes: Cliente[];
-};
+interface State {
+    clientes: Cliente[] | Object[] | any;
+}
 
-export default class ListagemClientesPorGenero extends Component<{}, State> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      clientes: [
-        
-      ]
-    };
-  }
+class ListagemClientesPorGenero extends Component<{}, State> {
 
-  handleEditarCliente = (id: number) => {
-    // Lógica para editar o cliente com o ID fornecido
-    console.log('Editar cliente com ID:', id);
-  };
-
-  handleExcluirCliente = (id: number) => {
-    // Lógica para excluir o cliente com o ID fornecido
-    console.log('Excluir cliente com ID:', id);
-  };
-
-  render() {
-    return (
-        <div className="container">
-          <h5><strong>Listagem de Clientes Por Gênero</strong></h5>
-          <hr/>
-          <div>
-            <h6>Gênero Masculino</h6>
-            <table className="bordered striped centered highlight responsive-table">
-              <thead>
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Nome Social</th>
-                  <th scope="col">CPF</th>
-                  <th scope="col">RG</th>
-                  <th scope="col">Telefone</th>
-                  <th scope="col">Gênero</th>
-                  <th scope="col">Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.clientes.map(cliente => {
-                  if (cliente.genero === 'masculino') {
-                    return (
-                      <tr key={cliente.id}>
-                        <td>{cliente.id}</td>
-                        <td>{cliente.nome}</td>
-                        <td>{cliente.nomeSocial || '-'}</td>
-                        <td>{cliente.cpf}</td>
-                        <td>{cliente.rg}</td>
-                        <td>{cliente.telefone}</td>
-                        <td>{cliente.genero}</td>
-                        <td>
-                          <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(cliente.id)}>Editar</button>
-                          <button className="btn btn-small red" onClick={() => this.handleExcluirCliente(cliente.id)}>Excluir</button>
-                        </td>
-                      </tr>
-                    );
-                  }
-                  return null;
-                })}
-              </tbody>
-            </table>
-          </div>
-                
-          <div style={{marginTop:50}}>
-            <h6>Gênero Feminino</h6>
-            <table className="bordered striped centered highlight responsive-table">
-              <thead>
-                <tr>
-                  <th scope="col">ID</th>
-                  <th scope="col">Nome</th>
-                  <th scope="col">Nome Social</th>
-                  <th scope="col">CPF</th>
-                  <th scope="col">RG</th>
-                  <th scope="col">Telefone</th>
-                  <th scope="col">Gênero</th>
-                  <th scope="col">Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.clientes.map(cliente => {
-                  if (cliente.genero === 'feminino') {
-                    return (
-                      <tr key={cliente.id}>
-                        <td>{cliente.id}</td>
-                        <td>{cliente.nome}</td>
-                        <td>{cliente.nomeSocial || '-'}</td>
-                        <td>{cliente.cpf}</td>
-                        <td>{cliente.rg}</td>
-                        <td>{cliente.telefone}</td>
-                        <td>{cliente.genero}</td>
-                        <td>
-                          <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(cliente.id)}>Editar</button>
-                          <button className="btn btn-small red" onClick={() => this.handleExcluirCliente(cliente.id)}>Excluir</button>
-                        </td>
-                      </tr>
-                    );
-                  }
-                  return null;
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      );
+    constructor(props: {}) {
+        super(props);
+        this.state = {
+            clientes: [],
+        };
+        this.excluirLocal = this.excluirLocal.bind(this);
     }
-}      
 
+    async componentDidMount() {
+        const buscadorClientes = new BuscadorClientes();
+        const clientes = await buscadorClientes.buscar();
+        this.setState({ clientes });
+    }
+
+    public excluirRemoto(idCliente: string) {
+        let removedor = new RemovedorCliente();
+        removedor.remover({ id: idCliente });
+    }
+
+    public excluirLocal(id: string, e: any) {
+        e.preventDefault();
+        let removedorLocal = new RemovedorClienteLocal();
+        let clientes = removedorLocal.remover(this.state.clientes, id);
+        this.setState({
+            clientes: clientes
+        });
+        this.excluirRemoto(id);
+    }
+
+    render() {
+        const { clientes } = this.state;
+
+        // Separando clientes por gênero
+        const clientesMasculinos = clientes.filter(cliente => cliente.genero === 'Masculino');
+        const clientesFemininos = clientes.filter(cliente => cliente.genero === 'Feminino');
+
+        return (
+            <div>
+                <h5><strong> Listagem de Clientes Por Gênero</strong></h5>
+                <hr />
+                
+                {/* Tabela para clientes masculinos */}
+                <h6><strong>Clientes Masculinos</strong></h6>
+                {clientesMasculinos.length === 0 ? (
+                    <p>Não existem clientes cadastrados do sexo masculino.</p>
+                ) : (
+                    <table className="striped">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>CPF</th>
+                                <th>Gênero</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {clientesMasculinos.map(cliente => (
+                                <tr key={cliente.id}>
+                                    <td>{cliente.nome}</td>
+                                    <td>{cliente.cpf}</td>
+                                    <td>{cliente.genero}</td>
+                                    <td>
+                                        <button className="btn-small red" onClick={() => this.excluirRemoto(cliente.id)}>Excluir</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
+
+                {/* Tabela para clientes femininos */}
+                <h6><strong>Clientes Femininos</strong></h6>
+                {clientesFemininos.length === 0 ? (
+                    <p>Não existem clientes cadastrados do sexo feminino.</p>
+                ) : (
+                    <table className="striped">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>CPF</th>
+                                <th>Gênero</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {clientesFemininos.map(cliente => (
+                                <tr key={cliente.id}>
+                                    <td>{cliente.nome}</td>
+                                    <td>{cliente.cpf}</td>
+                                    <td>{cliente.genero}</td>
+                                    <td>
+                                        <button className="btn-small red" onClick={(e) => this.excluirLocal(cliente.id, e)}>Excluir</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
+            </div>
+        );
+    }
+}
+
+export default ListagemClientesPorGenero;

@@ -44,6 +44,15 @@ public class Cliente extends RepresentationModel<Cliente> {
 
 	@Column
 	private String genero;
+
+	@Column
+	private String valorConsumido;
+
+	@Column
+	private int numeroProdutosConsumidos;
+
+	@Column
+	private int numeroServicosConsumidos;
 	
 	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Telefone> telefones = new ArrayList<>();

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, Component } from "react";
-import M from 'materialize-css'; 
+import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css'
 import AtualizadorCliente from "../../atualizadores/atualizadorCliente";
 import BuscadorClientes from "../../buscadores/buscadorCliente";
@@ -41,26 +41,26 @@ class ListagemClientes extends Component<{}, State> {
     }
 
     public atualizarCliente() {
-      const { clienteEditando } = this.state;
-      if (clienteEditando) {
-          let atualizadorCliente = new AtualizadorCliente();
-          atualizadorCliente.atualizar(clienteEditando);
-          
-          const modalInstance = M.Modal.getInstance(this.modalRef.current!);
-          modalInstance?.close();
-          
-          const clientesAtualizados = this.state.clientes.map(cliente => {
-              if (cliente.id === clienteEditando.id) {
-                  return clienteEditando;
-              } else {
-                  return cliente;
-              }
-          });
-          this.setState({ 
-              clientes: clientesAtualizados,
-              clienteEditando: null 
-          });
-      }
+        const { clienteEditando } = this.state;
+        if (clienteEditando) {
+            let atualizadorCliente = new AtualizadorCliente();
+            atualizadorCliente.atualizar(clienteEditando);
+
+            const modalInstance = M.Modal.getInstance(this.modalRef.current!);
+            modalInstance?.close();
+
+            const clientesAtualizados = this.state.clientes.map(cliente => {
+                if (cliente.id === clienteEditando.id) {
+                    return clienteEditando;
+                } else {
+                    return cliente;
+                }
+            });
+            this.setState({
+                clientes: clientesAtualizados,
+                clienteEditando: null
+            });
+        }
     }
 
     public async buscarClientes() {
@@ -86,11 +86,11 @@ class ListagemClientes extends Component<{}, State> {
 
 
     public abrirModalEdicao(cliente: Cliente) {
-      this.setState({ clienteEditando: cliente }, () => {
-          // Abrindo o modal de edição
-          const modalInstance = M.Modal.getInstance(this.modalRef.current!);
-          modalInstance?.open();
-      });
+        this.setState({ clienteEditando: cliente }, () => {
+            // Abrindo o modal de edição
+            const modalInstance = M.Modal.getInstance(this.modalRef.current!);
+            modalInstance?.open();
+        });
     }
 
     componentDidMount() {
@@ -105,60 +105,64 @@ class ListagemClientes extends Component<{}, State> {
             <div>
                 <h5><strong> Listagem de Clientes </strong></h5>
                 <hr />
-                <table className="striped">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
+                {clientes.length === 0 ? (
+                    <p>Não existem clientes cadastrados.</p>
+                ) : (
+                    <table className="striped">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
 
-                            <th>Nome Social</th>
+                                <th>Nome Social</th>
 
-                            <th>CPF</th>
+                                <th>CPF</th>
 
-                            <th>Data Emissão CPF</th>
+                                <th>Data Emissão CPF</th>
 
-                            <th>RG</th>
+                                <th>RG</th>
 
-                            <th>Data Emissão RG</th>
+                                <th>Data Emissão RG</th>
 
-                            <th>Gênero</th>
+                                <th>Gênero</th>
 
-                            <th>Telefone</th>
+                                <th>Telefone</th>
 
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {clientes.map((cliente: Cliente) => (
-                            <tr key={cliente.id}>
-
-                                <td>{cliente.nome}</td>
-
-                                <td>{cliente.nomeSocial}</td>
-
-                                <td>{cliente.cpf}</td>
-
-                                <td>{cliente.dataEmissaoCpf}</td>
-
-                                <td>{cliente.rg}</td>
-
-                                <td>{cliente.dataEmissaoRg}</td>
-
-                                <td>{cliente.genero}</td>
-
-                                {Array.isArray(cliente.telefones) && cliente.telefones.map((telefones, index) => (
-                                    <td key={index}> ({telefones.ddd}) {telefones.numero}</td>
-                                ))}
-                                <td>
-                                    <button className="btn-small purple" onClick={() => this.abrirModalEdicao(cliente)}>Editar</button>
-                                    <button className="btn-small red" onClick={(e) => this.excluirLocal(cliente.id, e)}>Excluir</button>
-                                </td>
+                                <th>Ações</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {clientes.map((cliente: Cliente) => (
+                                <tr key={cliente.id}>
 
-                 {/* Modal de Edição */}
-                 <div ref={this.modalRef} className="modal">
+                                    <td>{cliente.nome}</td>
+
+                                    <td>{cliente.nomeSocial}</td>
+
+                                    <td>{cliente.cpf}</td>
+
+                                    <td>{cliente.dataEmissaoCpf}</td>
+
+                                    <td>{cliente.rg}</td>
+
+                                    <td>{cliente.dataEmissaoRg}</td>
+
+                                    <td>{cliente.genero}</td>
+
+                                    {Array.isArray(cliente.telefones) && cliente.telefones.map((telefones, index) => (
+                                        <td key={index}> ({telefones.ddd}) {telefones.numero}</td>
+                                    ))}
+                                    <td>
+                                        <button className="btn-small purple" onClick={() => this.abrirModalEdicao(cliente)}>Editar</button>
+                                        <button className="btn-small red" onClick={(e) => this.excluirLocal(cliente.id, e)}>Excluir</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
+
+                {/* Modal de Edição */}
+                <div ref={this.modalRef} className="modal">
                     <div className="modal-content">
                         <h4>Editar Cliente</h4>
                         <div className="input-field">
@@ -269,8 +273,8 @@ class ListagemClientes extends Component<{}, State> {
                                         }]
                                     };
                                     this.setState({ clienteEditando: novoClienteEditando });
-                            }}
-                        />
+                                }}
+                            />
                         </div>
                     </div>
                     <div className="modal-footer">

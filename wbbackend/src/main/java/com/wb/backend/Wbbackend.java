@@ -59,6 +59,9 @@ public class Wbbackend {
 			cliente1.setRg("309453852");
 			cliente1.setDataEmissaoRg("18/10/1994");
 			cliente1.setGenero("Masculino");
+			cliente1.setValorConsumido("R$550,00");
+			cliente1.setNumeroProdutosConsumidos(10);
+			cliente1.setNumeroServicosConsumidos(15);
 			Telefone telefone = new Telefone();
 			telefone.setDdd("21");
 			telefone.setNumero("22152622");
@@ -74,6 +77,9 @@ public class Wbbackend {
 			cliente2.setRg("909253852");
 			cliente2.setDataEmissaoRg("10/10/1990");
 			cliente2.setGenero("Feminino");
+			cliente2.setValorConsumido("R$250,00");
+			cliente2.setNumeroProdutosConsumidos(13);
+			cliente2.setNumeroServicosConsumidos(16);
 			telefone = new Telefone();
 			telefone.setDdd("21");
 			telefone.setNumero("22152622");
@@ -89,6 +95,9 @@ public class Wbbackend {
 			cliente3.setRg("309453851");
 			cliente3.setDataEmissaoRg("28/10/2000");
 			cliente3.setGenero("Feminino");
+			cliente3.setValorConsumido("R$150,00");
+			cliente3.setNumeroProdutosConsumidos(30);
+			cliente3.setNumeroServicosConsumidos(25);
 			telefone = new Telefone();
 			telefone.setDdd("21");
 			telefone.setNumero("22152622");
@@ -104,6 +113,9 @@ public class Wbbackend {
 			cliente4.setRg("509656852");
 			cliente4.setDataEmissaoRg("18/10/1934");
 			cliente4.setGenero("Feminino");
+			cliente4.setValorConsumido("R$100,00");
+			cliente4.setNumeroProdutosConsumidos(10);
+			cliente4.setNumeroServicosConsumidos(5);
 			telefone = new Telefone();
 			telefone.setDdd("21");
 			telefone.setNumero("22152622");
