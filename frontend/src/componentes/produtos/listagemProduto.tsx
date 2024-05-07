@@ -98,6 +98,9 @@ class ListagemProdutos extends Component<{}, State> {
             <div>
                 <h5><strong> Listagem de Produtos </strong></h5>
                 <hr />
+                {produtos.length === 0 ? (
+                    <p>Não existem produtos cadastrados ou o backend não foi inicializado.</p>
+                ) : (
                 <table className="striped">
                     <thead>
                         <tr>
@@ -105,7 +108,7 @@ class ListagemProdutos extends Component<{}, State> {
 
                             <th>Marca</th>
 
-                            <th>Preço(R$)</th>
+                            <th>Preço</th>
 
                             <th>Gênero Consumidor</th>
 
@@ -120,7 +123,7 @@ class ListagemProdutos extends Component<{}, State> {
 
                                 <td>{produto.marca}</td>
 
-                                <td>{produto.preco}</td>
+                                <td>R${produto.preco},00</td>
 
                                 <td>{produto.generoConsumidor}</td>
                                
@@ -132,6 +135,7 @@ class ListagemProdutos extends Component<{}, State> {
                         ))}
                     </tbody>
                 </table>
+                )}
 
                  {/* Modal de Edição */}
                  <div ref={this.modalRef} className="modal">

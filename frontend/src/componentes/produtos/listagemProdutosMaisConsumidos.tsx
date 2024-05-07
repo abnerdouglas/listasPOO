@@ -81,9 +81,9 @@ class ListagemProdutosMaisConsumidos extends Component<{}, State> {
                             <tr key={produto.id}>
                                 <td>{produto.nome}</td>
                                 <td>{produto.marca}</td>
-                                <td>{produto.preco}</td>
+                                <td>R${produto.preco},00</td>
                                 <td>{produto.generoConsumidor}</td>
-                                <td>{produto.quantidadeConsumida}</td>
+                                <td>{produto.quantidadeConsumida} unidades</td>
                                 <td>
                                     <button className="btn-small red" onClick={(e) => this.excluirLocal(produto.id, e)}>Excluir</button>
                                 </td>

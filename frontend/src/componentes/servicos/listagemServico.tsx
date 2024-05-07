@@ -99,6 +99,9 @@ class ListagemServicos extends Component<{}, State> {
             <div>
                 <h5><strong> Listagem de Serviços </strong></h5>
                 <hr />
+                {servicos.length === 0 ? (
+                    <p>Não existem servicos cadastrados ou o backend não foi inicializado.</p>
+                ) : (
                 <table className="striped">
                     <thead>
                         <tr>
@@ -106,9 +109,9 @@ class ListagemServicos extends Component<{}, State> {
 
                             <th>Descrição</th>
 
-                            <th>Duração(min)</th>
+                            <th>Duração</th>
 
-                            <th>Preço(R$)</th>
+                            <th>Preço</th>
 
                             <th>Gênero Consumidor</th>
 
@@ -123,9 +126,9 @@ class ListagemServicos extends Component<{}, State> {
 
                                 <td>{servico.descricao}</td>
 
-                                <td>{servico.duracao}</td>
+                                <td>{servico.duracao} min</td>
 
-                                <td>{servico.preco}</td>
+                                <td>R${servico.preco},00</td>
 
                                 <td>{servico.generoConsumidor}</td>
                                
@@ -137,6 +140,7 @@ class ListagemServicos extends Component<{}, State> {
                         ))}
                     </tbody>
                 </table>
+                )}
 
                  {/* Modal de Edição */}
                  <div ref={this.modalRef} className="modal">

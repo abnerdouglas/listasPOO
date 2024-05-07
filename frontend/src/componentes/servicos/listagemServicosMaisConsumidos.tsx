@@ -71,7 +71,7 @@ class ListagemServicosMaisConsumidos extends Component<{}, State> {
                         <tr>
                             <th>Nome</th>
                             <th>Descrição</th>
-                            <th>Duração(min)</th>
+                            <th>Duração</th>
                             <th>Preço</th>
                             <th>Gênero Consumidor</th>
                             <th>Quantidade Consumida</th>
@@ -83,10 +83,10 @@ class ListagemServicosMaisConsumidos extends Component<{}, State> {
                             <tr key={servico.id}>
                                 <td>{servico.nome}</td>
                                 <td>{servico.descricao}</td>
-                                <td>{servico.duracao}</td>
-                                <td>{servico.preco}</td>
+                                <td>{servico.duracao} min</td>
+                                <td>R${servico.preco},00</td>
                                 <td>{servico.generoConsumidor}</td>
-                                <td>{servico.quantidadeConsumida}</td>
+                                <td>{servico.quantidadeConsumida} serviços</td>
                                 <td>
                                     <button className="btn-small red" onClick={(e) => this.excluirLocal(servico.id, e)}>Excluir</button>
                                 </td>

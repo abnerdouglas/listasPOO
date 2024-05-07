@@ -46,7 +46,7 @@ public class Cliente extends RepresentationModel<Cliente> {
 	private String genero;
 
 	@Column
-	private String valorConsumido;
+	private int valorConsumido;
 
 	@Column
 	private int numeroProdutosConsumidos;

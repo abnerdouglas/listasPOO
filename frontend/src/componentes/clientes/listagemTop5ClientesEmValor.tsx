@@ -17,7 +17,7 @@ interface Cliente {
         ddd: string;
         numero: string;
     };
-    valorConsumido: string; 
+    valorConsumido: number; 
 }
 
 interface State {
@@ -85,7 +85,7 @@ class ListagemTop5ClientesEmValor extends Component<{}, State> {
                             <tr key={cliente.id}>
                                 <td>{cliente.nome}</td>
                                 <td>{cliente.cpf}</td>
-                                <td>{cliente.valorConsumido}</td>
+                                <td>R${cliente.valorConsumido},00</td>
                                 <td>
                                     <button className="btn-small red" onClick={(e) => this.excluirLocal(cliente.id, e)}>Excluir</button>
                                 </td>

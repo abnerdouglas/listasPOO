@@ -26,7 +26,7 @@ public class Produto extends RepresentationModel<Produto> {
 	private String marca;
 
 	@Column
-	private String preco;
+	private int preco;
 
 	@Column
 	private String generoConsumidor;

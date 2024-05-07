@@ -106,7 +106,7 @@ class ListagemClientes extends Component<{}, State> {
                 <h5><strong> Listagem de Clientes </strong></h5>
                 <hr />
                 {clientes.length === 0 ? (
-                    <p>Não existem clientes cadastrados.</p>
+                    <p>Não existem clientes cadastrados ou o backend não foi inicializado.</p>
                 ) : (
                     <table className="striped">
                         <thead>
