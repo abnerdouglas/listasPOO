@@ -31,4 +31,7 @@ public class Produto extends RepresentationModel<Produto> {
 	@Column
 	private String generoConsumidor;
 
+	@Column
+	private int quantidadeConsumida;
+
 }

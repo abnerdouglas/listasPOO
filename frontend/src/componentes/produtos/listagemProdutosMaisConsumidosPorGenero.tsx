@@ -1,143 +1,157 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import 'materialize-css/dist/css/materialize.min.css';
+import BuscadorProdutos from "../../buscadores/buscadorProduto";
+import RemovedorProduto from "../../removedores/removedorProduto";
+import RemovedorProdutoLocal from "../../removedores/local/removedorProdutoLocal";
+import BuscadorClientes from "../../buscadores/buscadorCliente";
 
-type Produto = {
-    id: number;
+interface Produto {
+    id: string;
     nome: string;
     marca: string;
-    preco: number;
+    preco: string;
+    generoConsumidor: string;
+    quantidadeConsumida: number; 
+}
+
+interface Cliente {
+    id: string;
     genero: string;
-    quantidade: number
-};
+}
 
-type State = {
-    produtos: Produto[];
-};
+interface State {
+    produtos: Produto[] | Object[] | any;
+    clientes: Cliente[] | Object[] | any;
+}
 
-export default class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
+class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
     constructor(props: {}) {
         super(props);
         this.state = {
-            produtos: [
-                {
-                    id: 1,
-                    nome: 'Perfume',
-                    marca: 'Boticário',
-                    preco: 120.00,
-                    genero: 'masculino',
-                    quantidade: 12
-                },
-                {
-                    id: 2,
-                    nome: 'Creme de Barbear',
-                    marca: 'Gilette',
-                    preco: 50.00,
-                    genero: 'masculino',
-                    quantidade: 6
-                },
-                {
-                    id: 3,
-                    nome: 'Creme',
-                    marca: 'Natura',
-                    preco: 150.00,
-                    genero: 'feminino',
-                    quantidade: 2
-                }
-            ]
+            produtos: [],
+            clientes: []
         };
     }
 
-    handleEditarProduto = (id: number) => {
-        // Lógica para editar o Produto com o ID fornecido
-        console.log('Editar Produto com ID:', id);
-    };
+    public async buscarProdutos() {
+        let buscadorProdutos = new BuscadorProdutos();
+        const produtos = await buscadorProdutos.buscar();
+        
+        produtos.sort((a, b) => b.quantidadeConsumida - a.quantidadeConsumida)
 
-    handleExcluirProduto = (id: number) => {
-        // Lógica para excluir o Produto com o ID fornecido
-        console.log('Excluir cliente com ID:', id);
-    };
+        // Pegar os 10 produtos mais consumidos
+        const produtosMaisConsumidos = produtos.slice(0, 10);
+        this.setState({ produtos: produtosMaisConsumidos });
+    }
+
+    public async buscarClientes() {
+        let buscadorClientes = new BuscadorClientes();
+        const clientes = await buscadorClientes.buscar();
+        this.setState({ clientes: clientes });
+    }
+
+    public excluirRemoto(idProduto: string) {
+        let removedor = new RemovedorProduto();
+        removedor.remover({ id: idProduto });
+    }
+
+    public excluirLocal(id: string, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+        e.preventDefault();
+        let removedorLocal = new RemovedorProdutoLocal();
+        let produtos = removedorLocal.remover(this.state.produtos, id);
+        this.setState({
+            produtos: produtos
+        });
+        this.excluirRemoto(id);
+    }
+
+    async componentDidMount() {
+        await this.buscarProdutos();
+        await this.buscarClientes();
+    }
 
     render() {
+        const { produtos } = this.state;
+        
+        // Filtrar produtos por gênero
+        const produtosMasculinos = produtos.filter(produto => produto.generoConsumidor === 'Masculino' || produto.generoConsumidor === 'masculino');
+        const produtosFemininos = produtos.filter(produto => produto.generoConsumidor === 'Feminino' || produto.generoConsumidor === 'feminino');
+
         return (
-            <div className="container">
-                <h5><strong>Listagem dos Produtos MAIS Consumidos Por Gênero</strong></h5>
+            <div>
+                <h5><strong>Listagem dos Produtos Mais Consumidos Por Gênero</strong></h5>
                 <hr />
+
                 <div>
-                    <h6>Gênero Masculino</h6>
-                    <table className="bordered striped centered highlight responsive-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Marca</th>
-                                <th scope="col">Preço(R$)</th>
-                                <th scope="col">Gênero</th>
-                                <th scope="col">Quantidade de Consumo</th>
-                                <th scope="col">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.produtos.map(produto => {
-                                if (produto.genero === 'masculino') {
-                                    return (
-                                        <tr key={produto.id}>
-                                            <td>{produto.id}</td>
-                                            <td>{produto.nome}</td>
-                                            <td>{produto.marca}</td>
-                                            <td>{produto.preco}</td>
-                                            <td>{produto.genero}</td>
-                                            <td>{produto.quantidade}</td>
-                                            <td>
-                                                <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarProduto(produto.id)}>Editar</button>
-                                                <button className="btn btn-small red" onClick={() => this.handleExcluirProduto(produto.id)}>Excluir</button>
-                                            </td>
-                                        </tr>
-                                    );
-                                }
-                                return null;
-                            })}
-                        </tbody>
-                    </table>
+                    <h6><strong>Clientes Masculinos</strong></h6>
+                    {produtosMasculinos.length === 0 ? (
+                        <p>Não existem produtos consumidos por clientes do sexo masculino.</p>
+                    ) : (
+                        <table className="striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Marca</th>
+                                    <th>Preço</th>
+                                    <th>Gênero Consumidor</th>
+                                    <th>Quantidade Consumida</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {produtosMasculinos.map((produto: Produto) => (
+                                    <tr key={produto.id}>
+                                        <td>{produto.nome}</td>
+                                        <td>{produto.marca}</td>
+                                        <td>{produto.preco}</td>
+                                        <td>{produto.generoConsumidor}</td>
+                                        <td>{produto.quantidadeConsumida}</td>
+                                        <td>
+                                            <button className="btn-small red" onClick={(e) => this.excluirLocal(produto.id, e)}>Excluir</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
                 </div>
 
-                <div style={{marginTop:50}}>
-                    <h6>Gênero Feminino</h6>
-                    <table className="bordered striped centered highlight responsive-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Nome</th>
-                                <th scope="col">Marca</th>
-                                <th scope="col">Preço(R$)</th>
-                                <th scope="col">Gênero</th>
-                                <th scope="col">Quantidade de Consumo</th>
-                                <th scope="col">Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {this.state.produtos.map(produto => {
-                                if (produto.genero === 'feminino') {
-                                    return (
-                                        <tr key={produto.id}>
-                                            <td>{produto.id}</td>
-                                            <td>{produto.nome}</td>
-                                            <td>{produto.marca}</td>
-                                            <td>{produto.preco}</td>
-                                            <td>{produto.genero}</td>
-                                            <td>{produto.quantidade}</td>
-                                            <td>
-                                                <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarProduto(produto.id)}>Editar</button>
-                                                <button className="btn btn-small red" onClick={() => this.handleExcluirProduto(produto.id)}>Excluir</button>
-                                            </td>
-                                        </tr>
-                                    );
-                                }
-                                return null;
-                            })}
-                        </tbody>
-                    </table>
+                <div>
+                    <h6><strong>Clientes Femininos</strong></h6>
+                    {produtosFemininos.length === 0 ? (
+                        <p>Não existem produtos consumidos por clientes do sexo feminino.</p>
+                    ) : (
+                        <table className="striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Marca</th>
+                                    <th>Preço</th>
+                                    <th>Gênero Consumidor</th>
+                                    <th>Quantidade Consumida</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {produtosFemininos.map((produto: Produto) => (
+                                    <tr key={produto.id}>
+                                        <td>{produto.nome}</td>
+                                        <td>{produto.marca}</td>
+                                        <td>{produto.preco}</td>
+                                        <td>{produto.generoConsumidor}</td>
+                                        <td>{produto.quantidadeConsumida}</td>
+                                        <td>
+                                            <button className="btn-small red" onClick={(e) => this.excluirLocal(produto.id, e)}>Excluir</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
                 </div>
             </div>
         );
     }
 }
 
+export default ListagemProdutosMaisConsumidosPorGenero;

@@ -128,6 +128,7 @@ public class Wbbackend {
 			produto1.setMarca("Dove");
 			produto1.setPreco("R$49,99");
 			produto1.setGeneroConsumidor("Masculino");
+			produto1.setQuantidadeConsumida(10);
 			repositorioProduto.save(produto1);
 
 			//produto2
@@ -136,6 +137,7 @@ public class Wbbackend {
 			produto2.setMarca("Alpha");
 			produto2.setPreco("R$59,99");
 			produto2.setGeneroConsumidor("Masculino");
+			produto2.setQuantidadeConsumida(15);
 			repositorioProduto.save(produto2);
 
 			//produto3
@@ -144,6 +146,7 @@ public class Wbbackend {
 			produto3.setMarca("Boticário");
 			produto3.setPreco("R$259,99");
 			produto3.setGeneroConsumidor("Feminino");
+			produto3.setQuantidadeConsumida(5);
 			repositorioProduto.save(produto3);
 
 			//produt4
@@ -152,6 +155,7 @@ public class Wbbackend {
 			produto4.setMarca("Nivea Sun");
 			produto4.setPreco("R$39,99");
 			produto4.setGeneroConsumidor("Feminino");
+			produto4.setQuantidadeConsumida(20);
 			repositorioProduto.save(produto4);
 
 			//servico1
@@ -161,6 +165,7 @@ public class Wbbackend {
 			servico1.setDuracao("45");
 			servico1.setPreco("R$60,00");
 			servico1.setGeneroConsumidor("Masculino");
+			servico1.setQuantidadeConsumida(5);
 			repositorioServico.save(servico1);
 
 			//servico2
@@ -170,6 +175,7 @@ public class Wbbackend {
 			servico2.setDuracao("120");
 			servico2.setPreco("R$150,00");
 			servico2.setGeneroConsumidor("Feminino");
+			servico2.setQuantidadeConsumida(10);
 			repositorioServico.save(servico2);
 
 			//servico3
@@ -179,6 +185,7 @@ public class Wbbackend {
 			servico3.setDuracao("90");
 			servico3.setPreco("R$250,00");
 			servico3.setGeneroConsumidor("Feminino");
+			servico3.setQuantidadeConsumida(25);
 			repositorioServico.save(servico3);
 
 			//servico4
@@ -188,6 +195,7 @@ public class Wbbackend {
 			servico4.setDuracao("60");
 			servico4.setPreco("R$180,00");
 			servico4.setGeneroConsumidor("Feminino");
+			servico4.setQuantidadeConsumida(18);
 			repositorioServico.save(servico4);
 
 		}

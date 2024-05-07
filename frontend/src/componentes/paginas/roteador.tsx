@@ -14,6 +14,7 @@ import FormularioCliente from "../clientes/formularioCliente";
 import FormularioProduto from "../produtos/formularioProduto";
 import FormularioServico from "../servicos/formularioServico";
 import './styles.css';
+import FormularioAssociacao from "../formularioAssociacao/formularioAssociacao";
 
 type State = {
     tela: string;
@@ -55,7 +56,7 @@ class Roteador extends Component<{}, State> {
             <BarraNavegacao
                 seletorView={this.selecionarView}
                 tema="purple lighten"
-                botoes={['Formulário Cliente', 'Formulário Produto', 'Formulário Serviço', 'Lista de Clientes', 'Lista de Produtos', 'Lista de Serviços']}
+                botoes={['Formulário Cliente', 'Formulário Produto', 'Formulário Serviço', 'Formulário Associação', 'Lista de Clientes', 'Lista de Produtos', 'Lista de Serviços']}
             />
         );
 
@@ -135,6 +136,15 @@ class Roteador extends Component<{}, State> {
                         </div>
                     </>
                 );
+                case 'Formulário Associação':
+                    return (
+                        <>
+                            {barraNavegacao}
+                            <div className="container-wrapper">
+                                <FormularioAssociacao />
+                            </div>
+                        </>
+                    );
         }
     }
 }

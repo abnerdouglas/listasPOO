@@ -1,94 +1,103 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import 'materialize-css/dist/css/materialize.min.css';
+import BuscadorServicos from "../../buscadores/buscadorServico";
+import RemovedorServico from "../../removedores/removedorServico";
+import RemovedorServicoLocal from "../../removedores/local/removedorServicoLocal";
 
-type Servico = {
-  id: number;
-  nome: string;
-  descricao: string;
-  duracao: number;
-  preco: number;
-  genero: string;
-  quantidade: number
-};
-
-type State = {
-  servicos: Servico[];
-};
-
-export default class ListagemServicosMaisConsumidos extends Component<{}, State> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      servicos: [
-        {
-          id: 1,
-          nome: 'Corte de Cabelo',
-          descricao: 'Corte Social na tesoura',
-          duracao: 45,
-          preco: 120.00,
-          genero: 'masculino',
-          quantidade: 5
-        },
-        {
-          id: 2,
-          nome: 'Massagem',
-          descricao: 'Massagem nas costas',
-          duracao: 50,
-          preco: 180.00,
-          genero: 'masculino',
-          quantidade: 10
-        }
-      ]
-    };
-  }
-
-  handleEditarCliente = (id: number) => {
-    // Lógica para editar o cliente com o ID fornecido
-    console.log('Editar cliente com ID:', id);
-  };
-
-  handleExcluirCliente = (id: number) => {
-    // Lógica para excluir o cliente com o ID fornecido
-    console.log('Excluir cliente com ID:', id);
-  };
-
-  render() {
-    return (
-        <div className="container">
-        <h5><strong>Listagem dos Serviços MAIS Consumidos</strong></h5>
-        <hr />
-          <table className="bordered striped centered highlight responsive-table">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Descrição</th>
-                <th scope="col">Duração(min)</th>
-                <th scope="col">Preço(R$)</th>
-                <th scope="col">Gênero</th>
-                <th scope="col">Quantidade Consumo</th>
-                <th scope="col">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.servicos.map(servico => (
-                <tr key={servico.id}>
-                  <td>{servico.id}</td>
-                  <td>{servico.nome}</td>
-                  <td>{servico.descricao}</td>
-                  <td>{servico.duracao}</td>
-                  <td>{servico.preco}</td>
-                  <td>{servico.genero}</td>
-                  <td>{servico.quantidade}</td>
-                  <td>
-                  <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(servico.id)}>Editar</button>
-                    <button className="btn btn-small red" onClick={() => this.handleExcluirCliente(servico.id)}>Excluir</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-    );
-  }
+interface Servico {
+    id: string;
+    nome: string;
+    descricao: string;
+    duracao: string;
+    preco: string;
+    generoConsumidor: string;  
+    quantidadeConsumida: string;
 }
 
+interface State {
+    servicos: Servico[] | Object[] | any;
+}
+
+class ListagemServicosMaisConsumidos extends Component<{}, State> {
+    constructor(props: {}) {
+        super(props);
+        this.state = {
+            servicos: [],
+        };
+    }
+
+    public async buscarServicos() {
+        let buscadorServicos = new BuscadorServicos();
+        const servicos = await buscadorServicos.buscar();
+        
+        servicos.sort((a, b) => b.quantidadeConsumida - a.quantidadeConsumida)
+
+        // Pegar os 10 servicos mais consumidos
+        const servicosMaisConsumidos = servicos.slice(0, 10);
+        this.setState({ servicos: servicosMaisConsumidos });
+    }
+
+    public excluirRemoto(idServico: string) {
+        let removedor = new RemovedorServico();
+        removedor.remover({ id: idServico });
+    }
+
+    public excluirLocal(id: string, e: any) {
+        e.preventDefault();
+        let removedorLocal = new RemovedorServicoLocal();
+        let servicos = removedorLocal.remover(this.state.servicos, id);
+        this.setState({
+            servicos: servicos
+        });
+        this.excluirRemoto(id);
+    }
+
+    componentDidMount() {
+        this.buscarServicos();
+    }
+
+    render() {
+        const { servicos } = this.state;
+
+        return (
+            <div>
+                <h5><strong>Listagem dos Serviços Mais Consumidos</strong></h5>
+                <hr />
+                {servicos.length === 0 ? (
+                    <p>Não existem serviços cadastrados.</p>
+                ) : (
+                <table className="striped">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Duração(min)</th>
+                            <th>Preço</th>
+                            <th>Gênero Consumidor</th>
+                            <th>Quantidade Consumida</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {servicos.map((servico: Servico) => (
+                            <tr key={servico.id}>
+                                <td>{servico.nome}</td>
+                                <td>{servico.descricao}</td>
+                                <td>{servico.duracao}</td>
+                                <td>{servico.preco}</td>
+                                <td>{servico.generoConsumidor}</td>
+                                <td>{servico.quantidadeConsumida}</td>
+                                <td>
+                                    <button className="btn-small red" onClick={(e) => this.excluirLocal(servico.id, e)}>Excluir</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+                 )}
+            </div>
+        );
+    }
+}
+
+export default ListagemServicosMaisConsumidos;

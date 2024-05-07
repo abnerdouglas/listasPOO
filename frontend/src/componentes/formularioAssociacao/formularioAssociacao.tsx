@@ -1,7 +1,7 @@
 import { Component } from "react";
 import CadastradorCliente from "../../cadastradores/cadastradorCliente";
 
-class FormularioCliente extends Component {
+class FormularioAssociacao extends Component {
     private nome!: string;
     private nomeSocial!: string;
     private cpf!: string;
@@ -164,4 +164,4 @@ class FormularioCliente extends Component {
     }
 }
 
-export default FormularioCliente;
+export default FormularioAssociacao;

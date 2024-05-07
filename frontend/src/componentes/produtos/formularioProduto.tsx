@@ -6,6 +6,7 @@ class FormularioProduto extends Component {
     private marca!: string;
     private preco!: string;
     private generoConsumidor!: string;
+    private quantidadeConsumida!: string;
     
 
     constructor(props:any) {
@@ -14,6 +15,7 @@ class FormularioProduto extends Component {
         this.capturarMarca = this.capturarMarca.bind(this);
         this.capturarPreco = this.capturarPreco.bind(this);
         this.capturarGeneroConsumidor = this.capturarGeneroConsumidor.bind(this);
+        this.capturarQuantidadeConsumida = this.capturarQuantidadeConsumida.bind(this);
         this.submeterFormulario = this.submeterFormulario.bind(this);
         this.cadastrarProduto = this.cadastrarProduto.bind(this);
     }
@@ -39,13 +41,18 @@ class FormularioProduto extends Component {
         this.generoConsumidor = evento.target.value;
     }
 
+    public capturarQuantidadeConsumida(evento: any) {
+        this.quantidadeConsumida = evento.target.value;
+    }
+
     public submeterFormulario(evento: any) {
         evento.preventDefault();
         let produto = {
             nome: this.nome,
             marca: this.marca,
             preco: this.preco,
-            generoConsumidor: this.generoConsumidor
+            generoConsumidor: this.generoConsumidor,
+            quantidadeConsumida: this.quantidadeConsumida
         };
         this.cadastrarProduto(produto);
         evento.target.reset();
@@ -80,6 +87,11 @@ class FormularioProduto extends Component {
                                     <div className="input-field col s6">
                                         <input onChange={this.capturarGeneroConsumidor} id="generoConsumidor" type="text" className="validate" maxLength={30} />
                                         <label htmlFor="generoConsumidor">Gênero Consumidor</label>
+                                    </div>
+
+                                    <div className="input-field col s6">
+                                        <input onChange={this.capturarQuantidadeConsumida} id="quantidadeConsumida" type="text" className="validate" maxLength={30} />
+                                        <label htmlFor="quantidadeConsumida">Quantidade Consumida (unidades)</label>
                                     </div>
 
                                 </div>
