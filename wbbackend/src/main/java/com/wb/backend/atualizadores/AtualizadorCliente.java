@@ -40,7 +40,7 @@ public class AtualizadorCliente implements Atualizador<Cliente> {
 			alvo.setGenero(atualizacao.getGenero());
 		}
 
-		// valorConsumido, numeroProdutosConsumidos e numeroServicosConsumidos não estão mapeados aqui
+		// existem entidades que não estão mapeados aqui
 		
 		if (atualizacao.getTelefones().size() > 0) {
 			alvo.getTelefones().clear();

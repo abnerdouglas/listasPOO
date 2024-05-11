@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 
 import org.springframework.hateoas.RepresentationModel;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -45,15 +47,14 @@ public class Cliente extends RepresentationModel<Cliente> {
 	@Column
 	private String genero;
 
-	@Column
-	private int valorConsumido;
-
-	@Column
-	private int numeroProdutosConsumidos;
-
-	@Column
-	private int numeroServicosConsumidos;
-	
 	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Telefone> telefones = new ArrayList<>();
+
+	@OneToMany(orphanRemoval = true, mappedBy = "cliente", cascade = CascadeType.ALL)
+	@JsonManagedReference
+    private List<ServicosConsumidos> servicosConsumidos = new ArrayList<>();
+
+	@OneToMany(orphanRemoval = true, mappedBy = "cliente", cascade = CascadeType.ALL)
+	@JsonManagedReference
+    private List<ProdutosConsumidos> produtosConsumidos = new ArrayList<>();
 }
