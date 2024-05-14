@@ -48,7 +48,7 @@ interface State {
 }
 
 class FormularioCliente extends Component<{}, State> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.state = {
             nome: "",
@@ -252,8 +252,8 @@ class FormularioCliente extends Component<{}, State> {
                                     </div>
 
                                     <div className="input-field col s6">
-                                        <select value={""} onChange={this.capturarProdutoConsumido}>
-                                            <option value="" disabled>Escolha um produto</option>
+                                        <select id="produtoSelect" multiple={true} defaultValue={[]} onChange={(e) => this.setState({ produtosConsumidos: Array.from(e.target.selectedOptions).map(option => ({ id: parseInt(option.value), quantidade: 1 })) })}>
+                                            <option value="" disabled>Escolha um ou mais produtos</option>
                                             {produtosDisponiveis.map((produto: Produto) => (
                                                 <option key={produto.id} value={produto.id}>{produto.nome}</option>
                                             ))}
@@ -261,13 +261,14 @@ class FormularioCliente extends Component<{}, State> {
                                     </div>
 
                                     <div className="input-field col s6">
-                                        <select value={""} onChange={this.capturarServicoConsumido}>
-                                            <option value="" disabled>Escolha um serviço</option>
+                                        <select id="servicoSelect" multiple={true} defaultValue={[]} onChange={(e) => this.setState({ servicosConsumidos: Array.from(e.target.selectedOptions).map(option => ({ id: parseInt(option.value), quantidade: 1 })) })}>
+                                            <option value="" disabled>Escolha um ou mais serviços</option>
                                             {servicosDisponiveis.map((servico: Servico) => (
                                                 <option key={servico.id} value={servico.id}>{servico.nome}</option>
                                             ))}
                                         </select>
                                     </div>
+
 
                                 </div>
                             </div>
