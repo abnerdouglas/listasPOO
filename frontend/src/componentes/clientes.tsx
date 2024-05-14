@@ -22,7 +22,7 @@ interface Cliente {
     telefones: {
         ddd: string;
         numero: string;
-    };
+    }[];
 }
 
 interface State {
@@ -102,7 +102,9 @@ class Clientes extends Component<{}, State> {
             return (
                 <div>
                     <ul className="collection with-header">
+
                         <li className="collection-header"><h4>Clientes</h4></li>
+
                         {clientes.map(cliente => (
                             <li className="collection-item avatar" key={cliente.id}>
                                 <i className="material-icons circle purple lighten">person</i>
@@ -142,7 +144,9 @@ class Clientes extends Component<{}, State> {
                                 {modoEdicao && clienteEditando && cliente.id === clienteEditando.id && (
 
                                     <div className="edit-client-background">
+
                                         <h5><strong> Editar Cliente </strong></h5>
+
                                         <div className="input-field">
                                             <input
                                                 type="text"
@@ -153,6 +157,7 @@ class Clientes extends Component<{}, State> {
                                                 })}
                                             />
                                         </div>
+
                                         <div className="input-field">
                                             <input
                                                 type="text"
@@ -163,6 +168,7 @@ class Clientes extends Component<{}, State> {
                                                 })}
                                             />
                                         </div>
+
                                         <div className="input-field">
                                             <input
                                                 type="text"
@@ -173,6 +179,7 @@ class Clientes extends Component<{}, State> {
                                                 })}
                                             />
                                         </div>
+
                                         <div className="input-field">
                                             <input
                                                 type="text"
@@ -183,6 +190,7 @@ class Clientes extends Component<{}, State> {
                                                 })}
                                             />
                                         </div>
+
                                         <div className="input-field">
                                             <input
                                                 type="text"
@@ -193,6 +201,7 @@ class Clientes extends Component<{}, State> {
                                                 })}
                                             />
                                         </div>
+
                                         <div className="input-field">
                                             <input
                                                 type="text"
@@ -203,6 +212,7 @@ class Clientes extends Component<{}, State> {
                                                 })}
                                             />
                                         </div>
+
                                         <div className="input-field">
                                             <input
                                                 type="text"
@@ -213,6 +223,7 @@ class Clientes extends Component<{}, State> {
                                                 })}
                                             />
                                         </div>
+
                                         <div className="input-field">
                                             <input
                                                 type="text"
@@ -223,6 +234,7 @@ class Clientes extends Component<{}, State> {
                                                 })}
                                             />
                                         </div>
+
                                         <div className="input-field">
                                             <input
                                                 type="text"
@@ -233,6 +245,47 @@ class Clientes extends Component<{}, State> {
                                                 })}
                                             />
                                         </div>
+
+                                        <div className="input-field">
+                                            <input
+                                                type="text"
+                                                placeholder="Edite o DDD do telefone"
+                                                value={clienteEditando.telefones[0].ddd}
+                                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                                    const novosTelefones = clienteEditando.telefones.map((telefone, index) => {
+                                                        if (index === 0) {
+                                                            return { ...telefone, ddd: e.target.value };
+                                                        }
+                                                        return telefone;
+                                                    });
+
+                                                    this.setState({
+                                                        clienteEditando: { ...clienteEditando, telefones: novosTelefones }
+                                                    });
+                                                }}
+                                            />
+                                        </div>
+
+                                        <div className="input-field">
+                                            <input
+                                                type="text"
+                                                placeholder="Edite o número do Telefone"
+                                                value={clienteEditando.telefones[0].numero}
+                                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                                                    const novosTelefones = clienteEditando.telefones.map((telefone, index) => {
+                                                        if (index === 0) {
+                                                            return { ...telefone, numero: e.target.value };
+                                                        }
+                                                        return telefone;
+                                                    });
+
+                                                    this.setState({
+                                                        clienteEditando: { ...clienteEditando, telefones: novosTelefones }
+                                                    });
+                                                }}
+                                            />
+                                        </div>
+
                                         <button className="btn purple lighten" onClick={() => this.atualizarCliente(clienteEditando)}>Salvar</button>
                                         <button className="btn red lighten" onClick={() => this.setState({ modoEdicao: false, clienteEditando: null })}> Cancelar </button>
                                     </div>
