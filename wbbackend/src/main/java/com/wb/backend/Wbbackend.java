@@ -35,7 +35,7 @@ public class Wbbackend {
 		app.run(args);
 
 		// Forma padrão para iniciar a aplicação
-		// SpringApplication.run(Backend.class, args);
+		// SpringApplication.run(Wbbackend.class, args);
 	}
 
 	@Component
@@ -188,18 +188,32 @@ public class Wbbackend {
 			servico4.setQuantidadeConsumida(18);
 			repositorioServico.save(servico4);
 
-			//produtos e serviços associados ao cliente
-			ServicosConsumidos servicosConsumidos = new ServicosConsumidos();
-			servicosConsumidos.setCliente(cliente1); 
-			servicosConsumidos.setServico(servico1);
-			servicosConsumidos.setQuantidade(1); 
-			cliente1.getServicosConsumidos().add(servicosConsumidos);
+			//serviços associados ao cliente1
+			ServicosConsumidos servicoConsumido1 = new ServicosConsumidos();
+			servicoConsumido1.setCliente(cliente1); 
+			servicoConsumido1.setNome(servico1.getNome());
+			servicoConsumido1.setQuantidade(1); 
+			cliente1.getServicosConsumidos().add(servicoConsumido1);
 
-			ProdutosConsumidos produtosConsumidos = new ProdutosConsumidos();
-			produtosConsumidos.setCliente(cliente1);
-			produtosConsumidos.setProduto(produto1);
-			produtosConsumidos.setQuantidade(1);
-			cliente1.getProdutosConsumidos().add(produtosConsumidos);
+			ServicosConsumidos servicoConsumido2 = new ServicosConsumidos();
+			servicoConsumido2.setCliente(cliente1); 
+			servicoConsumido2.setNome(servico2.getNome());
+			servicoConsumido2.setQuantidade(2); 
+			cliente1.getServicosConsumidos().add(servicoConsumido2);
+
+			//produtos associados ao cliente1
+			ProdutosConsumidos produtoConsumido1 = new ProdutosConsumidos();
+			produtoConsumido1.setCliente(cliente1);
+			produtoConsumido1.setNome(produto1.getNome());
+			produtoConsumido1.setQuantidade(1);
+			cliente1.getProdutosConsumidos().add(produtoConsumido1);
+			
+			ProdutosConsumidos produtoConsumido2 = new ProdutosConsumidos();
+			produtoConsumido2.setCliente(cliente1);
+			produtoConsumido2.setNome(produto2.getNome());
+			produtoConsumido2.setQuantidade(1);
+			cliente1.getProdutosConsumidos().add(produtoConsumido2);
+
 			repositorioCliente.save(cliente1);
 		}
 	}

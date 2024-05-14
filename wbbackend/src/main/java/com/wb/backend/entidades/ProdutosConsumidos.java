@@ -18,18 +18,17 @@ public class ProdutosConsumidos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    @JsonBackReference
-    private Cliente cliente;
+    @Column
+    private String nome;
 
-    @ManyToOne
-    @JoinColumn(name = "produto_id")
-    private Produto produto;
+    @Column
+    private double preco;
 
     @Column
     private int quantidade;
 
-    @Column
-    private int valorUnitario;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    @JsonBackReference
+    private Cliente cliente;
 }
