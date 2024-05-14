@@ -3,6 +3,7 @@ import CadastradorCliente from "../../cadastradores/cadastradorCliente";
 import BuscadorProdutos from "../../buscadores/buscadorProduto";
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
+import BuscadorServicos from "../../buscadores/buscadorServico";
 
 interface Telefones {
     ddd: string;
@@ -13,11 +14,21 @@ interface Produto {
     id: number;
     nome: string;
     preco: number;
-    generoConsumidor: string;
+}
+
+interface Servico {
+    id: number;
+    nome: string;
+    preco: number;
 }
 
 interface ProdutoConsumido {
-    produto: Produto;
+    id: number;
+    quantidade: number;
+}
+
+interface ServicoConsumido {
+    id: number;
     quantidade: number;
 }
 
@@ -32,8 +43,9 @@ interface State {
     telefones: Telefones;
     produtosConsumidos: ProdutoConsumido[];
     produtosDisponiveis: Produto[];
+    servicosConsumidos: ServicoConsumido[];
+    servicosDisponiveis: Servico[];
 }
-
 
 class FormularioCliente extends Component<{}, State> {
     constructor(props) {
@@ -51,51 +63,75 @@ class FormularioCliente extends Component<{}, State> {
                 numero: ""
             },
             produtosConsumidos: [],
-            produtosDisponiveis: []
+            produtosDisponiveis: [],
+            servicosConsumidos: [],
+            servicosDisponiveis: []
         };
     }
 
-    capturarNome = (evento: any) => {
+    capturarNome = (evento: ChangeEvent<HTMLInputElement>) => {
         this.setState({ nome: evento.target.value });
     }
 
-    capturarNomeSocial = (evento: any) => {
+    capturarNomeSocial = (evento: ChangeEvent<HTMLInputElement>) => {
         this.setState({ nomeSocial: evento.target.value });
     }
 
-    capturarCpf = (evento: any) => {
+    capturarCpf = (evento: ChangeEvent<HTMLInputElement>) => {
         this.setState({ cpf: evento.target.value });
     }
 
-    capturarDataEmissaoCpf = (evento: any) => {
+    capturarDataEmissaoCpf = (evento: ChangeEvent<HTMLInputElement>) => {
         this.setState({ dataEmissaoCpf: evento.target.value });
     }
 
-    capturarRg = (evento: any) => {
+    capturarRg = (evento: ChangeEvent<HTMLInputElement>) => {
         this.setState({ rg: evento.target.value });
     }
 
-    capturarDataEmissaoRg = (evento: any) => {
+    capturarDataEmissaoRg = (evento: ChangeEvent<HTMLInputElement>) => {
         this.setState({ dataEmissaoRg: evento.target.value });
     }
 
-    capturarGenero = (evento: any) => {
+    capturarGenero = (evento: ChangeEvent<HTMLInputElement>) => {
         this.setState({ genero: evento.target.value });
     }
 
-    capturarTelefonesDDD = (evento: any) => {
+    capturarTelefonesDDD = (evento: ChangeEvent<HTMLInputElement>) => {
         this.setState({ telefones: { ...this.state.telefones, ddd: evento.target.value } });
     }
 
-    capturarTelefonesNumero = (evento: any) => {
+    capturarTelefonesNumero = (evento: ChangeEvent<HTMLInputElement>) => {
         this.setState({ telefones: { ...this.state.telefones, numero: evento.target.value } });
     }
 
     async componentDidMount() {
+        await this.buscarServicos();
         await this.buscarProdutos();
         const selects = document.querySelectorAll('select');
         M.FormSelect.init(selects, {});
     }
+
+    async buscarServicos() {
+        let buscadorServicos = new BuscadorServicos();
+        const servicos = await buscadorServicos.buscar();
+        this.setState({ servicosDisponiveis: servicos });
+    }
+
+    capturarServicoConsumido = (evento: ChangeEvent<HTMLSelectElement>) => {
+        const servicoId = parseInt(evento.target.value);
+        const servicoSelecionado = this.state.servicosDisponiveis.find(servico => servico.id === servicoId);
+        if (servicoSelecionado) {
+            const servicoAssociado: ServicoConsumido = {
+                id: servicoId,
+                quantidade: 1
+            };
+            this.setState(prevState => ({
+                servicosConsumidos: [...prevState.servicosConsumidos, servicoAssociado]
+            }));
+        }
+    }
+
     async buscarProdutos() {
         let buscadorProdutos = new BuscadorProdutos();
         const produtos = await buscadorProdutos.buscar();
@@ -106,16 +142,26 @@ class FormularioCliente extends Component<{}, State> {
         const produtoId = parseInt(evento.target.value);
         const produtoSelecionado = this.state.produtosDisponiveis.find(produto => produto.id === produtoId);
         if (produtoSelecionado) {
-            const novoProduto: ProdutoConsumido = {
-                produto: produtoSelecionado,
+            const produtoAssociado: ProdutoConsumido = {
+                id: produtoId,
                 quantidade: 1
             };
-            this.setState({ produtosConsumidos: [...this.state.produtosConsumidos, novoProduto] });
+            this.setState(prevState => ({
+                produtosConsumidos: [...prevState.produtosConsumidos, produtoAssociado]
+            }));
         }
     }
 
     submeterFormulario = (evento: FormEvent<HTMLFormElement>) => {
         evento.preventDefault();
+        const servicosDetalhados = this.state.servicosConsumidos.map(servico => ({
+            ...this.buscarDetalhesServico(servico.id),
+            quantidade: servico.quantidade
+        }));
+        const produtosDetalhados = this.state.produtosConsumidos.map(produto => ({
+            ...this.buscarDetalhesProduto(produto.id),
+            quantidade: produto.quantidade
+        }));
         const cliente = {
             nome: this.state.nome,
             nomeSocial: this.state.nomeSocial,
@@ -125,11 +171,12 @@ class FormularioCliente extends Component<{}, State> {
             dataEmissaoRg: this.state.dataEmissaoRg,
             genero: this.state.genero,
             telefones: [this.state.telefones],
-            produtosConsumidos: this.state.produtosConsumidos
+            produtosConsumidos: produtosDetalhados,
+            servicosConsumidos: servicosDetalhados
         };
         this.cadastrarCliente(cliente);
         evento.currentTarget.reset();
-        this.setState({ produtosConsumidos: [], produtosDisponiveis: [] }); // Limpa os produtos consumidos e disponíveis
+        this.setState({ produtosConsumidos: [], produtosDisponiveis: [], servicosConsumidos: [], servicosDisponiveis: [] });
     }
 
     cadastrarCliente = (cliente: Object) => {
@@ -137,8 +184,18 @@ class FormularioCliente extends Component<{}, State> {
         cadastrador.cadastrar(cliente);
     }
 
+    buscarDetalhesServico = (id: number) => {
+        const servico = this.state.servicosDisponiveis.find(servico => servico.id === id);
+        return servico ? { nome: servico.nome, preco: servico.preco } : null;
+    };
+
+    buscarDetalhesProduto = (id: number) => {
+        const produto = this.state.produtosDisponiveis.find(produto => produto.id === id);
+        return produto ? { nome: produto.nome, preco: produto.preco } : null;
+    };
+
     render() {
-        const { produtosDisponiveis } = this.state;
+        const { servicosDisponiveis, produtosDisponiveis } = this.state;
 
         return (
             <div className="col s12 m7">
@@ -147,7 +204,6 @@ class FormularioCliente extends Component<{}, State> {
                         <form className="col s12" onSubmit={(e) => this.submeterFormulario(e)}>
                             <div className="card-content">
                                 <div className="row">
-
                                     <h5><strong>Formulário Cliente</strong></h5>
 
                                     <div className="input-field col s6">
@@ -195,13 +251,20 @@ class FormularioCliente extends Component<{}, State> {
                                         <label htmlFor="numeroTelefone">Número Telefone</label>
                                     </div>
 
-                                    {/* Opçõs de produto para o cliente consumir */}
-
                                     <div className="input-field col s6">
                                         <select value={""} onChange={this.capturarProdutoConsumido}>
                                             <option value="" disabled>Escolha um produto</option>
                                             {produtosDisponiveis.map((produto: Produto) => (
                                                 <option key={produto.id} value={produto.id}>{produto.nome}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <div className="input-field col s6">
+                                        <select value={""} onChange={this.capturarServicoConsumido}>
+                                            <option value="" disabled>Escolha um serviço</option>
+                                            {servicosDisponiveis.map((servico: Servico) => (
+                                                <option key={servico.id} value={servico.id}>{servico.nome}</option>
                                             ))}
                                         </select>
                                     </div>
