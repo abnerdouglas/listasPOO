@@ -22,6 +22,9 @@ public class AtualizadorServico implements Atualizador<Servico> {
         if (!verificadorString.verificar(atualizacao.getDuracao())) {
 			alvo.setDuracao(atualizacao.getDuracao());
 		}
+		if (!verificadorString.verificar(atualizacao.getPreco())) {
+			alvo.setPreco(atualizacao.getPreco());
+		}
 		if (!verificadorString.verificar(atualizacao.getGeneroConsumidor())) {
 			alvo.setGeneroConsumidor(atualizacao.getGeneroConsumidor());
 		}

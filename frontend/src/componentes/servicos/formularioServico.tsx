@@ -6,17 +6,13 @@ class FormularioServico extends Component {
     private descricao!: string;
     private duracao!: string;
     private preco!: string;
-    private generoConsumidor!: string;
-    private quantidadeConsumida!: string;
 
     constructor(props:any) {
         super(props);
         this.capturarNome = this.capturarNome.bind(this);
         this.capturarDescricao = this.capturarDescricao.bind(this);
         this.capturarDuracao = this.capturarDuracao.bind(this);
-        this.capturarGeneroConsumidor = this.capturarGeneroConsumidor.bind(this);
         this.capturarPreco = this.capturarPreco.bind(this);
-        this.capturarQuantidadeConsumida = this.capturarQuantidadeConsumida.bind(this);
         this.submeterFormulario = this.submeterFormulario.bind(this);
         this.cadastrarServico = this.cadastrarServico.bind(this);
     }
@@ -38,16 +34,8 @@ class FormularioServico extends Component {
         this.duracao = evento.target.value;
     }
 
-    public capturarGeneroConsumidor(evento: any) {
-        this.generoConsumidor = evento.target.value;
-    }
-
     public capturarPreco(evento: any) {
         this.preco = evento.target.value;
-    }
-
-    public capturarQuantidadeConsumida(evento: any) {
-        this.quantidadeConsumida = evento.target.value;
     }
 
     public submeterFormulario(evento: any) {
@@ -56,9 +44,7 @@ class FormularioServico extends Component {
             nome: this.nome,
             descricao: this.descricao,
             duracao: this.duracao,
-            preco: this.preco,
-            generoConsumidor: this.generoConsumidor,
-            quantidadeConsumida: this.quantidadeConsumida
+            preco: this.preco
         };
         this.cadastrarServico(servico);
         evento.target.reset();
@@ -93,16 +79,6 @@ class FormularioServico extends Component {
                                     <div className="input-field col s6">
                                         <input onChange={this.capturarPreco} id="preco" type="text" className="validate" maxLength={30} />
                                         <label htmlFor="preco">Preço(R$)</label>
-                                    </div>
-
-                                    <div className="input-field col s6">
-                                        <input onChange={this.capturarGeneroConsumidor} id="generoConsumidor" type="text" className="validate" maxLength={30} />
-                                        <label htmlFor="generoConsumidor">Gênero Consumidor</label>
-                                    </div>
-
-                                    <div className="input-field col s6">
-                                        <input onChange={this.capturarQuantidadeConsumida} id="quantidadeConsumida" type="text" className="validate" maxLength={30} />
-                                        <label htmlFor="quantidadeConsumida">Quantidade Consumida</label>
                                     </div>
 
                                 </div>

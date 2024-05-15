@@ -116,7 +116,7 @@ public class Wbbackend {
 			Produto produto1 = new Produto();
 			produto1.setNome("Shampoo");
 			produto1.setMarca("Dove");
-			produto1.setPreco(49);
+			produto1.setPreco("49");
 			produto1.setGeneroConsumidor("Masculino");
 			repositorioProduto.save(produto1);
 
@@ -124,7 +124,7 @@ public class Wbbackend {
 			Produto produto2 = new Produto();
 			produto2.setNome("Gel Modelador");
 			produto2.setMarca("Alpha");
-			produto2.setPreco(59);
+			produto2.setPreco("59");
 			produto2.setGeneroConsumidor("Masculino");
 			repositorioProduto.save(produto2);
 
@@ -132,7 +132,7 @@ public class Wbbackend {
 			Produto produto3 = new Produto();
 			produto3.setNome("Perfume");
 			produto3.setMarca("Boticário");
-			produto3.setPreco(259);
+			produto3.setPreco("259");
 			produto3.setGeneroConsumidor("Feminino");
 			repositorioProduto.save(produto3);
 
@@ -140,7 +140,7 @@ public class Wbbackend {
 			Produto produto4 = new Produto();
 			produto4.setNome("Protetor Solar");
 			produto4.setMarca("Nivea Sun");
-			produto4.setPreco(39);
+			produto4.setPreco("39");
 			produto4.setGeneroConsumidor("Feminino");
 			repositorioProduto.save(produto4);
 
@@ -149,7 +149,7 @@ public class Wbbackend {
 			servico1.setNome("Corte de Cabelo");
 			servico1.setDescricao("Corte Social");
 			servico1.setDuracao("45");
-			servico1.setPreco(60);
+			servico1.setPreco("60");
 			servico1.setGeneroConsumidor("Masculino");
 			repositorioServico.save(servico1);
 
@@ -158,7 +158,7 @@ public class Wbbackend {
 			servico2.setNome("Manicure");
 			servico2.setDescricao("Serviço de beleza para os pés e as mãos");
 			servico2.setDuracao("120");
-			servico2.setPreco(150);
+			servico2.setPreco("150");
 			servico2.setGeneroConsumidor("Feminino");
 			repositorioServico.save(servico2);
 
@@ -167,7 +167,7 @@ public class Wbbackend {
 			servico3.setNome("Massagem");
 			servico3.setDescricao("Serviço de relaxamento muscular de alta qualidade");
 			servico3.setDuracao("90");
-			servico3.setPreco(250);
+			servico3.setPreco("250");
 			servico3.setGeneroConsumidor("Feminino");
 			repositorioServico.save(servico3);
 
@@ -176,7 +176,7 @@ public class Wbbackend {
 			servico4.setNome("Limpeza de pele");
 			servico4.setDescricao("Serviço de limpeza das impurezas do rosto");
 			servico4.setDuracao("60");
-			servico4.setPreco(180);
+			servico4.setPreco("180");
 			servico4.setGeneroConsumidor("Feminino");
 			repositorioServico.save(servico4);
 

@@ -58,11 +58,4 @@ public class Cliente extends RepresentationModel<Cliente> {
 	@JsonManagedReference
     private List<ProdutosConsumidos> produtosConsumidos = new ArrayList<>();
 
-	// public void setServicos(List<ServicosConsumidos> servicos) {
-    //     this.servicosConsumidos.clear(); // Limpa a lista existente
-    //     this.servicosConsumidos.addAll(servicos); // Adiciona os novos serviços
-    //     for (ServicosConsumidos servico : servicos) {
-    //         servico.setCliente(this); // Define o cliente para cada serviço
-    //     }
-    // }
 }

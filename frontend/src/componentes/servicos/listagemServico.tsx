@@ -11,8 +11,7 @@ interface Servico {
     nome: string;
     descricao: string;
     duracao: string;
-    preco: string;
-    generoConsumidor: string;  
+    preco: string;  
 }
 
 interface State {
@@ -113,8 +112,6 @@ class ListagemServicos extends Component<{}, State> {
 
                             <th>Preço</th>
 
-                            <th>Gênero Consumidor</th>
-
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -129,8 +126,6 @@ class ListagemServicos extends Component<{}, State> {
                                 <td>{servico.duracao} min</td>
 
                                 <td>R${servico.preco},00</td>
-
-                                <td>{servico.generoConsumidor}</td>
                                
                                 <td>
                                     <button className="btn-small purple" onClick={() => this.abrirModalEdicao(servico)}>Editar</button>
@@ -190,17 +185,7 @@ class ListagemServicos extends Component<{}, State> {
                                 }}
                             />
                         </div>
-                        <div className="input-field">
-                            <input
-                                type="text"
-                                placeholder="Gênero Consumidor"
-                                value={servicoEditando?.generoConsumidor || ''}
-                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                    const novoClienteEditando = { ...servicoEditando!, generoConsumidor: e.target.value };
-                                    this.setState({ servicoEditando: novoClienteEditando });
-                                }}
-                            />
-                        </div>
+                    
                     </div>
                     <div className="modal-footer">
                         <button className="btn purple lighten" onClick={() => this.atualizarServico()}>Salvar</button>

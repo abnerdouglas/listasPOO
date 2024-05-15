@@ -22,7 +22,7 @@ public class ServicosConsumidos {
     private String nome;
 
     @Column
-    private double preco;
+    private String preco;
 
     @Column
     private int quantidade;

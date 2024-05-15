@@ -26,7 +26,7 @@ public class Servico extends RepresentationModel<Produto> {
 	private String descricao;
 
 	@Column
-	private int preco;
+	private String preco;
 
     @Column
 	private String duracao;

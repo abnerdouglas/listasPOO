@@ -10,8 +10,7 @@ interface Produto {
     id: string;
     nome: string;
     marca: string;
-    preco: string;
-    generoConsumidor: string;  
+    preco: string; 
 }
 
 interface State {
@@ -110,8 +109,6 @@ class ListagemProdutos extends Component<{}, State> {
 
                             <th>Preço</th>
 
-                            <th>Gênero Consumidor</th>
-
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -124,8 +121,6 @@ class ListagemProdutos extends Component<{}, State> {
                                 <td>{produto.marca}</td>
 
                                 <td>R${produto.preco},00</td>
-
-                                <td>{produto.generoConsumidor}</td>
                                
                                 <td>
                                     <button className="btn-small purple" onClick={() => this.abrirModalEdicao(produto)}>Editar</button>
@@ -174,17 +169,7 @@ class ListagemProdutos extends Component<{}, State> {
                                 }}
                             />
                         </div>
-                        <div className="input-field">
-                            <input
-                                type="text"
-                                placeholder="Gênero Consumidor"
-                                value={produtoEditando?.generoConsumidor || ''}
-                                onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                                    const novoClienteEditando = { ...produtoEditando!, generoConsumidor: e.target.value };
-                                    this.setState({ produtoEditando: novoClienteEditando });
-                                }}
-                            />
-                        </div>
+                        
                     </div>
                     <div className="modal-footer">
                         <button className="btn purple lighten" onClick={() => this.atualizarProduto()}>Salvar</button>

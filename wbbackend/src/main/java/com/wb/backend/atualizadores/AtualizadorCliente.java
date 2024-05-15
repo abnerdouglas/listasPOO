@@ -39,9 +39,6 @@ public class AtualizadorCliente implements Atualizador<Cliente> {
 		if (!verificadorString.verificar(atualizacao.getGenero())) {
 			alvo.setGenero(atualizacao.getGenero());
 		}
-
-		// existem entidades que não estão mapeados aqui
-		
 		if (atualizacao.getTelefones().size() > 0) {
 			alvo.getTelefones().clear();
 			for (Telefone telefone : atualizacao.getTelefones()) {
