@@ -17,8 +17,12 @@ interface Cliente {
         ddd: string;
         numero: string;
     }[];
-    numeroProdutosConsumidos: number;
-    numeroServicosConsumidos: number;
+    produtosConsumidos: {
+        quantidade: number;
+    }[];
+    servicosConsumidos: {
+        quantidade: number;
+    }[];
 }
 
 interface State {
@@ -59,9 +63,11 @@ class ListagemTop10ClientesEmConsumo extends Component<{}, State> {
         const { clientes } = this.state;
 
         // Ordenar os clientes por total consumido
-        const clientesOrdenados = clientes.sort((a, b) => {
-            const totalA = a.numeroProdutosConsumidos + a.numeroServicosConsumidos;
-            const totalB = b.numeroProdutosConsumidos + b.numeroServicosConsumidos;
+        const clientesOrdenados = clientes.sort((a: Cliente, b: Cliente) => {
+            const totalA = a.produtosConsumidos.reduce((acc, produto) => acc + produto.quantidade, 0) + 
+                           a.servicosConsumidos.reduce((acc, servico) => acc + servico.quantidade, 0);
+            const totalB = b.produtosConsumidos.reduce((acc, produto) => acc + produto.quantidade, 0) + 
+                           b.servicosConsumidos.reduce((acc, servico) => acc + servico.quantidade, 0);
             return totalB - totalA;
         });
 
@@ -70,7 +76,7 @@ class ListagemTop10ClientesEmConsumo extends Component<{}, State> {
 
         return (
             <div>
-                <h5><strong> Listagem dos 10 Clientes Que Mais Consumiram Produtos e Serviços</strong></h5>
+                <h5><strong>Listagem dos 10 Clientes Que Mais Consumiram Produtos e Serviços</strong></h5>
                 <hr />
 
                 {clientes.length === 0 ? (
@@ -86,11 +92,14 @@ class ListagemTop10ClientesEmConsumo extends Component<{}, State> {
                             </tr>
                         </thead>
                         <tbody>
-                            {top10Clientes.map(cliente => (
+                            {top10Clientes.map((cliente: Cliente) => (
                                 <tr key={cliente.id}>
                                     <td>{cliente.nome}</td>
                                     <td>{cliente.cpf}</td>
-                                    <td>{cliente.numeroProdutosConsumidos + cliente.numeroServicosConsumidos}</td>
+                                    <td>
+                                        {cliente.produtosConsumidos.reduce((acc, produto) => acc + produto.quantidade, 0) + 
+                                         cliente.servicosConsumidos.reduce((acc, servico) => acc + servico.quantidade, 0)}
+                                    </td>
                                     <td>
                                         <button className="btn-small red" onClick={(e) => this.excluirLocal(cliente.id, e)}>Excluir</button>
                                     </td>

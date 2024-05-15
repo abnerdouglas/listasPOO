@@ -1,97 +1,81 @@
 import React, { Component } from "react";
 import 'materialize-css/dist/css/materialize.min.css';
-import BuscadorProdutos from "../../buscadores/buscadorProduto";
-import RemovedorProduto from "../../removedores/removedorProduto";
-import RemovedorProdutoLocal from "../../removedores/local/removedorProdutoLocal";
+import BuscadorClientes from "../../buscadores/buscadorCliente";
 
-interface Produto {
+interface Cliente {
     id: string;
-    nome: string;
-    marca: string;
-    preco: string;
-    generoConsumidor: string;
-    quantidadeConsumida: number; 
+    genero: string;
+    produtosConsumidos: {
+        nome: string;
+        quantidade: number;
+    }[];
 }
 
 interface State {
-    produtos: Produto[] | Object[] | any;
+    produtosConsumidos: { nome: string; quantidade: number }[];
 }
 
 class ListagemProdutosMaisConsumidos extends Component<{}, State> {
+
     constructor(props: {}) {
         super(props);
         this.state = {
-            produtos: [],
+            produtosConsumidos: [],
         };
     }
 
-    public async buscarProdutos() {
-        let buscadorProdutos = new BuscadorProdutos();
-        const produtos = await buscadorProdutos.buscar();
+    async componentDidMount() {
+        const buscadorClientes = new BuscadorClientes();
+        const clientes = await buscadorClientes.buscar();
         
-        produtos.sort((a, b) => b.quantidadeConsumida - a.quantidadeConsumida)
-
-        // Pegar os 10 produtos mais consumidos
-        const produtosMaisConsumidos = produtos.slice(0, 10);
-        this.setState({ produtos: produtosMaisConsumidos });
-    }
-
-    public excluirRemoto(idProduto: string) {
-        let removedor = new RemovedorProduto();
-        removedor.remover({ id: idProduto });
-    }
-
-    public excluirLocal(id: string, e: any) {
-        e.preventDefault();
-        let removedorLocal = new RemovedorProdutoLocal();
-        let produtos = removedorLocal.remover(this.state.produtos, id);
-        this.setState({
-            produtos: produtos
+        // Calcular a soma das quantidades de produtos consumidos por todos os clientes
+        const produtosConsumidos: { [nome: string]: number } = {};
+        clientes.forEach((cliente: Cliente) => {
+            cliente.produtosConsumidos.forEach((produto) => {
+                if (!produtosConsumidos[produto.nome]) {
+                    produtosConsumidos[produto.nome] = 0;
+                }
+                produtosConsumidos[produto.nome] += produto.quantidade;
+            });
         });
-        this.excluirRemoto(id);
+
+        // Converter para um array de objetos com nome e quantidade
+        const produtosArray = Object.entries(produtosConsumidos).map(([nome, quantidade]) => ({ nome, quantidade }));
+
+        // Ordenar os produtos pelo total consumido
+        produtosArray.sort((a, b) => b.quantidade - a.quantidade);
+
+        this.setState({ produtosConsumidos: produtosArray });
     }
 
-    componentDidMount() {
-        this.buscarProdutos();
+    renderQuantidade = (quantidade: number) => {
+        return quantidade === 1 ? "vez" : "vezes";
     }
 
     render() {
-        const { produtos } = this.state;
+        const { produtosConsumidos } = this.state;
 
         return (
             <div>
                 <h5><strong>Listagem dos Produtos Mais Consumidos</strong></h5>
                 <hr />
-                {produtos.length === 0 ? (
-                    <p>Não existem produtos cadastrados.</p>
-                ) : (
+
                 <table className="striped">
                     <thead>
                         <tr>
-                            <th>Nome</th>
-                            <th>Marca</th>
-                            <th>Preço</th>
-                            <th>Gênero Consumidor</th>
+                            <th>Nome do Produto</th>
                             <th>Quantidade Consumida</th>
-                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {produtos.map((produto: Produto) => (
-                            <tr key={produto.id}>
+                        {produtosConsumidos.map((produto, index) => (
+                            <tr key={index}>
                                 <td>{produto.nome}</td>
-                                <td>{produto.marca}</td>
-                                <td>R${produto.preco},00</td>
-                                <td>{produto.generoConsumidor}</td>
-                                <td>{produto.quantidadeConsumida} unidades</td>
-                                <td>
-                                    <button className="btn-small red" onClick={(e) => this.excluirLocal(produto.id, e)}>Excluir</button>
-                                </td>
+                                <td>{produto.quantidade} {this.renderQuantidade(produto.quantidade)}</td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                 )}
             </div>
         );
     }

@@ -4,6 +4,20 @@ import BuscadorClientes from "../../buscadores/buscadorCliente";
 import RemovedorCliente from "../../removedores/removedorCliente";
 import RemovedorClienteLocal from "../../removedores/local/removedorClienteLocal";
 
+interface Produto {
+    id: number;
+    nome: string;
+    preco: number;
+    quantidade: number;
+}
+
+interface Servico {
+    id: number;
+    nome: string;
+    preco: number;
+    quantidade: number;
+}
+
 interface Cliente {
     id: string;
     nome: string;
@@ -17,8 +31,8 @@ interface Cliente {
         ddd: string;
         numero: string;
     }[];
-    numeroProdutosConsumidos: number;
-    numeroServicosConsumidos: number;
+    servicosConsumidos: Servico[];
+    produtosConsumidos: Produto[];
 }
 
 interface State {
@@ -35,17 +49,34 @@ class Listagem10PioresClientesEmConsumo extends Component<{}, State> {
     }
 
     async componentDidMount() {
-        const buscadorClientes = new BuscadorClientes();
-        const clientes = await buscadorClientes.buscar();
-        this.setState({ clientes });
+        await this.buscarClientes();
     }
 
-    public excluirRemoto(idCliente: string) {
+    async buscarClientes() {
+        let buscadorClientes = new BuscadorClientes();
+        const clientes = await buscadorClientes.buscar();
+
+        // Ordenar os clientes pelo valor consumido em ordem crescente
+        clientes.sort((a, b) => this.calcularValorConsumido(a) - this.calcularValorConsumido(b));
+
+        // Pegar os 10 primeiros clientes
+        const top10Clientes = clientes.slice(0, 10);
+        this.setState({ clientes: top10Clientes });
+    }
+
+    calcularValorConsumido(cliente: Cliente): number {
+        // Soma dos preços dos produtos e serviços consumidos
+        const produtos = cliente.produtosConsumidos.reduce((total, produto) => total + produto.preco * produto.quantidade, 0);
+        const servicos = cliente.servicosConsumidos.reduce((total, servico) => total + servico.preco * servico.quantidade, 0);
+        return produtos + servicos;
+    }
+
+    excluirRemoto(idCliente: string) {
         let removedor = new RemovedorCliente();
         removedor.remover({ id: idCliente });
     }
 
-    public excluirLocal(id: string, e: any) {
+    excluirLocal(id: string, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.preventDefault();
         let removedorLocal = new RemovedorClienteLocal();
         let clientes = removedorLocal.remover(this.state.clientes, id);
@@ -58,21 +89,10 @@ class Listagem10PioresClientesEmConsumo extends Component<{}, State> {
     render() {
         const { clientes } = this.state;
 
-        // Ordenar os clientes por total consumido
-        const clientesOrdenados = clientes.sort((a, b) => {
-            const totalA = a.numeroProdutosConsumidos + a.numeroServicosConsumidos;
-            const totalB = b.numeroProdutosConsumidos + b.numeroServicosConsumidos;
-            return totalA - totalB;
-        });
-
-        // Selecionar os top 10 clientes
-        const top10Clientes = clientesOrdenados.slice(0, 10);
-
         return (
             <div>
-                <h5><strong> Listagem dos 10 Clientes que Menos Consumiram Produtos e Serviços</strong></h5>
+                <h5><strong>Listagem Dos 10 Clientes Que Menos Consumiram em Valor</strong></h5>
                 <hr />
-
                 {clientes.length === 0 ? (
                     <p>Não existem clientes cadastrados.</p>
                 ) : (
@@ -81,16 +101,16 @@ class Listagem10PioresClientesEmConsumo extends Component<{}, State> {
                             <tr>
                                 <th>Nome</th>
                                 <th>CPF</th>
-                                <th>Total Consumido</th>
+                                <th>Valor Consumido</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {top10Clientes.map(cliente => (
+                            {clientes.map((cliente) => (
                                 <tr key={cliente.id}>
                                     <td>{cliente.nome}</td>
                                     <td>{cliente.cpf}</td>
-                                    <td>{cliente.numeroProdutosConsumidos + cliente.numeroServicosConsumidos}</td>
+                                    <td>R${this.calcularValorConsumido(cliente)},00</td>
                                     <td>
                                         <button className="btn-small red" onClick={(e) => this.excluirLocal(cliente.id, e)}>Excluir</button>
                                     </td>

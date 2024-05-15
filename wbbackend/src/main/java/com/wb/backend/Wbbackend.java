@@ -118,7 +118,6 @@ public class Wbbackend {
 			produto1.setMarca("Dove");
 			produto1.setPreco(49);
 			produto1.setGeneroConsumidor("Masculino");
-			produto1.setQuantidadeConsumida(10);
 			repositorioProduto.save(produto1);
 
 			// produto2
@@ -127,7 +126,6 @@ public class Wbbackend {
 			produto2.setMarca("Alpha");
 			produto2.setPreco(59);
 			produto2.setGeneroConsumidor("Masculino");
-			produto2.setQuantidadeConsumida(15);
 			repositorioProduto.save(produto2);
 
 			// produto3
@@ -136,7 +134,6 @@ public class Wbbackend {
 			produto3.setMarca("Boticário");
 			produto3.setPreco(259);
 			produto3.setGeneroConsumidor("Feminino");
-			produto3.setQuantidadeConsumida(5);
 			repositorioProduto.save(produto3);
 
 			// produt4
@@ -145,7 +142,6 @@ public class Wbbackend {
 			produto4.setMarca("Nivea Sun");
 			produto4.setPreco(39);
 			produto4.setGeneroConsumidor("Feminino");
-			produto4.setQuantidadeConsumida(20);
 			repositorioProduto.save(produto4);
 
 			// servico1
@@ -155,7 +151,6 @@ public class Wbbackend {
 			servico1.setDuracao("45");
 			servico1.setPreco(60);
 			servico1.setGeneroConsumidor("Masculino");
-			servico1.setQuantidadeConsumida(5);
 			repositorioServico.save(servico1);
 
 			// servico2
@@ -165,7 +160,6 @@ public class Wbbackend {
 			servico2.setDuracao("120");
 			servico2.setPreco(150);
 			servico2.setGeneroConsumidor("Feminino");
-			servico2.setQuantidadeConsumida(10);
 			repositorioServico.save(servico2);
 
 			// servico3
@@ -175,7 +169,6 @@ public class Wbbackend {
 			servico3.setDuracao("90");
 			servico3.setPreco(250);
 			servico3.setGeneroConsumidor("Feminino");
-			servico3.setQuantidadeConsumida(25);
 			repositorioServico.save(servico3);
 
 			// servico4
@@ -185,36 +178,105 @@ public class Wbbackend {
 			servico4.setDuracao("60");
 			servico4.setPreco(180);
 			servico4.setGeneroConsumidor("Feminino");
-			servico4.setQuantidadeConsumida(18);
 			repositorioServico.save(servico4);
 
-			//serviços associados ao cliente1
+			//serviços associados ao cliente - 1
 			ServicosConsumidos servicoConsumido1 = new ServicosConsumidos();
 			servicoConsumido1.setCliente(cliente1); 
 			servicoConsumido1.setNome(servico1.getNome());
+			servicoConsumido1.setPreco(servico1.getPreco());
 			servicoConsumido1.setQuantidade(1); 
 			cliente1.getServicosConsumidos().add(servicoConsumido1);
 
 			ServicosConsumidos servicoConsumido2 = new ServicosConsumidos();
 			servicoConsumido2.setCliente(cliente1); 
 			servicoConsumido2.setNome(servico2.getNome());
-			servicoConsumido2.setQuantidade(2); 
+			servicoConsumido2.setPreco(servico2.getPreco());
+			servicoConsumido2.setQuantidade(1); 
 			cliente1.getServicosConsumidos().add(servicoConsumido2);
 
-			//produtos associados ao cliente1
+			//produtos associados ao cliente - 1
 			ProdutosConsumidos produtoConsumido1 = new ProdutosConsumidos();
 			produtoConsumido1.setCliente(cliente1);
 			produtoConsumido1.setNome(produto1.getNome());
+			produtoConsumido1.setPreco(produto1.getPreco());
 			produtoConsumido1.setQuantidade(1);
 			cliente1.getProdutosConsumidos().add(produtoConsumido1);
 			
 			ProdutosConsumidos produtoConsumido2 = new ProdutosConsumidos();
 			produtoConsumido2.setCliente(cliente1);
 			produtoConsumido2.setNome(produto2.getNome());
+			produtoConsumido2.setPreco(produto2.getPreco());
 			produtoConsumido2.setQuantidade(1);
 			cliente1.getProdutosConsumidos().add(produtoConsumido2);
 
 			repositorioCliente.save(cliente1);
+
+
+			//serviços associados ao cliente - 2
+			ServicosConsumidos servicoConsumido3 = new ServicosConsumidos();
+			servicoConsumido3.setCliente(cliente2); 
+			servicoConsumido3.setNome(servico3.getNome());
+			servicoConsumido3.setPreco(servico3.getPreco());
+			servicoConsumido3.setQuantidade(1); 
+			cliente2.getServicosConsumidos().add(servicoConsumido3);
+
+			ServicosConsumidos servicoConsumido4 = new ServicosConsumidos();
+			servicoConsumido4.setCliente(cliente2); 
+			servicoConsumido4.setNome(servico4.getNome());
+			servicoConsumido4.setPreco(servico4.getPreco());
+			servicoConsumido4.setQuantidade(1); 
+			cliente2.getServicosConsumidos().add(servicoConsumido4);
+
+			//produtos associados ao cliente - 2
+			ProdutosConsumidos produtoConsumido3 = new ProdutosConsumidos();
+			produtoConsumido3.setCliente(cliente2);
+			produtoConsumido3.setNome(produto3.getNome());
+			produtoConsumido3.setPreco(produto3.getPreco());
+			produtoConsumido3.setQuantidade(2);
+			cliente2.getProdutosConsumidos().add(produtoConsumido3);
+			
+			ProdutosConsumidos produtoConsumido4= new ProdutosConsumidos();
+			produtoConsumido4.setCliente(cliente2);
+			produtoConsumido4.setNome(produto4.getNome());
+			produtoConsumido4.setPreco(produto4.getPreco());
+			produtoConsumido4.setQuantidade(1);
+			cliente2.getProdutosConsumidos().add(produtoConsumido4);
+
+			repositorioCliente.save(cliente2);
+
+
+			//serviços associados ao cliente - 3
+			ServicosConsumidos servicoConsumido5 = new ServicosConsumidos();
+			servicoConsumido5.setCliente(cliente3); 
+			servicoConsumido5.setNome(servico1.getNome());
+			servicoConsumido5.setPreco(servico1.getPreco());
+			servicoConsumido5.setQuantidade(3); 
+			cliente3.getServicosConsumidos().add(servicoConsumido5);
+
+			ServicosConsumidos servicoConsumido6 = new ServicosConsumidos();
+			servicoConsumido6.setCliente(cliente3); 
+			servicoConsumido6.setNome(servico2.getNome());
+			servicoConsumido6.setPreco(servico2.getPreco());
+			servicoConsumido6.setQuantidade(1); 
+			cliente3.getServicosConsumidos().add(servicoConsumido6);
+
+			//produtos associados ao cliente - 3
+			ProdutosConsumidos produtoConsumido5 = new ProdutosConsumidos();
+			produtoConsumido5.setCliente(cliente3);
+			produtoConsumido5.setNome(produto1.getNome());
+			produtoConsumido5.setPreco(produto1.getPreco());
+			produtoConsumido5.setQuantidade(2);
+			cliente3.getProdutosConsumidos().add(produtoConsumido5);
+			
+			ProdutosConsumidos produtoConsumido6 = new ProdutosConsumidos();
+			produtoConsumido6.setCliente(cliente3);
+			produtoConsumido6.setNome(produto2.getNome());
+			produtoConsumido6.setPreco(produto2.getPreco());
+			produtoConsumido6.setQuantidade(1);
+			cliente3.getProdutosConsumidos().add(produtoConsumido6);
+
+			repositorioCliente.save(cliente3);
 		}
 	}
 }

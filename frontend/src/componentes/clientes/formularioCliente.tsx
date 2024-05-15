@@ -93,7 +93,7 @@ class FormularioCliente extends Component<{}, State> {
         this.setState({ dataEmissaoRg: evento.target.value });
     }
 
-    capturarGenero = (evento: ChangeEvent<HTMLInputElement>) => {
+    capturarGenero = (evento: ChangeEvent<HTMLSelectElement>) => {
         this.setState({ genero: evento.target.value });
     }
 
@@ -176,7 +176,7 @@ class FormularioCliente extends Component<{}, State> {
         };
         this.cadastrarCliente(cliente);
         evento.currentTarget.reset();
-        this.setState({ produtosConsumidos: [], produtosDisponiveis: [], servicosConsumidos: [], servicosDisponiveis: [] });
+        this.setState({ produtosConsumidos: [], produtosDisponiveis: [], servicosConsumidos: [], servicosDisponiveis: [], genero: '' });
     }
 
     cadastrarCliente = (cliente: Object) => {
@@ -225,6 +225,7 @@ class FormularioCliente extends Component<{}, State> {
                                         <input onChange={this.capturarDataEmissaoCpf} id="dataEmissaoCpf" type="text" className="validate" maxLength={30} />
                                         <label htmlFor="dataEmissaoCpf">Data Emissão CPF</label>
                                     </div>
+                                    
 
                                     <div className="input-field col s6">
                                         <input onChange={this.capturarRg} id="RG" type="text" className="validate" maxLength={30} />
@@ -237,7 +238,11 @@ class FormularioCliente extends Component<{}, State> {
                                     </div>
 
                                     <div className="input-field col s6">
-                                        <input onChange={this.capturarGenero} id="genero" type="text" className="validate" maxLength={30} />
+                                        <select onChange={this.capturarGenero} defaultValue={[]} id="genero" className="validate">
+                                            <option value="" disabled selected>Escolha o gênero</option>
+                                            <option value="Masculino">Masculino</option>
+                                            <option value="Feminino">Feminino</option>
+                                        </select>
                                         <label htmlFor="genero">Gênero</label>
                                     </div>
 

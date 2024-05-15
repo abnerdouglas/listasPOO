@@ -14,6 +14,7 @@ import FormularioCliente from "../clientes/formularioCliente";
 import FormularioProduto from "../produtos/formularioProduto";
 import FormularioServico from "../servicos/formularioServico";
 import './styles.css';
+import ListagemServicosMaisConsumidosPorGenero from "../servicos/listagemServicosMaisConsumidosPorGenero";
 
 type State = {
     tela: string;
@@ -132,6 +133,9 @@ class Roteador extends Component<{}, State> {
                         </div>
                         <div className="container-wrapper">
                             <ListagemServicosMaisConsumidos />
+                        </div>
+                        <div className="container-wrapper">
+                            <ListagemServicosMaisConsumidosPorGenero />
                         </div>
                     </>
                 );
