@@ -59,7 +59,9 @@ class ListagemProdutosMaisConsumidos extends Component<{}, State> {
             <div>
                 <h5><strong>Listagem dos Produtos Mais Consumidos</strong></h5>
                 <hr />
-
+                {produtosConsumidos.length === 0 ? (
+                    <p>Não existem produtos consumidos por clientes.</p>
+                ) : (
                 <table className="striped">
                     <thead>
                         <tr>
@@ -76,6 +78,7 @@ class ListagemProdutosMaisConsumidos extends Component<{}, State> {
                         ))}
                     </tbody>
                 </table>
+                )}
             </div>
         );
     }

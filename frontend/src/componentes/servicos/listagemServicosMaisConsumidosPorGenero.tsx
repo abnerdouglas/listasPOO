@@ -78,6 +78,9 @@ class ListagemServicosMaisConsumidosPorGenero extends Component<{}, State> {
 
                 <div>
                     <h6><strong>Clientes Masculinos</strong></h6>
+                    {servicosConsumidosMasculinos.length === 0 ? (
+                    <p>Não existem serviços consumidos pelos gênero masculino.</p>
+                ) : (
                     <table className="striped">
                         <thead>
                             <tr>
@@ -94,10 +97,14 @@ class ListagemServicosMaisConsumidosPorGenero extends Component<{}, State> {
                             ))}
                         </tbody>
                     </table>
+                )}
                 </div>
 
                 <div>
                     <h6><strong>Clientes Femininos</strong></h6>
+                    {servicosConsumidosMasculinos.length === 0 ? (
+                    <p>Não existem serviços consumidos pelos gênero feminino.</p>
+                ) : (
                     <table className="striped">
                         <thead>
                             <tr>
@@ -114,6 +121,7 @@ class ListagemServicosMaisConsumidosPorGenero extends Component<{}, State> {
                             ))}
                         </tbody>
                     </table>
+                )}
                 </div>
             </div>
         );

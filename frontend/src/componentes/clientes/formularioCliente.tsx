@@ -4,6 +4,7 @@ import BuscadorProdutos from "../../buscadores/buscadorProduto";
 import 'materialize-css/dist/css/materialize.min.css';
 import M from 'materialize-css/dist/js/materialize.min.js';
 import BuscadorServicos from "../../buscadores/buscadorServico";
+import { IMaskInput } from 'react-imask'
 
 interface Telefones {
     ddd: string;
@@ -207,53 +208,88 @@ class FormularioCliente extends Component<{}, State> {
                                     <h5><strong>Formulário Cliente</strong></h5>
 
                                     <div className="input-field col s6">
-                                        <input onChange={this.capturarNome} id="nome" type="text" className="validate active" maxLength={30} />
-                                        <label htmlFor="nome">Nome</label>
+                                        <IMaskInput
+                                            placeholder="Digite o seu Nome"
+                                            onChange={this.capturarNome}
+                                            id="nome"
+                                            maxLength={30}
+                                        />
                                     </div>
 
                                     <div className="input-field col s6">
-                                        <input onChange={this.capturarNomeSocial} id="nomeSocial" type="text" className="validate" maxLength={30} />
-                                        <label htmlFor="nomeSocial">Nome Social</label>
+                                        <IMaskInput
+                                            placeholder="Digite o seu Nome Social"
+                                            onChange={this.capturarNomeSocial}
+                                            id="nomeSocial"
+                                            maxLength={30}
+                                        />
                                     </div>
 
                                     <div className="input-field col s6">
-                                        <input onChange={this.capturarCpf} id="cpf" type="text" className="validate" maxLength={30} />
-                                        <label htmlFor="cpf">CPF</label>
+                                        <IMaskInput
+                                            mask="000.000.000-00"
+                                            placeholder="Digite o seu CPF"
+                                            onChange={this.capturarCpf}
+                                            id="cpf"
+                                        />
                                     </div>
 
                                     <div className="input-field col s6">
-                                        <input onChange={this.capturarDataEmissaoCpf} id="dataEmissaoCpf" type="text" className="validate" maxLength={30} />
-                                        <label htmlFor="dataEmissaoCpf">Data Emissão CPF</label>
-                                    </div>
-                                    
-
-                                    <div className="input-field col s6">
-                                        <input onChange={this.capturarRg} id="RG" type="text" className="validate" maxLength={30} />
-                                        <label htmlFor="RG">RG</label>
+                                        <IMaskInput
+                                            mask="00/00/0000"
+                                            placeholder="Digite a data de emissão de seu CPF"
+                                            onChange={this.capturarDataEmissaoCpf}
+                                            id="dataEmissaoCpf"
+                                        />
                                     </div>
 
                                     <div className="input-field col s6">
-                                        <input onChange={this.capturarDataEmissaoRg} id="dataEmissaoRg" type="text" className="validate" maxLength={30} />
-                                        <label htmlFor="dataEmissaoRg">Data Emissão RG</label>
+                                        <IMaskInput
+                                            mask="00.000.000-0"
+                                            placeholder="Digite o seu RG"
+                                            onChange={this.capturarRg}
+                                            id="RG"
+                                        />
+                                    </div>
+
+                                    <div className="input-field col s6">
+                                        <IMaskInput
+                                            mask="00/00/0000"
+                                            placeholder="Digite a data de emissão do seu RG"
+                                            onChange={this.capturarDataEmissaoRg}
+                                            id="dataEmissaoRG"
+                                        />
+                                    </div>
+
+                                    <div className="input-field col s6">
+                                        <IMaskInput
+                                            mask="000"
+                                            placeholder="Digite o seu DDD"
+                                            onChange={this.capturarTelefonesDDD}
+                                            id="DDD"
+                                        />
+                                    </div>
+
+                                    <div className="input-field col s6">
+                                        <IMaskInput
+                                            mask="00000-0000"
+                                            placeholder="Digite o seu Telefone"
+                                            onChange={this.capturarTelefonesNumero}
+                                            id="numero"
+                                        />
                                     </div>
 
                                     <div className="input-field col s6">
                                         <select onChange={this.capturarGenero} defaultValue={[]} id="genero" className="validate">
-                                            <option value="" disabled selected>Escolha o gênero</option>
+                                            <option value="" disabled selected>Escolha o seu gênero</option>
                                             <option value="Masculino">Masculino</option>
                                             <option value="Feminino">Feminino</option>
                                         </select>
-                                        <label htmlFor="genero">Gênero</label>
+                                        
                                     </div>
 
-                                    <div className="input-field col s6">
-                                        <input onChange={this.capturarTelefonesDDD} id="ddd" type="text" className="validate" maxLength={3} />
-                                        <label htmlFor="ddd">DDD Telefone</label>
-                                    </div>
-
-                                    <div className="input-field col s6">
-                                        <input onChange={this.capturarTelefonesNumero} id="numeroTelefone" type="text" className="validate" maxLength={10} />
-                                        <label htmlFor="numeroTelefone">Número Telefone</label>
+                                    <div className="col s12 m7">
+                                        <h5><strong>Comprar Produtos ou Serviços</strong></h5>
                                     </div>
 
                                     <div className="input-field col s6">
@@ -264,7 +300,7 @@ class FormularioCliente extends Component<{}, State> {
                                             ))}
                                         </select>
                                     </div>
-
+                                
                                     <div className="input-field col s6">
                                         <select id="servicoSelect" multiple={true} defaultValue={[]} onChange={(e) => this.setState({ servicosConsumidos: Array.from(e.target.selectedOptions).map(option => ({ id: parseInt(option.value), quantidade: 1 })) })}>
                                             <option value="" disabled>Escolha um ou mais serviços</option>

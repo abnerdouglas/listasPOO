@@ -1,5 +1,6 @@
 import { Component } from "react";
 import CadastradorServico from "../../cadastradores/cadastradorServico";
+import { IMaskInput } from "react-imask";
 
 class FormularioServico extends Component {
     private nome!: string;
@@ -62,23 +63,39 @@ class FormularioServico extends Component {
                                     <h5><strong>Formulário Serviço</strong></h5>
 
                                     <div className="input-field col s6">
-                                        <input onChange={this.capturarNome} id="nomeServico" type="text" className="validate active" maxLength={30} />
-                                        <label htmlFor="nomeServico">Nome</label>
+                                        <IMaskInput
+                                            placeholder="Digite o Nome do Serviço"
+                                            onChange={this.capturarNome}
+                                            id="nome"
+                                            maxLength={30}
+                                        />
                                     </div>
 
                                     <div className="input-field col s6">
-                                        <input onChange={this.capturarDescricao} id="descricao" type="text" className="validate" maxLength={30} />
-                                        <label htmlFor="descricao">Descrição</label>
+                                        <IMaskInput
+                                            placeholder="Digite uma descrição"
+                                            onChange={this.capturarDescricao}
+                                            id="descricao"
+                                            maxLength={30}
+                                        />
                                     </div>
 
                                     <div className="input-field col s6">
-                                        <input onChange={this.capturarDuracao} id="duracao" type="text" className="validate" maxLength={30} />
-                                        <label htmlFor="duracao">Duração(min)</label>
+                                        <IMaskInput
+                                            placeholder="Digite a duração em minutos"
+                                            onChange={this.capturarDuracao}
+                                            id="duracao"
+                                            maxLength={5}
+                                        />
                                     </div>
 
                                     <div className="input-field col s6">
-                                        <input onChange={this.capturarPreco} id="preco" type="text" className="validate" maxLength={30} />
-                                        <label htmlFor="preco">Preço(R$)</label>
+                                        <IMaskInput
+                                            placeholder="Digite o Preço (apenas numeros)"
+                                            onChange={this.capturarPreco}
+                                            id="preco"
+                                            maxLength={10}
+                                        />
                                     </div>
 
                                 </div>

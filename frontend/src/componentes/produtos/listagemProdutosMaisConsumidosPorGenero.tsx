@@ -58,7 +58,7 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
         produtosArrayMasculinos.sort((a, b) => b.quantidade - a.quantidade);
         produtosArrayFemininos.sort((a, b) => b.quantidade - a.quantidade);
 
-        this.setState({ 
+        this.setState({
             produtosConsumidosMasculinos: produtosArrayMasculinos,
             produtosConsumidosFemininos: produtosArrayFemininos,
         });
@@ -78,42 +78,50 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
 
                 <div>
                     <h6><strong>Clientes Masculinos</strong></h6>
-                    <table className="striped">
-                        <thead>
-                            <tr>
-                                <th>Nome do Produto</th>
-                                <th>Quantidade Consumida</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {produtosConsumidosMasculinos.map((produto, index) => (
-                                <tr key={index}>
-                                    <td>{produto.nome}</td>
-                                    <td>{produto.quantidade}  {this.renderQuantidade(produto.quantidade)} </td>
+                    {produtosConsumidosMasculinos.length === 0 ? (
+                        <p>Não existem produtos consumidos pelos gênero masculino.</p>
+                    ) : (
+                        <table className="striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome do Produto</th>
+                                    <th>Quantidade Consumida</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {produtosConsumidosMasculinos.map((produto, index) => (
+                                    <tr key={index}>
+                                        <td>{produto.nome}</td>
+                                        <td>{produto.quantidade}  {this.renderQuantidade(produto.quantidade)} </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
                 </div>
 
                 <div>
                     <h6><strong>Clientes Femininos</strong></h6>
-                    <table className="striped">
-                        <thead>
-                            <tr>
-                                <th>Nome do Produto</th>
-                                <th>Quantidade Consumida</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {produtosConsumidosFemininos.map((produto, index) => (
-                                <tr key={index}>
-                                    <td>{produto.nome}</td>
-                                    <td>{produto.quantidade} {this.renderQuantidade(produto.quantidade)}</td>
+                    {produtosConsumidosFemininos.length === 0 ? (
+                        <p>Não existem produtos consumidos pelos gênero feminino.</p>
+                    ) : (
+                        <table className="striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome do Produto</th>
+                                    <th>Quantidade Consumida</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {produtosConsumidosFemininos.map((produto, index) => (
+                                    <tr key={index}>
+                                        <td>{produto.nome}</td>
+                                        <td>{produto.quantidade} {this.renderQuantidade(produto.quantidade)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
                 </div>
             </div>
         );

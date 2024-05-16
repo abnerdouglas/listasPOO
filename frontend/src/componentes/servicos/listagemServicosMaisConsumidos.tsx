@@ -26,7 +26,7 @@ class ListagemServicosMaisConsumidos extends Component<{}, State> {
     async componentDidMount() {
         const buscadorClientes = new BuscadorClientes();
         const clientes = await buscadorClientes.buscar();
-        
+
         // Calcular a soma das quantidades de servicos consumidos por todos os clientes
         const servicosConsumidos: { [nome: string]: number } = {};
         clientes.forEach((cliente: Cliente) => {
@@ -58,23 +58,26 @@ class ListagemServicosMaisConsumidos extends Component<{}, State> {
             <div>
                 <h5><strong>Listagem dos Serviços Mais Consumidos</strong></h5>
                 <hr />
-
-                <table className="striped">
-                    <thead>
-                        <tr>
-                            <th>Nome do Serviço</th>
-                            <th>Quantidade Consumida</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {servicosConsumidos.map((servico, index) => (
-                            <tr key={index}>
-                                <td>{servico.nome}</td>
-                                <td>{servico.quantidade} {this.renderQuantidade(servico.quantidade)}</td>
+                {servicosConsumidos.length === 0 ? (
+                    <p>Não existem serviços consumidos pelos clientes.</p>
+                ) : (
+                    <table className="striped">
+                        <thead>
+                            <tr>
+                                <th>Nome do Serviço</th>
+                                <th>Quantidade Consumida</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {servicosConsumidos.map((servico, index) => (
+                                <tr key={index}>
+                                    <td>{servico.nome}</td>
+                                    <td>{servico.quantidade} {this.renderQuantidade(servico.quantidade)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
             </div>
         );
     }
