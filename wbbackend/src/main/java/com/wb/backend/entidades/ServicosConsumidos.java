@@ -31,4 +31,11 @@ public class ServicosConsumidos {
     @JoinColumn(name = "cliente_id")
     @JsonBackReference
     private Cliente cliente;
+
+    public ServicosConsumidos(Cliente cliente, String nome, String preco, int quantidade){
+        this.cliente = cliente;
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade = quantidade;
+    }
 }

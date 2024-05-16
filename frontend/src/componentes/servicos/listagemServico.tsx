@@ -125,7 +125,7 @@ class ListagemServicos extends Component<{}, State> {
 
                                 <td>{servico.duracao} min</td>
 
-                                <td>R${servico.preco},00</td>
+                                <td>R${servico.preco}</td>
                                
                                 <td>
                                     <button className="btn-small purple" onClick={() => this.abrirModalEdicao(servico)}>Editar</button>

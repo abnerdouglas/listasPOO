@@ -120,7 +120,7 @@ class ListagemProdutos extends Component<{}, State> {
 
                                 <td>{produto.marca}</td>
 
-                                <td>R${produto.preco},00</td>
+                                <td>R${produto.preco}</td>
                                
                                 <td>
                                     <button className="btn-small purple" onClick={() => this.abrirModalEdicao(produto)}>Editar</button>

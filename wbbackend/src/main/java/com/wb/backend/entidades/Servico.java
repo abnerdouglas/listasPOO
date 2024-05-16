@@ -31,6 +31,13 @@ public class Servico extends RepresentationModel<Produto> {
     @Column
 	private String duracao;
 
-	@Column
-	private String generoConsumidor;
+	public Servico(){
+	}
+
+	public Servico(String nome, String descricao, String preco, String duracao){
+		this.nome = nome;
+		this.descricao = descricao;
+		this.preco = preco;
+		this.duracao = duracao;
+	}
 }

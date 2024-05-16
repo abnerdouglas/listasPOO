@@ -58,4 +58,21 @@ public class Cliente extends RepresentationModel<Cliente> {
 	@JsonManagedReference
     private List<ProdutosConsumidos> produtosConsumidos = new ArrayList<>();
 
+	// Construtor
+    public Cliente() {
+    }
+
+    public Cliente(String nome, String nomeSocial, String cpf, String dataEmissaoCpf, String rg, String dataEmissaoRg, String genero, String ddd, String numero) {
+        this.nome = nome;
+        this.nomeSocial = nomeSocial;
+        this.cpf = cpf;
+        this.dataEmissaoCpf = dataEmissaoCpf;
+        this.rg = rg;
+        this.dataEmissaoRg = dataEmissaoRg;
+        this.genero = genero;
+        Telefone telefone = new Telefone();
+        telefone.setDdd(ddd);
+        telefone.setNumero(numero);
+        this.telefones.add(telefone);
+    }
 }

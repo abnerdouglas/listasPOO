@@ -91,7 +91,7 @@ class FormularioServico extends Component {
 
                                     <div className="input-field col s6">
                                         <IMaskInput
-                                            placeholder="Digite o Preço (apenas numeros)"
+                                            placeholder="Digite o Preço R$(apenas numeros)"
                                             onChange={this.capturarPreco}
                                             id="preco"
                                             maxLength={10}

@@ -22,8 +22,5 @@ public class AtualizadorProduto implements Atualizador<Produto> {
 		if (!verificadorString.verificar(atualizacao.getPreco())) {
 			alvo.setPreco(atualizacao.getPreco());
 		}
-		if (!verificadorString.verificar(atualizacao.getGeneroConsumidor())) {
-			alvo.setGeneroConsumidor(atualizacao.getGeneroConsumidor());
-		}
 	}
 }
