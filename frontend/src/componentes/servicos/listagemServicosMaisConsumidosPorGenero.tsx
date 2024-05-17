@@ -14,16 +14,27 @@ interface Cliente {
 interface State {
     servicosConsumidosMasculinos: { nome: string; quantidade: number }[];
     servicosConsumidosFemininos: { nome: string; quantidade: number }[];
+    currentPage: number;
+    itemsPerPage: number;
 }
 
 class ListagemServicosMaisConsumidosPorGenero extends Component<{}, State> {
+    modalRef: React.RefObject<HTMLDivElement>;
 
     constructor(props: {}) {
         super(props);
         this.state = {
             servicosConsumidosMasculinos: [],
             servicosConsumidosFemininos: [],
+            currentPage: 1,
+            itemsPerPage: 5 // Número fixo de itens por página
         };
+        this.modalRef = React.createRef();
+        this.handlePageChange = this.handlePageChange.bind(this);
+    }
+
+    handlePageChange = (pageNumber: number) => {
+        this.setState({ currentPage: pageNumber });
     }
 
     async componentDidMount() {
@@ -58,7 +69,7 @@ class ListagemServicosMaisConsumidosPorGenero extends Component<{}, State> {
         servicosArrayMasculinos.sort((a, b) => b.quantidade - a.quantidade);
         servicosArrayFemininos.sort((a, b) => b.quantidade - a.quantidade);
 
-        this.setState({ 
+        this.setState({
             servicosConsumidosMasculinos: servicosArrayMasculinos,
             servicosConsumidosFemininos: servicosArrayFemininos,
         });
@@ -68,8 +79,26 @@ class ListagemServicosMaisConsumidosPorGenero extends Component<{}, State> {
         return quantidade === 1 ? "vez" : "vezes";
     }
 
+    totalPages = () => {
+        const { itemsPerPage } = this.state;
+        const totalMasculinos = this.state.servicosConsumidosMasculinos.length;
+        const totalFemininos = this.state.servicosConsumidosFemininos.length;
+        return Math.ceil((totalMasculinos + totalFemininos) / itemsPerPage);
+    }
+
     render() {
-        const { servicosConsumidosMasculinos, servicosConsumidosFemininos } = this.state;
+        const { servicosConsumidosMasculinos, servicosConsumidosFemininos, currentPage } = this.state;
+
+
+        // Lógica de Paginação
+        const totalPages = this.totalPages();
+        const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+        // Índices de itens para a página atual
+        const indexOfLastService = currentPage * this.state.itemsPerPage;
+        const indexOfFirstService = indexOfLastService - this.state.itemsPerPage;
+        const allServices = [...servicosConsumidosMasculinos, ...servicosConsumidosFemininos];
+        const currentServices = allServices.slice(indexOfFirstService, indexOfLastService);
 
         return (
             <div>
@@ -78,50 +107,59 @@ class ListagemServicosMaisConsumidosPorGenero extends Component<{}, State> {
 
                 <div>
                     <h6><strong>Clientes Masculinos</strong></h6>
-                    {servicosConsumidosMasculinos.length === 0 ? (
-                    <p>Não existem serviços consumidos pelos gênero masculino.</p>
-                ) : (
-                    <table className="striped">
-                        <thead>
-                            <tr>
-                                <th>Nome do Serviço</th>
-                                <th>Quantidade Consumida</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {servicosConsumidosMasculinos.map((servico, index) => (
-                                <tr key={index}>
-                                    <td>{servico.nome}</td>
-                                    <td>{servico.quantidade}  {this.renderQuantidade(servico.quantidade)} </td>
+                    {currentServices.length === 0 ? (
+                        <p>Não existem serviços consumidos pelos gênero masculino.</p>
+                    ) : (
+                        <table className="striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome do Serviço</th>
+                                    <th>Quantidade Consumida</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                )}
+                            </thead>
+                            <tbody>
+                                {currentServices.map((servico, index) => (
+                                    <tr key={index}>
+                                        <td>{servico.nome}</td>
+                                        <td>{servico.quantidade}  {this.renderQuantidade(servico.quantidade)} </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
                 </div>
 
                 <div>
                     <h6><strong>Clientes Femininos</strong></h6>
-                    {servicosConsumidosMasculinos.length === 0 ? (
-                    <p>Não existem serviços consumidos pelos gênero feminino.</p>
-                ) : (
-                    <table className="striped">
-                        <thead>
-                            <tr>
-                                <th>Nome do Serviço</th>
-                                <th>Quantidade Consumida</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {servicosConsumidosFemininos.map((servico, index) => (
-                                <tr key={index}>
-                                    <td>{servico.nome}</td>
-                                    <td>{servico.quantidade} {this.renderQuantidade(servico.quantidade)}</td>
+                    {currentServices.length === 0 ? (
+                        <p>Não existem serviços consumidos pelos gênero feminino.</p>
+                    ) : (
+                        <table className="striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome do Serviço</th>
+                                    <th>Quantidade Consumida</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                )}
+                            </thead>
+                            <tbody>
+                                {currentServices.map((servico, index) => (
+                                    <tr key={index}>
+                                        <td>{servico.nome}</td>
+                                        <td>{servico.quantidade} {this.renderQuantidade(servico.quantidade)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+
+                    {/* Paginação */}
+                    <ul className="pagination">
+                        {pageNumbers.map(number => (
+                            <li key={number} className={currentPage === number ? "active" : ""}>
+                                <a href="#!" onClick={() => this.handlePageChange(number)}>{number}</a>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             </div>
         );

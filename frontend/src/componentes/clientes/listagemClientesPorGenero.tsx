@@ -21,6 +21,8 @@ interface Cliente {
 
 interface State {
     clientes: Cliente[] | Object[] | any;
+    currentPage: number;
+    itemsPerPage: number;
 }
 
 class ListagemClientesPorGenero extends Component<{}, State> {
@@ -29,8 +31,11 @@ class ListagemClientesPorGenero extends Component<{}, State> {
         super(props);
         this.state = {
             clientes: [],
+            currentPage: 1,
+            itemsPerPage: 5
         };
         this.excluirLocal = this.excluirLocal.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this);
     }
 
     async componentDidMount() {
@@ -54,12 +59,29 @@ class ListagemClientesPorGenero extends Component<{}, State> {
         this.excluirRemoto(id);
     }
 
+    public handlePageChange(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, pageNumber: number) {
+        event.preventDefault();
+        this.setState({ currentPage: pageNumber });
+    }
+
     render() {
-        const { clientes } = this.state;
+        const { clientes, currentPage, itemsPerPage } = this.state;
 
         // Separando clientes por gênero
         const clientesMasculinos = clientes.filter(cliente => cliente.genero === 'Masculino');
         const clientesFemininos = clientes.filter(cliente => cliente.genero === 'Feminino');
+
+        // Lógica de Paginação para clientes masculinos
+        const indexOfLastClientMasc = currentPage * itemsPerPage;
+        const indexOfFirstClientMasc = indexOfLastClientMasc - itemsPerPage;
+        const currentClientsMasc = clientesMasculinos.slice(indexOfFirstClientMasc, indexOfLastClientMasc);
+        const totalPagesMasc = Math.ceil(clientesMasculinos.length / itemsPerPage);
+
+        // Lógica de Paginação para clientes femininos
+        const indexOfLastClientFem = currentPage * itemsPerPage;
+        const indexOfFirstClientFem = indexOfLastClientFem - itemsPerPage;
+        const currentClientsFem = clientesFemininos.slice(indexOfFirstClientFem, indexOfLastClientFem);
+        const totalPagesFem = Math.ceil(clientesFemininos.length / itemsPerPage);
 
         return (
             <div>
@@ -68,60 +90,72 @@ class ListagemClientesPorGenero extends Component<{}, State> {
                 
                 {/* Tabela para clientes masculinos */}
                 <h6><strong>Clientes Masculinos</strong></h6>
-                {clientesMasculinos.length === 0 ? (
+                {currentClientsMasc.length === 0 ? (
                     <p>Não existem clientes cadastrados do sexo masculino.</p>
                 ) : (
-                    <table className="striped">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>CPF</th>
-                                <th>Gênero</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {clientesMasculinos.map(cliente => (
-                                <tr key={cliente.id}>
-                                    <td>{cliente.nome}</td>
-                                    <td>{cliente.cpf}</td>
-                                    <td>{cliente.genero}</td>
-                                    <td>
-                                        <button className="btn-small red" onClick={() => this.excluirRemoto(cliente.id)}>Excluir</button>
-                                    </td>
+                    <div>
+                        <table className="striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>CPF</th>
+                                    <th>Gênero</th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                {currentClientsMasc.map(cliente => (
+                                    <tr key={cliente.id}>
+                                        <td>{cliente.nome}</td>
+                                        <td>{cliente.cpf}</td>
+                                        <td>{cliente.genero}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        {/* Paginação para clientes masculinos */}
+                        <ul className="pagination">
+                            {Array.from({ length: totalPagesMasc }, (_, index) => (
+                                <li className={index + 1 === currentPage ? "active" : "waves-effect"} key={index}>
+                                    <a href="#!" onClick={(e) => this.handlePageChange(e, index + 1)}>{index + 1}</a>
+                                </li>
                             ))}
-                        </tbody>
-                    </table>
+                        </ul>
+                    </div>
                 )}
 
                 {/* Tabela para clientes femininos */}
                 <h6><strong>Clientes Femininos</strong></h6>
-                {clientesFemininos.length === 0 ? (
+                {currentClientsFem.length === 0 ? (
                     <p>Não existem clientes cadastrados do sexo feminino.</p>
                 ) : (
-                    <table className="striped">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>CPF</th>
-                                <th>Gênero</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {clientesFemininos.map(cliente => (
-                                <tr key={cliente.id}>
-                                    <td>{cliente.nome}</td>
-                                    <td>{cliente.cpf}</td>
-                                    <td>{cliente.genero}</td>
-                                    <td>
-                                        <button className="btn-small red" onClick={(e) => this.excluirLocal(cliente.id, e)}>Excluir</button>
-                                    </td>
+                    <div>
+                        <table className="striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>CPF</th>
+                                    <th>Gênero</th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                {currentClientsFem.map(cliente => (
+                                    <tr key={cliente.id}>
+                                        <td>{cliente.nome}</td>
+                                        <td>{cliente.cpf}</td>
+                                        <td>{cliente.genero}</td>           
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        {/* Paginação para clientes femininos */}
+                        <ul className="pagination">
+                            {Array.from({ length: totalPagesFem }, (_, index) => (
+                                <li className={index + 1 === currentPage ? "active" : "waves-effect"} key={index}>
+                                    <a href="#!" onClick={(e) => this.handlePageChange(e, index + 1)}>{index + 1}</a>
+                                </li>
                             ))}
-                        </tbody>
-                    </table>
+                        </ul>
+                    </div>
                 )}
             </div>
         );

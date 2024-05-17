@@ -280,12 +280,11 @@ class FormularioCliente extends Component<{}, State> {
                                     </div>
 
                                     <div className="input-field col s6">
-                                        <select onChange={this.capturarGenero} defaultValue={[]} id="genero" className="validate">
-                                            <option value="" disabled selected>Escolha o seu gênero</option>
+                                        <select onChange={this.capturarGenero} value={this.state.genero} id="genero" className="validate">
+                                            <option value="" disabled>Escolha o seu gênero</option>
                                             <option value="Masculino">Masculino</option>
                                             <option value="Feminino">Feminino</option>
                                         </select>
-                                        
                                     </div>
 
                                     <div className="col s12 m7">
@@ -293,23 +292,22 @@ class FormularioCliente extends Component<{}, State> {
                                     </div>
 
                                     <div className="input-field col s6">
-                                        <select id="produtoSelect" multiple={true} defaultValue={[]} onChange={(e) => this.setState({ produtosConsumidos: Array.from(e.target.selectedOptions).map(option => ({ id: parseInt(option.value), quantidade: 1 })) })}>
+                                        <select id="produtoSelect" multiple={true} value={this.state.produtosConsumidos.map(produto => produto.id.toString())} onChange={(e) => this.setState({ produtosConsumidos: Array.from(e.target.selectedOptions).map(option => ({ id: parseInt(option.value), quantidade: 1 })) })}>
                                             <option value="" disabled>Escolha um ou mais produtos</option>
                                             {produtosDisponiveis.map((produto: Produto) => (
                                                 <option key={produto.id} value={produto.id}>{produto.nome}</option>
                                             ))}
                                         </select>
                                     </div>
-                                
+
                                     <div className="input-field col s6">
-                                        <select id="servicoSelect" multiple={true} defaultValue={[]} onChange={(e) => this.setState({ servicosConsumidos: Array.from(e.target.selectedOptions).map(option => ({ id: parseInt(option.value), quantidade: 1 })) })}>
+                                        <select id="servicoSelect" multiple={true} value={this.state.servicosConsumidos.map(servico => servico.id.toString())} onChange={(e) => this.setState({ servicosConsumidos: Array.from(e.target.selectedOptions).map(option => ({ id: parseInt(option.value), quantidade: 1 })) })}>
                                             <option value="" disabled>Escolha um ou mais serviços</option>
                                             {servicosDisponiveis.map((servico: Servico) => (
                                                 <option key={servico.id} value={servico.id}>{servico.nome}</option>
                                             ))}
                                         </select>
                                     </div>
-
 
                                 </div>
                             </div>

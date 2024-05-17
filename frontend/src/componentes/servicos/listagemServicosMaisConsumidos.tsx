@@ -12,18 +12,32 @@ interface Cliente {
 
 interface State {
     servicosConsumidos: { nome: string; quantidade: number }[];
+    currentPage: number;
+    itemsPerPage: number;
 }
 
 class ListagemServicosMaisConsumidos extends Component<{}, State> {
+    modalRef: React.RefObject<HTMLDivElement>;
 
     constructor(props: {}) {
         super(props);
         this.state = {
             servicosConsumidos: [],
+            currentPage: 1,
+            itemsPerPage: 5 // Número fixo de itens por página
         };
+        this.modalRef = React.createRef();
+        this.handlePageChange = this.handlePageChange.bind(this);
+    }
+
+    handlePageChange(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, pageNumber: number) {
+        event.preventDefault();
+        this.setState({ currentPage: pageNumber });
     }
 
     async componentDidMount() {
+        M.Modal.init(this.modalRef.current!);
+
         const buscadorClientes = new BuscadorClientes();
         const clientes = await buscadorClientes.buscar();
 
@@ -52,7 +66,13 @@ class ListagemServicosMaisConsumidos extends Component<{}, State> {
     }
 
     render() {
-        const { servicosConsumidos } = this.state;
+        const { servicosConsumidos, currentPage, itemsPerPage } = this.state;
+
+        // Lógica de Paginação
+        const indexOfLastService = currentPage * itemsPerPage;
+        const indexOfFirstService = indexOfLastService - itemsPerPage;
+        const currentServices = servicosConsumidos.slice(indexOfFirstService, indexOfLastService);
+        const totalPages = Math.ceil(servicosConsumidos.length / itemsPerPage);
 
         return (
             <div>
@@ -69,7 +89,7 @@ class ListagemServicosMaisConsumidos extends Component<{}, State> {
                             </tr>
                         </thead>
                         <tbody>
-                            {servicosConsumidos.map((servico, index) => (
+                            {currentServices.map((servico, index) => (
                                 <tr key={index}>
                                     <td>{servico.nome}</td>
                                     <td>{servico.quantidade} {this.renderQuantidade(servico.quantidade)}</td>
@@ -78,6 +98,14 @@ class ListagemServicosMaisConsumidos extends Component<{}, State> {
                         </tbody>
                     </table>
                 )}
+                {/* Paginação */}
+                <ul className="pagination">
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <li className={index + 1 === currentPage ? "active" : "waves-effect"} key={index}>
+                            <a href="#!" onClick={(e) => this.handlePageChange(e, index + 1)}>{index + 1}</a>
+                        </li>
+                    ))}
+                </ul>
             </div>
         );
     }

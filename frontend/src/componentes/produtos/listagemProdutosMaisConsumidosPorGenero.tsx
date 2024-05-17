@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 import BuscadorClientes from "../../buscadores/buscadorCliente";
 
@@ -14,19 +15,35 @@ interface Cliente {
 interface State {
     produtosConsumidosMasculinos: { nome: string; quantidade: number }[];
     produtosConsumidosFemininos: { nome: string; quantidade: number }[];
+    currentPage: number;
+    itemsPerPage: number;
 }
 
 class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
+    modalRef: React.RefObject<HTMLDivElement>;
 
     constructor(props: {}) {
         super(props);
         this.state = {
             produtosConsumidosMasculinos: [],
             produtosConsumidosFemininos: [],
+            currentPage: 1,
+            itemsPerPage: 5 // Número fixo de itens por página
         };
+        this.modalRef = React.createRef();
+        this.handlePageChange = this.handlePageChange.bind(this);
+    }
+
+    handlePageChange = (pageNumber: number) => {
+        this.setState({ currentPage: pageNumber });
     }
 
     async componentDidMount() {
+        M.Modal.init(this.modalRef.current!);
+        await this.fetchData();
+    }
+
+    fetchData = async () => {
         const buscadorClientes = new BuscadorClientes();
         const clientes = await buscadorClientes.buscar();
 
@@ -68,8 +85,25 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
         return quantidade === 1 ? "vez" : "vezes";
     }
 
+    totalPages = () => {
+        const { itemsPerPage } = this.state;
+        const totalMasculinos = this.state.produtosConsumidosMasculinos.length;
+        const totalFemininos = this.state.produtosConsumidosFemininos.length;
+        return Math.ceil((totalMasculinos + totalFemininos) / itemsPerPage);
+    }
+
     render() {
-        const { produtosConsumidosMasculinos, produtosConsumidosFemininos } = this.state;
+        const { produtosConsumidosMasculinos, produtosConsumidosFemininos, currentPage } = this.state;
+
+        // Lógica de Paginação
+        const totalPages = this.totalPages();
+        const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+        // Índices de itens para a página atual
+        const indexOfLastProduct = currentPage * this.state.itemsPerPage;
+        const indexOfFirstProduct = indexOfLastProduct - this.state.itemsPerPage;
+        const allProducts = [...produtosConsumidosMasculinos, ...produtosConsumidosFemininos];
+        const currentProducts = allProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
         return (
             <div>
@@ -78,8 +112,8 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
 
                 <div>
                     <h6><strong>Clientes Masculinos</strong></h6>
-                    {produtosConsumidosMasculinos.length === 0 ? (
-                        <p>Não existem produtos consumidos pelos gênero masculino.</p>
+                    {currentProducts.length === 0 ? (
+                        <p>Não existem produtos consumidos pelo gênero masculino.</p>
                     ) : (
                         <table className="striped">
                             <thead>
@@ -89,7 +123,7 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
                                 </tr>
                             </thead>
                             <tbody>
-                                {produtosConsumidosMasculinos.map((produto, index) => (
+                                {currentProducts.map((produto, index) => (
                                     <tr key={index}>
                                         <td>{produto.nome}</td>
                                         <td>{produto.quantidade}  {this.renderQuantidade(produto.quantidade)} </td>
@@ -102,8 +136,8 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
 
                 <div>
                     <h6><strong>Clientes Femininos</strong></h6>
-                    {produtosConsumidosFemininos.length === 0 ? (
-                        <p>Não existem produtos consumidos pelos gênero feminino.</p>
+                    {currentProducts.length === 0 ? (
+                        <p>Não existem produtos consumidos pelo gênero feminino.</p>
                     ) : (
                         <table className="striped">
                             <thead>
@@ -113,7 +147,7 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
                                 </tr>
                             </thead>
                             <tbody>
-                                {produtosConsumidosFemininos.map((produto, index) => (
+                                {currentProducts.map((produto, index) => (
                                     <tr key={index}>
                                         <td>{produto.nome}</td>
                                         <td>{produto.quantidade} {this.renderQuantidade(produto.quantidade)}</td>
@@ -123,6 +157,15 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
                         </table>
                     )}
                 </div>
+
+                {/* Paginação */}
+                <ul className="pagination">
+                    {pageNumbers.map(number => (
+                        <li key={number} className={currentPage === number ? "active" : ""}>
+                            <a href="#!" onClick={() => this.handlePageChange(number)}>{number}</a>
+                        </li>
+                    ))}
+                </ul>
             </div>
         );
     }

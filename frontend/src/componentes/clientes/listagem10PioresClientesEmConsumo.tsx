@@ -37,6 +37,8 @@ interface Cliente {
 
 interface State {
     clientes: Cliente[] | Object[] | any;
+    currentPage: number;
+    itemsPerPage: number;
 }
 
 class Listagem10PioresClientesEmConsumo extends Component<{}, State> {
@@ -45,7 +47,10 @@ class Listagem10PioresClientesEmConsumo extends Component<{}, State> {
         super(props);
         this.state = {
             clientes: [],
+            currentPage: 1,
+            itemsPerPage: 5 // Número fixo de itens por página
         };
+        this.handlePageChange = this.handlePageChange.bind(this);
     }
 
     async componentDidMount() {
@@ -59,9 +64,7 @@ class Listagem10PioresClientesEmConsumo extends Component<{}, State> {
         // Ordenar os clientes pelo valor consumido em ordem crescente
         clientes.sort((a, b) => this.calcularValorConsumido(a) - this.calcularValorConsumido(b));
 
-        // Pegar os 10 primeiros clientes
-        const top10Clientes = clientes.slice(0, 10);
-        this.setState({ clientes: top10Clientes });
+        this.setState({ clientes });
     }
 
     calcularValorConsumido(cliente: Cliente): number {
@@ -86,8 +89,18 @@ class Listagem10PioresClientesEmConsumo extends Component<{}, State> {
         this.excluirRemoto(id);
     }
 
+    handlePageChange = (pageNumber: number) => {
+        this.setState({ currentPage: pageNumber });
+    }
+
     render() {
-        const { clientes } = this.state;
+        const { clientes, currentPage, itemsPerPage } = this.state;
+
+        // Lógica de Paginação
+        const indexOfLastClient = currentPage * itemsPerPage;
+        const indexOfFirstClient = indexOfLastClient - itemsPerPage;
+        const currentClients = clientes.slice(indexOfFirstClient, indexOfLastClient);
+        const totalPages = Math.ceil(clientes.length / itemsPerPage);
 
         return (
             <div>
@@ -96,28 +109,34 @@ class Listagem10PioresClientesEmConsumo extends Component<{}, State> {
                 {clientes.length === 0 ? (
                     <p>Não existem clientes cadastrados.</p>
                 ) : (
-                    <table className="striped">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>CPF</th>
-                                <th>Valor Consumido</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {clientes.map((cliente) => (
-                                <tr key={cliente.id}>
-                                    <td>{cliente.nome}</td>
-                                    <td>{cliente.cpf}</td>
-                                    <td>R${this.calcularValorConsumido(cliente)},00</td>
-                                    <td>
-                                        <button className="btn-small red" onClick={(e) => this.excluirLocal(cliente.id, e)}>Excluir</button>
-                                    </td>
+                    <div>
+                        <table className="striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>CPF</th>
+                                    <th>Valor Consumido</th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                {currentClients.map((cliente) => (
+                                    <tr key={cliente.id}>
+                                        <td>{cliente.nome}</td>
+                                        <td>{cliente.cpf}</td>
+                                        <td>R${this.calcularValorConsumido(cliente)},00</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        {/* Paginação */}
+                        <ul className="pagination">
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <li key={index} className={currentPage === index + 1 ? "active" : ""}>
+                                    <a href="#!" onClick={() => this.handlePageChange(index + 1)}>{index + 1}</a>
+                                </li>
                             ))}
-                        </tbody>
-                    </table>
+                        </ul>
+                    </div>
                 )}
             </div>
         );

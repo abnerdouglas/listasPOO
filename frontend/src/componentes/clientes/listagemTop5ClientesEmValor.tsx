@@ -34,6 +34,8 @@ interface Cliente {
 
 interface State {
     clientes: Cliente[] | Object[] | any;
+    currentPage: number;
+    itemsPerPage: number;
 }
 
 class ListagemTop5ClientesEmValor extends Component<{}, State> {
@@ -41,7 +43,10 @@ class ListagemTop5ClientesEmValor extends Component<{}, State> {
         super(props);
         this.state = {
             clientes: [],
+            currentPage: 1,
+            itemsPerPage: 5
         };
+        this.handlePageChange = this.handlePageChange.bind(this);
     }
 
     async componentDidMount() {
@@ -80,8 +85,19 @@ class ListagemTop5ClientesEmValor extends Component<{}, State> {
         this.excluirRemoto(id);
     }
 
+    handlePageChange(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, pageNumber: number) {
+        event.preventDefault();
+        this.setState({ currentPage: pageNumber });
+    }
+
     render() {
-        const { clientes } = this.state;
+        const { clientes, currentPage, itemsPerPage } = this.state;
+
+        // Lógica de Paginação
+        const indexOfLastClient = currentPage * itemsPerPage;
+        const indexOfFirstClient = indexOfLastClient - itemsPerPage;
+        const currentClients = clientes.slice(indexOfFirstClient, indexOfLastClient);
+        const totalPages = Math.ceil(clientes.length / itemsPerPage);
 
         return (
             <div>
@@ -90,28 +106,34 @@ class ListagemTop5ClientesEmValor extends Component<{}, State> {
                 {clientes.length === 0 ? (
                     <p>Não existem clientes cadastrados.</p>
                 ) : (
-                    <table className="striped">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>CPF</th>
-                                <th>Valor Consumido</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {clientes.map((cliente) => (
-                                <tr key={cliente.id}>
-                                    <td>{cliente.nome}</td>
-                                    <td>{cliente.cpf}</td>
-                                    <td>R${this.calcularValorConsumido(cliente)},00</td>
-                                    <td>
-                                        <button className="btn-small red" onClick={(e) => this.excluirLocal(cliente.id, e)}>Excluir</button>
-                                    </td>
+                    <div>
+                        <table className="striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>CPF</th>
+                                    <th>Valor Consumido</th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                {currentClients.map((cliente: Cliente) => (
+                                    <tr key={cliente.id}>
+                                        <td>{cliente.nome}</td>
+                                        <td>{cliente.cpf}</td>
+                                        <td>R${this.calcularValorConsumido(cliente)},00</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        {/* Paginação */}
+                        <ul className="pagination">
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <li className={index + 1 === currentPage ? "active" : "waves-effect"} key={index}>
+                                    <a href="#!" onClick={(e) => this.handlePageChange(e, index + 1)}>{index + 1}</a>
+                                </li>
                             ))}
-                        </tbody>
-                    </table>
+                        </ul>
+                    </div>
                 )}
             </div>
         );

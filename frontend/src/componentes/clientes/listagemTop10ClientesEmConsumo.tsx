@@ -27,6 +27,8 @@ interface Cliente {
 
 interface State {
     clientes: Cliente[] | Object[] | any;
+    currentPage: number;
+    itemsPerPage: number;
 }
 
 class ListagemTop10ClientesEmConsumo extends Component<{}, State> {
@@ -35,7 +37,10 @@ class ListagemTop10ClientesEmConsumo extends Component<{}, State> {
         super(props);
         this.state = {
             clientes: [],
+            currentPage: 1,
+            itemsPerPage: 5
         };
+        this.handlePageChange = this.handlePageChange.bind(this);
     }
 
     async componentDidMount() {
@@ -59,8 +64,13 @@ class ListagemTop10ClientesEmConsumo extends Component<{}, State> {
         this.excluirRemoto(id);
     }
 
+    handlePageChange(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, pageNumber: number) {
+        event.preventDefault();
+        this.setState({ currentPage: pageNumber });
+    }
+
     render() {
-        const { clientes } = this.state;
+        const { clientes, currentPage, itemsPerPage } = this.state;
 
         // Ordenar os clientes por total consumido
         const clientesOrdenados = clientes.sort((a: Cliente, b: Cliente) => {
@@ -71,8 +81,11 @@ class ListagemTop10ClientesEmConsumo extends Component<{}, State> {
             return totalB - totalA;
         });
 
-        // Selecionar os top 10 clientes
-        const top10Clientes = clientesOrdenados.slice(0, 10);
+        // Lógica de Paginação
+        const indexOfLastClient = currentPage * itemsPerPage;
+        const indexOfFirstClient = indexOfLastClient - itemsPerPage;
+        const currentClients = clientesOrdenados.slice(indexOfFirstClient, indexOfLastClient);
+        const totalPages = Math.ceil(clientesOrdenados.length / itemsPerPage);
 
         return (
             <div>
@@ -82,31 +95,37 @@ class ListagemTop10ClientesEmConsumo extends Component<{}, State> {
                 {clientes.length === 0 ? (
                     <p>Não existem clientes cadastrados.</p>
                 ) : (
-                    <table className="striped">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>CPF</th>
-                                <th>Total Consumido</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {top10Clientes.map((cliente: Cliente) => (
-                                <tr key={cliente.id}>
-                                    <td>{cliente.nome}</td>
-                                    <td>{cliente.cpf}</td>
-                                    <td>
-                                        {cliente.produtosConsumidos.reduce((acc, produto) => acc + produto.quantidade, 0) + 
-                                         cliente.servicosConsumidos.reduce((acc, servico) => acc + servico.quantidade, 0)}
-                                    </td>
-                                    <td>
-                                        <button className="btn-small red" onClick={(e) => this.excluirLocal(cliente.id, e)}>Excluir</button>
-                                    </td>
+                    <div>
+                        <table className="striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>CPF</th>
+                                    <th>Total Consumido</th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                {currentClients.map((cliente: Cliente) => (
+                                    <tr key={cliente.id}>
+                                        <td>{cliente.nome}</td>
+                                        <td>{cliente.cpf}</td>
+                                        <td>
+                                            {cliente.produtosConsumidos.reduce((acc, produto) => acc + produto.quantidade, 0) + 
+                                             cliente.servicosConsumidos.reduce((acc, servico) => acc + servico.quantidade, 0)}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        {/* Paginação */}
+                        <ul className="pagination">
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <li className={index + 1 === currentPage ? "active" : "waves-effect"} key={index}>
+                                    <a href="#!" onClick={(e) => this.handlePageChange(e, index + 1)}>{index + 1}</a>
+                                </li>
                             ))}
-                        </tbody>
-                    </table>
+                        </ul>
+                    </div>
                 )}
             </div>
         );

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, Component } from "react";
 import M from 'materialize-css'; 
-import 'materialize-css/dist/css/materialize.min.css'
+import 'materialize-css/dist/css/materialize.min.css';
 import AtualizadorProduto from "../../atualizadores/atualizadorProduto";
 import BuscadorProdutos from "../../buscadores/buscadorProduto";
 import RemovedorProduto from "../../removedores/removedorProduto";
@@ -15,7 +15,9 @@ interface Produto {
 
 interface State {
     produtos: Produto[] | Object[] | any;
-    produtoEditando: Produto[] | null | any;
+    produtoEditando: Produto | null;
+    currentPage: number;
+    itemsPerPage: number;
 }
 
 class ListagemProdutos extends Component<{}, State> {
@@ -25,34 +27,38 @@ class ListagemProdutos extends Component<{}, State> {
         super(props);
         this.state = {
             produtos: [],
-            produtoEditando: null
+            produtoEditando: null,
+            currentPage: 1,
+            itemsPerPage: 5 // Número fixo de itens por página
         };
         this.modalRef = React.createRef();
         this.excluirLocal = this.excluirLocal.bind(this);
         this.atualizarProduto = this.atualizarProduto.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this);
+    }
+
+    handlePageChange(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, pageNumber: number) {
+        event.preventDefault();
+        this.setState({ currentPage: pageNumber });
     }
 
     public atualizarProduto() {
-      const { produtoEditando } = this.state;
-      if (produtoEditando) {
-          let atualizadorProduto = new AtualizadorProduto();
-          atualizadorProduto.atualizar(produtoEditando);
-          
-          const modalInstance = M.Modal.getInstance(this.modalRef.current!);
-          modalInstance?.close();
-          
-          const produtosAtualizados = this.state.produtos.map(produto => {
-              if (produto.id === produtoEditando.id) {
-                  return produtoEditando;
-              } else {
-                  return produto;
-              }
-          });
-          this.setState({ 
-              produtos: produtosAtualizados,
-              produtoEditando: null 
-          });
-      }
+        const { produtoEditando } = this.state;
+        if (produtoEditando) {
+            let atualizadorProduto = new AtualizadorProduto();
+            atualizadorProduto.atualizar(produtoEditando);
+
+            const modalInstance = M.Modal.getInstance(this.modalRef.current!);
+            modalInstance?.close();
+
+            const produtosAtualizados = this.state.produtos.map(produto =>
+                produto.id === produtoEditando.id ? produtoEditando : produto
+            );
+            this.setState({ 
+                produtos: produtosAtualizados,
+                produtoEditando: null 
+            });
+        }
     }
 
     public async buscarProdutos() {
@@ -66,7 +72,7 @@ class ListagemProdutos extends Component<{}, State> {
         removedor.remover({ id: idProduto });
     }
 
-    public excluirLocal(id: string, e: any) {
+    public excluirLocal(id: string, e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         e.preventDefault();
         let removedorLocal = new RemovedorProdutoLocal();
         let produtos = removedorLocal.remover(this.state.produtos, id);
@@ -76,13 +82,11 @@ class ListagemProdutos extends Component<{}, State> {
         this.excluirRemoto(id);
     }
 
-
     public abrirModalEdicao(produto: Produto) {
-      this.setState({ produtoEditando: produto }, () => {
-          // Abrindo o modal de edição
-          const modalInstance = M.Modal.getInstance(this.modalRef.current!);
-          modalInstance?.open();
-      });
+        this.setState({ produtoEditando: produto }, () => {
+            const modalInstance = M.Modal.getInstance(this.modalRef.current!);
+            modalInstance?.open();
+        });
     }
 
     componentDidMount() {
@@ -91,7 +95,13 @@ class ListagemProdutos extends Component<{}, State> {
     }
 
     render() {
-        const { produtos, produtoEditando } = this.state;
+        const { produtos, produtoEditando, currentPage, itemsPerPage } = this.state;
+
+        // Lógica de Paginação
+        const indexOfLastProduct = currentPage * itemsPerPage;
+        const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+        const currentProducts = produtos.slice(indexOfFirstProduct, indexOfLastProduct);
+        const totalPages = Math.ceil(produtos.length / itemsPerPage);
 
         return (
             <div>
@@ -100,40 +110,43 @@ class ListagemProdutos extends Component<{}, State> {
                 {produtos.length === 0 ? (
                     <p>Não existem produtos cadastrados ou o backend não foi inicializado.</p>
                 ) : (
-                <table className="striped">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-
-                            <th>Marca</th>
-
-                            <th>Preço</th>
-
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {produtos.map((produto: Produto) => (
-                            <tr key={produto.id}>
-
-                                <td>{produto.nome}</td>
-
-                                <td>{produto.marca}</td>
-
-                                <td>R${produto.preco}</td>
-                               
-                                <td>
-                                    <button className="btn-small purple" onClick={() => this.abrirModalEdicao(produto)}>Editar</button>
-                                    <button className="btn-small red" onClick={(e) => this.excluirLocal(produto.id, e)}>Excluir</button>
-                                </td>
+                <div>
+                    <table className="striped">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Marca</th>
+                                <th>Preço</th>
+                                <th>Ações</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            {currentProducts.map((produto: Produto) => (
+                                <tr key={produto.id}>
+                                    <td>{produto.nome}</td>
+                                    <td>{produto.marca}</td>
+                                    <td>R${produto.preco}</td>
+                                    <td>
+                                        <button className="btn-small purple" onClick={() => this.abrirModalEdicao(produto)}>Editar</button>
+                                        <button className="btn-small red" onClick={(e) => this.excluirLocal(produto.id, e)}>Excluir</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    {/* Paginação */}
+                    <ul className="pagination">
+                        {Array.from({ length: totalPages }, (_, index) => (
+                            <li className={index + 1 === currentPage ? "active" : "waves-effect"} key={index}>
+                                <a href="#!" onClick={(e) => this.handlePageChange(e, index + 1)}>{index + 1}</a>
+                            </li>
                         ))}
-                    </tbody>
-                </table>
+                    </ul>
+                </div>
                 )}
 
-                 {/* Modal de Edição */}
-                 <div ref={this.modalRef} className="modal">
+                {/* Modal de Edição */}
+                <div ref={this.modalRef} className="modal">
                     <div className="modal-content">
                         <h4>Editar Produto</h4>
                         <div className="input-field">
@@ -169,7 +182,6 @@ class ListagemProdutos extends Component<{}, State> {
                                 }}
                             />
                         </div>
-                        
                     </div>
                     <div className="modal-footer">
                         <button className="btn purple lighten" onClick={() => this.atualizarProduto()}>Salvar</button>

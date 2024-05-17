@@ -1,5 +1,5 @@
 import React, { ChangeEvent, Component } from "react";
-import M from 'materialize-css'; 
+import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 import AtualizadorServico from "../../atualizadores/atualizadorServico";
 import BuscadorServicos from "../../buscadores/buscadorServico";
@@ -11,12 +11,14 @@ interface Servico {
     nome: string;
     descricao: string;
     duracao: string;
-    preco: string;  
+    preco: string;
 }
 
 interface State {
     servicos: Servico[] | Object[] | any;
     servicoEditando: Servico[] | null | any;
+    currentPage: number;
+    itemsPerPage: number;
 }
 
 class ListagemServicos extends Component<{}, State> {
@@ -26,34 +28,42 @@ class ListagemServicos extends Component<{}, State> {
         super(props);
         this.state = {
             servicos: [],
-            servicoEditando: null
+            servicoEditando: null,
+            currentPage: 1,
+            itemsPerPage: 5 // Número fixo de itens por página
         };
         this.modalRef = React.createRef();
         this.excluirLocal = this.excluirLocal.bind(this);
         this.atualizarServico = this.atualizarServico.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this);
+    }
+
+    handlePageChange(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>, pageNumber: number) {
+        event.preventDefault();
+        this.setState({ currentPage: pageNumber });
     }
 
     public atualizarServico() {
-      const { servicoEditando } = this.state;
-      if (servicoEditando) {
-          let atualizadorServico = new AtualizadorServico();
-          atualizadorServico.atualizar(servicoEditando);
-          
-          const modalInstance = M.Modal.getInstance(this.modalRef.current!);
-          modalInstance?.close();
-          
-          const servicosAtualizados = this.state.servicos.map(servico => {
-              if (servico.id === servicoEditando.id) {
-                  return servicoEditando;
-              } else {
-                  return servico;
-              }
-          });
-          this.setState({ 
-              servicos: servicosAtualizados,
-              servicoEditando: null 
-          });
-      }
+        const { servicoEditando } = this.state;
+        if (servicoEditando) {
+            let atualizadorServico = new AtualizadorServico();
+            atualizadorServico.atualizar(servicoEditando);
+
+            const modalInstance = M.Modal.getInstance(this.modalRef.current!);
+            modalInstance?.close();
+
+            const servicosAtualizados = this.state.servicos.map(servico => {
+                if (servico.id === servicoEditando.id) {
+                    return servicoEditando;
+                } else {
+                    return servico;
+                }
+            });
+            this.setState({
+                servicos: servicosAtualizados,
+                servicoEditando: null
+            });
+        }
     }
 
     public async buscarServicos() {
@@ -72,18 +82,18 @@ class ListagemServicos extends Component<{}, State> {
         let removedorLocal = new RemovedorServicoLocal();
         let servicos = removedorLocal.remover(this.state.servicos, id);
         this.setState({
-            servicos : servicos
+            servicos: servicos
         });
         this.excluirRemoto(id);
     }
 
 
     public abrirModalEdicao(servico: Servico) {
-      this.setState({ servicoEditando: servico }, () => {
-          // Abrindo o modal de edição
-          const modalInstance = M.Modal.getInstance(this.modalRef.current!);
-          modalInstance?.open();
-      });
+        this.setState({ servicoEditando: servico }, () => {
+            // Abrindo o modal de edição
+            const modalInstance = M.Modal.getInstance(this.modalRef.current!);
+            modalInstance?.open();
+        });
     }
 
     componentDidMount() {
@@ -92,7 +102,13 @@ class ListagemServicos extends Component<{}, State> {
     }
 
     render() {
-        const { servicos, servicoEditando } = this.state;
+        const { servicos, servicoEditando, currentPage, itemsPerPage } = this.state;
+
+        // Lógica de Paginação
+        const indexOfLastServices = currentPage * itemsPerPage;
+        const indexOfFirstServices = indexOfLastServices - itemsPerPage;
+        const currentService = servicos.slice(indexOfFirstServices, indexOfLastServices);
+        const totalPages = Math.ceil(servicos.length / itemsPerPage);
 
         return (
             <div>
@@ -101,44 +117,53 @@ class ListagemServicos extends Component<{}, State> {
                 {servicos.length === 0 ? (
                     <p>Não existem servicos cadastrados ou o backend não foi inicializado.</p>
                 ) : (
-                <table className="striped">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
+                    <table className="striped">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
 
-                            <th>Descrição</th>
+                                <th>Descrição</th>
 
-                            <th>Duração</th>
+                                <th>Duração</th>
 
-                            <th>Preço</th>
+                                <th>Preço</th>
 
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {servicos.map((servico: Servico) => (
-                            <tr key={servico.id}>
-
-                                <td>{servico.nome}</td>
-
-                                <td>{servico.descricao}</td>
-
-                                <td>{servico.duracao} min</td>
-
-                                <td>R${servico.preco}</td>
-                               
-                                <td>
-                                    <button className="btn-small purple" onClick={() => this.abrirModalEdicao(servico)}>Editar</button>
-                                    <button className="btn-small red" onClick={(e) => this.excluirLocal(servico.id, e)}>Excluir</button>
-                                </td>
+                                <th>Ações</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {currentService.map((servico: Servico) => (
+                                <tr key={servico.id}>
+
+                                    <td>{servico.nome}</td>
+
+                                    <td>{servico.descricao}</td>
+
+                                    <td>{servico.duracao} min</td>
+
+                                    <td>R${servico.preco}</td>
+
+                                    <td>
+                                        <button className="btn-small purple" onClick={() => this.abrirModalEdicao(servico)}>Editar</button>
+                                        <button className="btn-small red" onClick={(e) => this.excluirLocal(servico.id, e)}>Excluir</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 )}
 
-                 {/* Modal de Edição */}
-                 <div ref={this.modalRef} className="modal">
+                {/* Paginação */}
+                <ul className="pagination">
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <li className={index + 1 === currentPage ? "active" : "waves-effect"} key={index}>
+                            <a href="#!" onClick={(e) => this.handlePageChange(e, index + 1)}>{index + 1}</a>
+                        </li>
+                    ))}
+                </ul>
+
+                {/* Modal de Edição */}
+                <div ref={this.modalRef} className="modal">
                     <div className="modal-content">
                         <h4>Editar Serviço</h4>
                         <div className="input-field">
@@ -185,7 +210,7 @@ class ListagemServicos extends Component<{}, State> {
                                 }}
                             />
                         </div>
-                    
+
                     </div>
                     <div className="modal-footer">
                         <button className="btn purple lighten" onClick={() => this.atualizarServico()}>Salvar</button>

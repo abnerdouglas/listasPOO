@@ -18,12 +18,14 @@ interface Cliente {
     telefones: {
         ddd: string;
         numero: string;
-    };
+    }[];
 }
 
 interface State {
     clientes: Cliente[] | Object[] | any;
-    clienteEditando: Cliente | null | any;
+    clienteEditando: Cliente | null;
+    currentPage: number;
+    itemsPerPage: number;
 }
 
 class ListagemClientes extends Component<{}, State> {
@@ -33,11 +35,14 @@ class ListagemClientes extends Component<{}, State> {
         super(props);
         this.state = {
             clientes: [],
-            clienteEditando: null
+            clienteEditando: null,
+            currentPage: 1,
+            itemsPerPage: 5
         };
         this.modalRef = React.createRef();
         this.excluirLocal = this.excluirLocal.bind(this);
         this.atualizarCliente = this.atualizarCliente.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this);
     }
 
     public atualizarCliente() {
@@ -98,8 +103,18 @@ class ListagemClientes extends Component<{}, State> {
         M.Modal.init(this.modalRef.current!);
     }
 
+    handlePageChange = (pageNumber: number) => {
+        this.setState({ currentPage: pageNumber });
+    }
+
     render() {
-        const { clientes, clienteEditando } = this.state;
+        const { clientes, clienteEditando, currentPage, itemsPerPage } = this.state;
+
+        // Lógica de Paginação
+        const indexOfLastClient = currentPage * itemsPerPage;
+        const indexOfFirstClient = indexOfLastClient - itemsPerPage;
+        const currentClients = clientes.slice(indexOfFirstClient, indexOfLastClient);
+        const totalPages = Math.ceil(clientes.length / itemsPerPage);
 
         return (
             <div>
@@ -108,57 +123,51 @@ class ListagemClientes extends Component<{}, State> {
                 {clientes.length === 0 ? (
                     <p>Não existem clientes cadastrados ou o backend não foi inicializado.</p>
                 ) : (
-                    <table className="striped">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-
-                                <th>Nome Social</th>
-
-                                <th>CPF</th>
-
-                                <th>Data Emissão CPF</th>
-
-                                <th>RG</th>
-
-                                <th>Data Emissão RG</th>
-
-                                <th>Gênero</th>
-
-                                <th>Telefone</th>
-
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {clientes.map((cliente: Cliente) => (
-                                <tr key={cliente.id}>
-
-                                    <td>{cliente.nome}</td>
-
-                                    <td>{cliente.nomeSocial}</td>
-
-                                    <td>{cliente.cpf}</td>
-
-                                    <td>{cliente.dataEmissaoCpf}</td>
-
-                                    <td>{cliente.rg}</td>
-
-                                    <td>{cliente.dataEmissaoRg}</td>
-
-                                    <td>{cliente.genero}</td>
-
-                                    {Array.isArray(cliente.telefones) && cliente.telefones.map((telefones, index) => (
-                                        <td key={index}> ({telefones.ddd}) {telefones.numero}</td>
-                                    ))}
-                                    <td>
-                                        <button className="btn-small purple" onClick={() => this.abrirModalEdicao(cliente)}>Editar</button>
-                                        <button className="btn-small red" onClick={(e) => this.excluirLocal(cliente.id, e)}>Excluir</button>
-                                    </td>
+                    <div>
+                        <table className="striped">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Nome Social</th>
+                                    <th>CPF</th>
+                                    <th>Data Emissão CPF</th>
+                                    <th>RG</th>
+                                    <th>Data Emissão RG</th>
+                                    <th>Gênero</th>
+                                    <th>Telefone</th>
+                                    <th>Ações</th>
                                 </tr>
+                            </thead>
+                            <tbody>
+                                {currentClients.map((cliente: Cliente) => (
+                                    <tr key={cliente.id}>
+                                        <td>{cliente.nome}</td>
+                                        <td>{cliente.nomeSocial}</td>
+                                        <td>{cliente.cpf}</td>
+                                        <td>{cliente.dataEmissaoCpf}</td>
+                                        <td>{cliente.rg}</td>
+                                        <td>{cliente.dataEmissaoRg}</td>
+                                        <td>{cliente.genero}</td>
+                                        {Array.isArray(cliente.telefones) && cliente.telefones.map((telefones, index) => (
+                                            <td key={index}> ({telefones.ddd}) {telefones.numero}</td>
+                                        ))}
+                                        <td>
+                                            <button className="btn-small purple" onClick={() => this.abrirModalEdicao(cliente)}>Editar</button>
+                                            <button className="btn-small red" onClick={(e) => this.excluirLocal(cliente.id, e)}>Excluir</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                        {/* Paginação */}
+                        <ul className="pagination">
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <li key={index} className={currentPage === index + 1 ? "active" : ""}>
+                                    <a href="#!" onClick={() => this.handlePageChange(index + 1)}>{index + 1}</a>
+                                </li>
                             ))}
-                        </tbody>
-                    </table>
+                        </ul>
+                    </div>
                 )}
 
                 {/* Modal de Edição */}
@@ -276,6 +285,7 @@ class ListagemClientes extends Component<{}, State> {
                                 }}
                             />
                         </div>
+
                     </div>
                     <div className="modal-footer">
                         <button className="btn purple lighten" onClick={() => this.atualizarCliente()}>Salvar</button>
