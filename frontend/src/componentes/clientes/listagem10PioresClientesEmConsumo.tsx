@@ -93,6 +93,10 @@ class Listagem10PioresClientesEmConsumo extends Component<{}, State> {
         this.setState({ currentPage: pageNumber });
     }
 
+    formatarValor(valor: number): string {
+        return valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
     render() {
         const { clientes, currentPage, itemsPerPage } = this.state;
 
@@ -123,7 +127,7 @@ class Listagem10PioresClientesEmConsumo extends Component<{}, State> {
                                     <tr key={cliente.id}>
                                         <td>{cliente.nome}</td>
                                         <td>{cliente.cpf}</td>
-                                        <td>R${this.calcularValorConsumido(cliente)},00</td>
+                                        <td>R${this.formatarValor(this.calcularValorConsumido(cliente))}</td>
                                     </tr>
                                 ))}
                             </tbody>

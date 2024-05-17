@@ -32,6 +32,9 @@ public class ServicosConsumidos {
     @JsonBackReference
     private Cliente cliente;
 
+    public ServicosConsumidos(){
+    }
+
     public ServicosConsumidos(Cliente cliente, String nome, String preco, int quantidade){
         this.cliente = cliente;
         this.nome = nome;

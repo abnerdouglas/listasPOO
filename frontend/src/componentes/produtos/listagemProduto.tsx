@@ -94,6 +94,11 @@ class ListagemProdutos extends Component<{}, State> {
         M.Modal.init(this.modalRef.current!);
     }
 
+    formatarValor(valor: string): string {
+        const valorNumerico = parseFloat(valor);
+        return valorNumerico.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    
     render() {
         const { produtos, produtoEditando, currentPage, itemsPerPage } = this.state;
 
@@ -125,7 +130,7 @@ class ListagemProdutos extends Component<{}, State> {
                                 <tr key={produto.id}>
                                     <td>{produto.nome}</td>
                                     <td>{produto.marca}</td>
-                                    <td>R${produto.preco}</td>
+                                    <td>R${this.formatarValor(produto.preco)}</td>
                                     <td>
                                         <button className="btn-small purple" onClick={() => this.abrirModalEdicao(produto)}>Editar</button>
                                         <button className="btn-small red" onClick={(e) => this.excluirLocal(produto.id, e)}>Excluir</button>

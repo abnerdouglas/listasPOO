@@ -87,7 +87,6 @@ class ListagemServicos extends Component<{}, State> {
         this.excluirRemoto(id);
     }
 
-
     public abrirModalEdicao(servico: Servico) {
         this.setState({ servicoEditando: servico }, () => {
             // Abrindo o modal de edição
@@ -99,6 +98,11 @@ class ListagemServicos extends Component<{}, State> {
     componentDidMount() {
         this.buscarServicos();
         M.Modal.init(this.modalRef.current!);
+    }
+
+    formatarValor(valor: string): string {
+        const valorNumerico = parseFloat(valor);
+        return valorNumerico.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
     render() {
@@ -141,7 +145,7 @@ class ListagemServicos extends Component<{}, State> {
 
                                     <td>{servico.duracao} min</td>
 
-                                    <td>R${servico.preco}</td>
+                                    <td>R${this.formatarValor(servico.preco)}</td>
 
                                     <td>
                                         <button className="btn-small purple" onClick={() => this.abrirModalEdicao(servico)}>Editar</button>
