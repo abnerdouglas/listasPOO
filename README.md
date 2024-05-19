@@ -13,8 +13,8 @@ Este projeto consiste em uma atividade prática para treinar habilidades de dese
 2. Certifique-se de ter o Node.js instalado em sua máquina.
 3. Abra o terminal e navegue até o diretório do projeto.
 4. Certifique-se de que o JDK 17 está instalado e configurado no seu sistema.
-5. Limpe e compile o projeto com o comando ./mvnw clean install.
-6. Execute o comando ./mvnw spring-boot:run para subir toda a aplicação back-end no modo debug.
+5. Limpe e compile o projeto com o comando `./mvnw clean install`.
+6. Execute o comando `./mvnw spring-boot:run` para subir toda a aplicação back-end no modo debug.
 7. Abra outro terminal e navegue até o diretório /frontend.
 8. Execute o comando npm install para instalar as dependências do projeto.
 9. Execute o comando npm start para iniciar o servidor de desenvolvimento.
