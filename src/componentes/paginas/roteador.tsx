@@ -14,6 +14,7 @@ import ListagemServicosMaisConsumidos from "../servicos/listagemServicosMaisCons
 import ListagemProdutosMaisConsumidosPorGenero from "../produtos/listagemProdutosMaisConsumidosPorGenero";
 import ListagemTop10PioresClientes from "../clientes/listagemTop10PioresClientes";
 import ListagemTop5ClientesEmValor from "../clientes/listagemTop5ClientesEmValor";
+import ListagemServicosMaisConsumidosPorGenero from "../servicos/listagemServicosMaisConsumidosPorGenero";
 
 
 type State = {
@@ -120,6 +121,9 @@ export default class Roteador extends Component<{}, State> {
                         </div>
                         <div className="container-wrapper">
                             <ListagemServicosMaisConsumidos/>
+                        </div>
+                        <div className="container-wrapper">
+                            <ListagemServicosMaisConsumidosPorGenero/>
                         </div>
                     </>
                 );

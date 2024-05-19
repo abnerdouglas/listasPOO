@@ -4,11 +4,7 @@ import 'materialize-css/dist/css/materialize.min.css'
 type Cliente = {
   id: number;
   nome: string;
-  nomeSocial: string;
   cpf: string;
-  rg: string;
-  telefone: string;
-  genero: string;
   valorConsumido: number;
 };
 
@@ -24,36 +20,66 @@ export default class ListagemTop5ClientesEmValor extends Component<{}, State> {
         {
           id: 1,
           nome: 'João Silva',
-          nomeSocial: 'Joãozinho',
           cpf: '123.456.789-00',
-          rg: '9876543-21',
-          telefone: '(11) 1234-5678',
-          genero: 'Masculino',
-          valorConsumido: 2050
+          valorConsumido: 4050
         },
         {
           id: 2,
           nome: 'Maria Oliveira',
-          nomeSocial: 'Maria da Silva',
           cpf: '987.654.321-00',
-          rg: '1234567-89',
-          telefone: '(11) 9876-5432',
-          genero: 'Feminino',
+          valorConsumido: 3300
+        },
+        {
+          id: 3,
+          nome: 'Abner Machado',
+          cpf: '123.456.789-00',
+          valorConsumido: 3000
+        },
+        {
+          id: 4,
+          nome: 'João Silva',
+          cpf: '987.654.321-00',
+          valorConsumido: 2700
+        },
+        {
+          id: 5,
+          nome: 'Andreas Pereira',
+          cpf: '123.456.789-00',
+          valorConsumido: 2500
+        },
+        {
+          id: 6,
+          nome: 'Maria do Rosário',
+          cpf: '987.654.321-00',
           valorConsumido: 2300
+        },
+        {
+          id: 7,
+          nome: 'Abel Ferreira',
+          cpf: '123.456.789-00',
+          valorConsumido: 2000
+        },
+        {
+          id: 8,
+          nome: 'Fernanda Ribeiro',
+          cpf: '987.654.321-00',
+          valorConsumido: 1900
+        },
+        {
+          id: 9,
+          nome: 'Deyverson',
+          cpf: '123.456.789-00',
+          valorConsumido: 1700
+        },
+        {
+          id: 10,
+          nome: 'Maria Oliveira',
+          cpf: '987.654.321-00',
+          valorConsumido: 1200
         },
       ]
     };
   }
-
-  handleEditarCliente = (id: number) => {
-    // Lógica para editar o cliente com o ID fornecido
-    console.log('Editar cliente com ID:', id);
-  };
-
-  handleExcluirCliente = (id: number) => {
-    // Lógica para excluir o cliente com o ID fornecido
-    console.log('Excluir cliente com ID:', id);
-  };
 
   render() {
     return (
@@ -65,13 +91,8 @@ export default class ListagemTop5ClientesEmValor extends Component<{}, State> {
               <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Nome</th>
-                <th scope="col">Nome Social</th>
                 <th scope="col">CPF</th>
-                <th scope="col">RG</th>
-                <th scope="col">Telefone</th>
-                <th scope="col">Gênero</th>
                 <th scope="col">Valor Consumido</th>
-                <th scope="col">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -79,16 +100,8 @@ export default class ListagemTop5ClientesEmValor extends Component<{}, State> {
                 <tr key={cliente.id}>
                   <td>{cliente.id}</td>
                   <td>{cliente.nome}</td>
-                  <td>{cliente.nomeSocial || '-'}</td>
                   <td>{cliente.cpf}</td>
-                  <td>{cliente.rg}</td>
-                  <td>{cliente.telefone}</td>
-                  <td>{cliente.genero}</td>
-                  <td>{cliente.valorConsumido}</td>
-                  <td>
-                    <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(cliente.id)}>Editar</button>
-                    <button className="btn btn-small red" onClick={() => this.handleExcluirCliente(cliente.id)}>Excluir</button>
-                  </td>
+                  <td>R${cliente.valorConsumido},00</td>
                 </tr>
               ))}
             </tbody>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-type Produto = {
+type Servico = {
     id: number;
     nome: string;
     genero: string;
@@ -8,34 +8,34 @@ type Produto = {
 };
 
 type State = {
-    produtos: Produto[];
+    servicos: Servico[];
 };
 
-export default class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
+export default class ListagemServicosMaisConsumidosPorGenero extends Component<{}, State> {
     constructor(props: {}) {
         super(props);
         this.state = {
-            produtos: [
+            servicos: [
                 {
-                    id: 1,
-                    nome: 'Perfume',
-                    genero: 'Feminino',
-                    quantidade: 12
+                  id: 1,
+                  nome: 'Corte de Cabelo',
+                  genero: 'Feminino',
+                  quantidade: 5
                 },
                 {
-                    id: 2,
-                    nome: 'Creme de Barbear',
-                    genero: 'Masculino',
-                    quantidade: 6
-                },
-            ]
+                  id: 2,
+                  nome: 'Massagem',
+                  genero: 'Masculino',
+                  quantidade: 10
+                }
+              ]
         };
     }
 
     render() {
         return (
             <div className="container">
-                <h5><strong>Listagem dos Produtos Mais Consumidos Por Gênero</strong></h5>
+                <h5><strong>Listagem dos Serviços Mais Consumidos Por Gênero</strong></h5>
                 <hr />
                 <div>
                     <h6>Gênero Masculino</h6>
@@ -49,14 +49,14 @@ export default class ListagemProdutosMaisConsumidosPorGenero extends Component<{
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.produtos.map(produto => {
-                                if (produto.genero === 'Masculino') {
+                            {this.state.servicos.map(servico => {
+                                if (servico.genero === 'Masculino') {
                                     return (
-                                        <tr key={produto.id}>
-                                            <td>{produto.id}</td>
-                                            <td>{produto.nome}</td>
-                                            <td>{produto.genero}</td>
-                                            <td>{produto.quantidade}</td>
+                                        <tr key={servico.id}>
+                                            <td>{servico.id}</td>
+                                            <td>{servico.nome}</td>
+                                            <td>{servico.genero}</td>
+                                            <td>{servico.quantidade}</td>
                                         </tr>
                                     );
                                 }
@@ -78,14 +78,14 @@ export default class ListagemProdutosMaisConsumidosPorGenero extends Component<{
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.produtos.map(produto => {
-                                if (produto.genero === 'Feminino') {
+                            {this.state.servicos.map(servico => {
+                                if (servico.genero === 'Feminino') {
                                     return (
-                                        <tr key={produto.id}>
-                                            <td>{produto.id}</td>
-                                            <td>{produto.nome}</td>
-                                            <td>{produto.genero}</td>
-                                            <td>{produto.quantidade}</td>
+                                        <tr key={servico.id}>
+                                            <td>{servico.id}</td>
+                                            <td>{servico.nome}</td>
+                                            <td>{servico.genero}</td>
+                                            <td>{servico.quantidade}</td>
                                         </tr>
                                     );
                                 }

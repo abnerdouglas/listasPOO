@@ -28,8 +28,8 @@ export default class CadastroServico extends Component<props> {
                             <label htmlFor="duracao-servico">Duração(min)</label>
                         </div>
                         <div className="input-field col s6">
-                            <input id="genero-servico" type="text" className="validate" />
-                            <label htmlFor="genero-servico"> Gênero Consumidor</label>
+                            <input id="preco-servico" type="text" className="validate" />
+                            <label htmlFor="preco-servico"> Preço(R$)</label>
                         </div>
                     </div>
                     <div className="row">

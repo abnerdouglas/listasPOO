@@ -21,15 +21,15 @@ export default class ListagemProdutos extends Component<{}, State> {
           id: 1,
           nome: 'Perfume',
           marca: 'Boticário',
-          preco: 120.00,
-          genero: 'masculino'
+          preco: 120,
+          genero: 'Feminino'
         },
         {
           id: 2,
           nome: 'Creme de Barbear',
           marca: 'Gilette',
-          preco: 50.00,
-          genero: 'masculino'
+          preco: 50,
+          genero: 'Masculino'
         }
       ]
     };
@@ -57,7 +57,6 @@ export default class ListagemProdutos extends Component<{}, State> {
                 <th scope="col">Nome</th>
                 <th scope="col">Marca</th>
                 <th scope="col">Preço(R$)</th>
-                <th scope="col">Gênero</th>
                 <th scope="col">Ações</th>
               </tr>
             </thead>
@@ -67,8 +66,7 @@ export default class ListagemProdutos extends Component<{}, State> {
                   <td>{produto.id}</td>
                   <td>{produto.nome}</td>
                   <td>{produto.marca}</td>
-                  <td>{produto.preco}</td>
-                  <td>{produto.genero}</td>
+                  <td>R${produto.preco},00</td>
                   <td>
                     <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(produto.id)}>Editar</button>
                     <button className="btn btn-small red" onClick={() => this.handleExcluirCliente(produto.id)}>Excluir</button>

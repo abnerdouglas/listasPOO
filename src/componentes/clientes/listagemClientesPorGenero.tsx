@@ -4,10 +4,7 @@ import 'materialize-css/dist/css/materialize.min.css'
 type Cliente = {
   id: number;
   nome: string;
-  nomeSocial?: string;
   cpf: string;
-  rg: string;
-  telefone: string;
   genero: string;
 };
 
@@ -22,35 +19,67 @@ export default class ListagemClientesPorGenero extends Component<{}, State> {
       clientes: [
         {
           id: 1,
-          nome: 'Benedito',
-          nomeSocial: 'Seu Benedito',
+          nome: 'João Silva',
           cpf: '123.456.789-00',
-          rg: '9876543-21',
-          telefone: '(11) 1234-5673',
-          genero: 'masculino'
+          genero: 'Masculino'
         },
         {
           id: 2,
-          nome: 'Ana Júlia',
-          nomeSocial: 'O ana júliaaaaa',
+          nome: 'Maria Oliveira',
+          cpf: '987.654.321-00',
+          genero: 'Feminino'
+        },
+        {
+          id: 3,
+          nome: 'Abner Machado',
           cpf: '123.456.789-00',
-          rg: '9876543-21',
-          telefone: '(11) 1234-5673',
-          genero: 'feminino'
-        }
+          genero: 'Masculino'
+        },
+        {
+          id: 4,
+          nome: 'João Silva',
+          cpf: '987.654.321-00',
+          genero: 'Masculino'
+        },
+        {
+          id: 5,
+          nome: 'Andreas Pereira',
+          cpf: '123.456.789-00',
+          genero: 'Masculino'
+        },
+        {
+          id: 6,
+          nome: 'Maria do Rosário',
+          cpf: '987.654.321-00',
+          genero: 'Feminino'
+        },
+        {
+          id: 7,
+          nome: 'Abel Ferreira',
+          cpf: '123.456.789-00',
+          genero: 'Masculino'
+        },
+        {
+          id: 8,
+          nome: 'Fernanda Ribeiro',
+          cpf: '987.654.321-00',
+          genero: 'Feminino'
+        },
+        {
+          id: 9,
+          nome: 'Deyverson',
+          cpf: '123.456.789-00',
+          genero: 'Masculino'
+        },
+        {
+          id: 10,
+          nome: 'Maria Oliveira',
+          cpf: '987.654.321-00',
+          genero: 'Feminino'
+        },
       ]
     };
   }
-
-  handleEditarCliente = (id: number) => {
-    // Lógica para editar o cliente com o ID fornecido
-    console.log('Editar cliente com ID:', id);
-  };
-
-  handleExcluirCliente = (id: number) => {
-    // Lógica para excluir o cliente com o ID fornecido
-    console.log('Excluir cliente com ID:', id);
-  };
 
   render() {
     return (
@@ -64,30 +93,19 @@ export default class ListagemClientesPorGenero extends Component<{}, State> {
                 <tr>
                   <th scope="col">ID</th>
                   <th scope="col">Nome</th>
-                  <th scope="col">Nome Social</th>
                   <th scope="col">CPF</th>
-                  <th scope="col">RG</th>
-                  <th scope="col">Telefone</th>
                   <th scope="col">Gênero</th>
-                  <th scope="col">Ações</th>
                 </tr>
               </thead>
               <tbody>
                 {this.state.clientes.map(cliente => {
-                  if (cliente.genero === 'masculino') {
+                  if (cliente.genero === 'Masculino') {
                     return (
                       <tr key={cliente.id}>
                         <td>{cliente.id}</td>
                         <td>{cliente.nome}</td>
-                        <td>{cliente.nomeSocial || '-'}</td>
                         <td>{cliente.cpf}</td>
-                        <td>{cliente.rg}</td>
-                        <td>{cliente.telefone}</td>
                         <td>{cliente.genero}</td>
-                        <td>
-                          <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(cliente.id)}>Editar</button>
-                          <button className="btn btn-small red" onClick={() => this.handleExcluirCliente(cliente.id)}>Excluir</button>
-                        </td>
                       </tr>
                     );
                   }
@@ -104,30 +122,19 @@ export default class ListagemClientesPorGenero extends Component<{}, State> {
                 <tr>
                   <th scope="col">ID</th>
                   <th scope="col">Nome</th>
-                  <th scope="col">Nome Social</th>
                   <th scope="col">CPF</th>
-                  <th scope="col">RG</th>
-                  <th scope="col">Telefone</th>
                   <th scope="col">Gênero</th>
-                  <th scope="col">Ações</th>
                 </tr>
               </thead>
               <tbody>
                 {this.state.clientes.map(cliente => {
-                  if (cliente.genero === 'feminino') {
+                  if (cliente.genero === 'Feminino') {
                     return (
                       <tr key={cliente.id}>
                         <td>{cliente.id}</td>
                         <td>{cliente.nome}</td>
-                        <td>{cliente.nomeSocial || '-'}</td>
                         <td>{cliente.cpf}</td>
-                        <td>{cliente.rg}</td>
-                        <td>{cliente.telefone}</td>
                         <td>{cliente.genero}</td>
-                        <td>
-                          <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(cliente.id)}>Editar</button>
-                          <button className="btn btn-small red" onClick={() => this.handleExcluirCliente(cliente.id)}>Excluir</button>
-                        </td>
                       </tr>
                     );
                   }

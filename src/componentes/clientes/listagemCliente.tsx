@@ -25,7 +25,7 @@ export default class ListagemClientes extends Component<{}, State> {
           nome: 'João Silva',
           nomeSocial: 'Joãozinho da Silva',
           cpf: '123.456.789-00',
-          rg: '9876543-21',
+          rg: '98.765.432-1',
           telefone: '(11) 1234-5678',
           genero: 'Masculino'
         },
@@ -34,7 +34,79 @@ export default class ListagemClientes extends Component<{}, State> {
           nome: 'Maria Oliveira',
           nomeSocial: 'Maria da Silva Oliveira',
           cpf: '987.654.321-00',
-          rg: '1234567-89',
+          rg: '12.345.678-9',
+          telefone: '(11) 9876-5432',
+          genero: 'Feminino'
+        },
+        {
+          id: 3,
+          nome: 'Abner Machado',
+          nomeSocial: 'Abnerzinho',
+          cpf: '123.456.789-00',
+          rg: '98.765.432-1',
+          telefone: '(11) 1234-5678',
+          genero: 'Masculino'
+        },
+        {
+          id: 4,
+          nome: 'João Silva',
+          nomeSocial: 'Joãozinho',
+          cpf: '987.654.321-00',
+          rg: '12.345.678-9',
+          telefone: '(11) 9876-5432',
+          genero: 'Masculino'
+        },
+        {
+          id: 5,
+          nome: 'Andreas Pereira',
+          nomeSocial: 'Entregador Ifood',
+          cpf: '123.456.789-00',
+          rg: '98.765.432-1',
+          telefone: '(11) 1234-5678',
+          genero: 'Masculino'
+        },
+        {
+          id: 6,
+          nome: 'Maria do Rosário',
+          nomeSocial: 'Maria da Silva Oliveira',
+          cpf: '987.654.321-00',
+          rg: '12.345.678-9',
+          telefone: '(11) 9876-5432',
+          genero: 'Feminino'
+        },
+        {
+          id: 7,
+          nome: 'Abel Ferreira',
+          nomeSocial: 'Descobridor do Palestra',
+          cpf: '123.456.789-00',
+          rg: '98.765.432-1',
+          telefone: '(11) 1234-5678',
+          genero: 'Masculino'
+        },
+        {
+          id: 8,
+          nome: 'Fernanda Ribeiro',
+          nomeSocial: 'Fernandinha',
+          cpf: '987.654.321-00',
+          rg: '12.345.678-9',
+          telefone: '(11) 9876-5432',
+          genero: 'Feminino'
+        },
+        {
+          id: 9,
+          nome: 'Deyverson',
+          nomeSocial: 'Deyvin',
+          cpf: '123.456.789-00',
+          rg: '98.765.432-1',
+          telefone: '(11) 1234-5678',
+          genero: 'Masculino'
+        },
+        {
+          id: 10,
+          nome: 'Maria Oliveira',
+          nomeSocial: 'Maria da Silva Oliveira',
+          cpf: '987.654.321-00',
+          rg: '12.345.678-9',
           telefone: '(11) 9876-5432',
           genero: 'Feminino'
         },

@@ -27,10 +27,6 @@ export default class CadastroProduto extends Component<props> {
                             <input id="preco-produto" type="text" className="validate" />
                             <label htmlFor="preco-produto">Preço(R$)</label>
                         </div>
-                        <div className="input-field col s6">
-                            <input id="genero-produto" type="email" className="validate" />
-                            <label htmlFor="genero-produto">Gênero Consumidor</label>
-                        </div>
                     </div>
                     <div className="row">
                         <div className="col s12">

@@ -23,16 +23,16 @@ export default class ListagemServicos extends Component<{}, State> {
           nome: 'Corte de Cabelo',
           descricao: 'Corte Social na tesoura',
           duracao: 45,
-          preco: 120.00,
-          genero: 'masculino'
+          preco: 120,
+          genero: 'Masculino'
         },
         {
           id: 2,
           nome: 'Massagem',
           descricao: 'Massagem nas costas',
           duracao: 50,
-          preco: 180.00,
-          genero: 'masculino'
+          preco: 180,
+          genero: 'Masculino'
         }
       ]
     };
@@ -72,7 +72,7 @@ export default class ListagemServicos extends Component<{}, State> {
                   <td>{servico.nome}</td>
                   <td>{servico.descricao}</td>
                   <td>{servico.duracao}</td>
-                  <td>{servico.preco}</td>
+                  <td>R${servico.preco},00</td>
                   <td>{servico.genero}</td>
                   <td>
                   <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(servico.id)}>Editar</button>
