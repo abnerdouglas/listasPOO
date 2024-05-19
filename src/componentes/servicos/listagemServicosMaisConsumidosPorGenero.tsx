@@ -20,7 +20,7 @@ export default class ListagemServicosMaisConsumidosPorGenero extends Component<{
                   id: 1,
                   nome: 'Corte de Cabelo',
                   genero: 'Feminino',
-                  quantidade: 5
+                  quantidade: 15
                 },
                 {
                   id: 2,

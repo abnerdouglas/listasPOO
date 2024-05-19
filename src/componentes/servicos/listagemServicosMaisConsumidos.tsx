@@ -18,7 +18,7 @@ export default class ListagemServicosMaisConsumidos extends Component<{}, State>
         {
           id: 1,
           nome: 'Corte de Cabelo',
-          quantidade: 5
+          quantidade: 15
         },
         {
           id: 2,

@@ -6,7 +6,6 @@ type Servico = {
   descricao: string;
   duracao: number;
   preco: number;
-  genero: string;
 };
 
 type State = {
@@ -24,7 +23,6 @@ export default class ListagemServicos extends Component<{}, State> {
           descricao: 'Corte Social na tesoura',
           duracao: 45,
           preco: 120,
-          genero: 'Masculino'
         },
         {
           id: 2,
@@ -32,7 +30,6 @@ export default class ListagemServicos extends Component<{}, State> {
           descricao: 'Massagem nas costas',
           duracao: 50,
           preco: 180,
-          genero: 'Masculino'
         }
       ]
     };
@@ -61,7 +58,6 @@ export default class ListagemServicos extends Component<{}, State> {
                 <th scope="col">Descrição</th>
                 <th scope="col">Duração(min)</th>
                 <th scope="col">Preço(R$)</th>
-                <th scope="col">Gênero</th>
                 <th scope="col">Ações</th>
               </tr>
             </thead>
@@ -73,7 +69,6 @@ export default class ListagemServicos extends Component<{}, State> {
                   <td>{servico.descricao}</td>
                   <td>{servico.duracao}</td>
                   <td>R${servico.preco},00</td>
-                  <td>{servico.genero}</td>
                   <td>
                   <button className="btn btn-small purple lighten-1" onClick={() => this.handleEditarCliente(servico.id)}>Editar</button>
                     <button className="btn btn-small red" onClick={() => this.handleExcluirCliente(servico.id)}>Excluir</button>
