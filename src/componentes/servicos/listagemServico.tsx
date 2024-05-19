@@ -6,7 +6,6 @@ type Servico = {
     descricao: string;
     duracao: number;
     preco: number;
-    genero: string;
 };
 
 const ListagemServicos: React.FC = () => {
@@ -16,8 +15,7 @@ const ListagemServicos: React.FC = () => {
             nome: 'Corte de Cabelo',
             descricao: 'Corte Social na tesoura',
             duracao: 45,
-            preco: 120.00,
-            genero: 'Masculino'
+            preco: 120.00
         },
         {
             id: 2,
@@ -25,7 +23,6 @@ const ListagemServicos: React.FC = () => {
             descricao: 'Massagem nas costas',
             duracao: 50,
             preco: 180.00,
-            genero: 'Masculino'
         }
     ]);
 
@@ -50,9 +47,8 @@ const ListagemServicos: React.FC = () => {
                         <th scope="col">ID</th>
                         <th scope="col">Nome</th>
                         <th scope="col">Descrição</th>
-                        <th scope="col">Duração(min)</th>
-                        <th scope="col">Preço(R$)</th>
-                        <th scope="col">Gênero</th>
+                        <th scope="col">Duração</th>
+                        <th scope="col">Preço</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
@@ -62,9 +58,8 @@ const ListagemServicos: React.FC = () => {
                             <td>{servico.id}</td>
                             <td>{servico.nome}</td>
                             <td>{servico.descricao}</td>
-                            <td>{servico.duracao}</td>
-                            <td>{servico.preco}</td>
-                            <td>{servico.genero}</td>
+                            <td>{servico.duracao} min</td>
+                            <td>R${servico.preco},00</td>
                             <td>
                                 <button className="btn btn-small purple lighten-1" onClick={() => handleEditarServico(servico.id)}>Editar</button>
                                 <button className="btn btn-small red" onClick={() => handleExcluirServico(servico.id)}>Excluir</button>

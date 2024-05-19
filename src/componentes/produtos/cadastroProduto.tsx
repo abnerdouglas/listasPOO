@@ -8,15 +8,13 @@ type Produto = {
     nome: string;
     marca: string;
     preco: string;
-    genero: string;
 };
 
 const CadastroProduto = ({ tema }: Props) => {
     const [produto, setProduto] = useState<Produto>({
         nome: '',
         marca: '',
-        preco: '',
-        genero: ''
+        preco: ''
     });
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -45,10 +43,6 @@ const CadastroProduto = ({ tema }: Props) => {
                     <div className="input-field col s6">
                         <input id="preco-produto" type="text" className="validate" value={produto.preco} onChange={(e) => setProduto({ ...produto, preco: e.target.value })} />
                         <label htmlFor="preco-produto">Preço(R$)</label>
-                    </div>
-                    <div className="input-field col s6">
-                        <input id="genero-produto" type="email" className="validate" value={produto.genero} onChange={(e) => setProduto({ ...produto, genero: e.target.value })} />
-                        <label htmlFor="genero-produto">Gênero Consumidor</label>
                     </div>
                 </div>
                 <div className="row">

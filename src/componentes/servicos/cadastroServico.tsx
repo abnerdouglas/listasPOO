@@ -8,12 +8,12 @@ const CadastroServico = ({ tema }: Props) => {
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
     const [duracao, setDuracao] = useState('');
-    const [genero, setGenero] = useState('');
+    const [preco, setPreco] = useState('');
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        
-        console.log('Dados do serviço:', { nome, descricao, duracao, genero });
+
+        console.log('Dados do serviço:', { nome, descricao, duracao, preco });
     };
 
     let estiloBotao = `btn waves-effect waves-light ${tema}`;
@@ -38,8 +38,8 @@ const CadastroServico = ({ tema }: Props) => {
                         <label htmlFor="duracao-servico">Duração(min)</label>
                     </div>
                     <div className="input-field col s6">
-                        <input id="genero-servico" type="text" className="validate" value={genero} onChange={(e) => setGenero(e.target.value)} />
-                        <label htmlFor="genero-servico">Gênero Consumidor</label>
+                        <input id="preco-servico" type="text" className="validate" value={preco} onChange={(e) => setPreco(e.target.value)} />
+                        <label htmlFor="preco-servico"> Preço(R$)</label>
                     </div>
                 </div>
                 <div className="row">

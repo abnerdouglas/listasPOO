@@ -1,37 +1,31 @@
 import { useState } from 'react';
 
-type Produto = {
+type Servico = {
   id: number;
   nome: string;
   genero: string;
   quantidade: number;
 };
 
-const ListagemProdutosMaisConsumidosPorGenero = () => {
-  const [produtos] = useState<Produto[]>([
+const ListagemServicosMaisConsumidosPorGenero = () => {
+  const [servicos] = useState<Servico[]>([
     {
-      id: 1,
-      nome: 'Perfume',
-      genero: 'Masculino',
-      quantidade: 12
-    },
-    {
-      id: 2,
-      nome: 'Creme de Barbear',
-      genero: 'Masculino',
-      quantidade: 6
-    },
-    {
-      id: 3,
-      nome: 'Creme',
-      genero: 'Feminino',
-      quantidade: 2
-    }
+        id: 1,
+        nome: 'Corte de Cabelo',
+        genero: 'Feminino',
+        quantidade: 5
+      },
+      {
+        id: 2,
+        nome: 'Massagem',
+        genero: 'Masculino',
+        quantidade: 10
+      }
   ]);
 
   return (
     <div className="container">
-      <h5><strong>Listagem dos Produtos Mais Consumidos Por Gênero</strong></h5>
+      <h5><strong>Listagem dos Serviços Mais Consumidos Por Gênero</strong></h5>
       <hr />
       {['Masculino', 'Feminino'].map((genero, index) => (
         <div key={index} style={{ marginTop: index === 1 ? 50 : 0 }}>
@@ -46,14 +40,14 @@ const ListagemProdutosMaisConsumidosPorGenero = () => {
               </tr>
             </thead>
             <tbody>
-              {produtos.map(produto => {
-                if (produto.genero === genero) {
+              {servicos.map(servico => {
+                if (servico.genero === genero) {
                   return (
-                    <tr key={produto.id}>
-                      <td>{produto.id}</td>
-                      <td>{produto.nome}</td>
-                      <td>{produto.genero}</td>
-                      <td>{produto.quantidade}</td>
+                    <tr key={servico.id}>
+                      <td>{servico.id}</td>
+                      <td>{servico.nome}</td>
+                      <td>{servico.genero}</td>
+                      <td>{servico.quantidade}</td>
                     </tr>
                   );
                 }
@@ -67,4 +61,4 @@ const ListagemProdutosMaisConsumidosPorGenero = () => {
   );
 };
 
-export default ListagemProdutosMaisConsumidosPorGenero;
+export default ListagemServicosMaisConsumidosPorGenero;

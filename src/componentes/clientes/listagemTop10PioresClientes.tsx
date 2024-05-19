@@ -4,12 +4,8 @@ import 'materialize-css/dist/css/materialize.min.css';
 type Cliente = {
   id: number;
   nome: string;
-  nomeSocial?: string;
   cpf: string;
-  rg: string;
-  telefone: string;
-  genero: string;
-  consumoQuantidade: number;
+  quantidadeConsumida: number
 };
 
 const ListagemTop10PioresClientes = () => {
@@ -17,68 +13,85 @@ const ListagemTop10PioresClientes = () => {
     {
       id: 1,
       nome: 'João Silva',
-      nomeSocial: 'Joãozinho da Silva',
       cpf: '123.456.789-00',
-      rg: '9876543-21',
-      telefone: '(11) 1234-5678',
-      genero: 'Masculino',
-      consumoQuantidade: 2
+      quantidadeConsumida: 20
     },
     {
       id: 2,
       nome: 'Maria Oliveira',
-      nomeSocial: 'Maria da Silva Oliveira',
       cpf: '987.654.321-00',
-      rg: '1234567-89',
-      telefone: '(11) 9876-5432',
-      genero: 'Feminino',
-      consumoQuantidade: 1
-    }
+      quantidadeConsumida: 17
+    },
+    {
+      id: 3,
+      nome: 'Abner Machado',
+      cpf: '123.456.789-00',
+      quantidadeConsumida: 15
+    },
+    {
+      id: 4,
+      nome: 'João Silva',
+      cpf: '987.654.321-00',
+      quantidadeConsumida: 12
+    },
+    {
+      id: 5,
+      nome: 'Andreas Pereira',
+      cpf: '123.456.789-00',
+      quantidadeConsumida: 10
+    },
+    {
+      id: 6,
+      nome: 'Maria do Rosário',
+      cpf: '987.654.321-00',
+      quantidadeConsumida: 8
+    },
+    {
+      id: 7,
+      nome: 'Abel Ferreira',
+      cpf: '123.456.789-00',
+      quantidadeConsumida: 7
+    },
+    {
+      id: 8,
+      nome: 'Fernanda Ribeiro',
+      cpf: '987.654.321-00',
+      quantidadeConsumida: 5
+    },
+    {
+      id: 9,
+      nome: 'Deyverson',
+      cpf: '123.456.789-00',
+      quantidadeConsumida: 2
+    },
+    {
+      id: 10,
+      nome: 'Maria Oliveira',
+      cpf: '987.654.321-00',
+      quantidadeConsumida: 1
+    },
   ]);
-
-  const handleEditarCliente = (id: number) => {
-    // Lógica para editar o cliente com o ID fornecido
-    console.log('Editar cliente com ID:', id);
-  };
-
-  const handleExcluirCliente = (id: number) => {
-    // Lógica para excluir o cliente com o ID fornecido
-    console.log('Excluir cliente com ID:', id);
-  };
 
   return (
     <div className="container">
-      <h5><strong>Listagem dos 10 Piores Clientes Consumidores</strong></h5>
+      <h5><strong>Listagem dos 10 Piores Clientes Consumidores de Serviços e Produtos</strong></h5>
       <hr />
       <table className="bordered striped centered highlight responsive-table">
         <thead>
           <tr>
             <th scope="col">ID</th>
             <th scope="col">Nome</th>
-            <th scope="col">Nome Social</th>
             <th scope="col">CPF</th>
-            <th scope="col">RG</th>
-            <th scope="col">Telefone</th>
-            <th scope="col">Gênero</th>
             <th scope="col">Quantidade Consumida</th>
-            <th scope="col">Ações</th>
           </tr>
         </thead>
         <tbody>
-          {clientes.map(cliente => (
+          {clientes.slice().reverse().map(cliente => (
             <tr key={cliente.id}>
               <td>{cliente.id}</td>
               <td>{cliente.nome}</td>
-              <td>{cliente.nomeSocial || '-'}</td>
               <td>{cliente.cpf}</td>
-              <td>{cliente.rg}</td>
-              <td>{cliente.telefone}</td>
-              <td>{cliente.genero}</td>
-              <td>{cliente.consumoQuantidade}</td>
-              <td>
-                <button className="btn btn-small purple lighten-1" onClick={() => handleEditarCliente(cliente.id)}>Editar</button>
-                <button className="btn btn-small red" onClick={() => handleExcluirCliente(cliente.id)}>Excluir</button>
-              </td>
+              <td>{cliente.quantidadeConsumida}</td>
             </tr>
           ))}
         </tbody>

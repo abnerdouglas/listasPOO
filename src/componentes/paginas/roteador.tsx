@@ -13,6 +13,8 @@ import ListagemProdutosMaisConsumidosPorGenero from "../produtos/listagemProduto
 import ListagemTop10PioresClientes from "../clientes/listagemTop10PioresClientes";
 import ListagemTop5ClientesEmValor from "../clientes/listagemTop5ClientesEmValor";
 import BarraNavegacao from "../layout/barraNavegacao";
+import ListagemServicosMaisConsumidosPorGenero from "../servicos/listagemServicosMaisConsumidosPorGenero";
+import './styles.css'
 
 const Roteador = () => {
     const [tela, setTela] = useState('Cadastro Cliente');
@@ -34,24 +36,47 @@ const Roteador = () => {
                 {tela === 'Cadastro Servico' && <CadastroServico tema="purple lighten" />}
                 {tela === 'Lista de Clientes' && (
                     <>
-                        <ListagemClientes />
-                        <ListagemClientesPorGenero />
-                        <ListagemTop10Clientes />
-                        <ListagemTop10PioresClientes />
-                        <ListagemTop5ClientesEmValor />
+                        <div className="container-wrapper">
+                            <ListagemClientes />
+                        </div>
+                        <div className="container-wrapper">
+                            <ListagemClientesPorGenero />
+                        </div>
+                        <div className="container-wrapper">
+                            <ListagemTop10Clientes />
+                        </div>
+                        <div className="container-wrapper">
+                            <ListagemTop10PioresClientes />
+                        </div>
+                        <div className="container-wrapper">
+                            <ListagemTop5ClientesEmValor />
+                        </div>
                     </>
                 )}
                 {tela === 'Lista de Produtos' && (
                     <>
-                        <ListagemProdutos />
-                        <ListagemProdutosMaisConsumidos />
-                        <ListagemProdutosMaisConsumidosPorGenero />
+                        <div className="container-wrapper">
+                            <ListagemProdutos />
+                        </div>
+                        <div className="container-wrapper">
+                            <ListagemProdutosMaisConsumidos />
+                        </div>
+                        <div className="container-wrapper">
+                            <ListagemProdutosMaisConsumidosPorGenero />
+                        </div>
                     </>
                 )}
                 {tela === 'Lista de Servicos' && (
                     <>
-                        <ListagemServicos />
-                        <ListagemServicosMaisConsumidos />
+                        <div className="container-wrapper">
+                            <ListagemServicos />
+                        </div>
+                        <div className="container-wrapper">
+                            <ListagemServicosMaisConsumidos />
+                        </div>
+                        <div className="container-wrapper">
+                            <ListagemServicosMaisConsumidosPorGenero />
+                        </div>
                     </>
                 )}
             </div>

@@ -9,10 +9,12 @@ const CadastroCliente = ({ tema }) => {
         rg: '',
         dataEmissaoRG: '',
         telefone: '',
-        genero: ''
+        genero: '',
+        servicosConsumidos: '',
+        produtosConsumidos: ''
     });
 
-    const handleChange = (e) => {
+    const handleChange = (e : any) => {
         const { id, value } = e.target;
         setClientes(prevInputs => ({
             ...prevInputs,
@@ -20,7 +22,7 @@ const CadastroCliente = ({ tema }) => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e : any) => {
         e.preventDefault();
         console.log('Dados do formulário:', clientes);
     };
@@ -69,6 +71,16 @@ const CadastroCliente = ({ tema }) => {
                         <label htmlFor="genero">Gênero</label>
                     </div>
                 </div>
+                <div className="row">
+                        <div className="input-field col s6">
+                            <input id="servicos-consumidos" type="text" className="validate" />
+                            <label htmlFor="servicos-consumidos">Escolha um ou mais serviços</label>
+                        </div>
+                        <div className="input-field col s6">
+                            <input id="produtos-consumidos" type="text" className="validate" />
+                            <label htmlFor="produtos-consumidos">Escolha um ou mais produtos</label>
+                        </div>
+                    </div>
                 <div className="row">
                     <div className="col s12">
                         <button className={`btn waves-effect waves-light ${tema}`} type="submit" name="action">Enviar

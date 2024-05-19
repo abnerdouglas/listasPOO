@@ -5,7 +5,6 @@ type Produto = {
   nome: string;
   marca: string;
   preco: number;
-  genero: string;
 };
 
 const ListagemProdutos: React.FC = () => {
@@ -14,15 +13,13 @@ const ListagemProdutos: React.FC = () => {
       id: 1,
       nome: 'Perfume',
       marca: 'Boticário',
-      preco: 120.00,
-      genero: 'Masculino'
+      preco: 120
     },
     {
       id: 2,
       nome: 'Creme de Barbear',
       marca: 'Gilette',
-      preco: 50.00,
-      genero: 'Masculino'
+      preco: 50
     }
   ]);
 
@@ -47,7 +44,6 @@ const ListagemProdutos: React.FC = () => {
             <th scope="col">Nome</th>
             <th scope="col">Marca</th>
             <th scope="col">Preço(R$)</th>
-            <th scope="col">Gênero</th>
             <th scope="col">Ações</th>
           </tr>
         </thead>
@@ -57,8 +53,7 @@ const ListagemProdutos: React.FC = () => {
               <td>{produto.id}</td>
               <td>{produto.nome}</td>
               <td>{produto.marca}</td>
-              <td>{produto.preco}</td>
-              <td>{produto.genero}</td>
+              <td>R${produto.preco},00</td>
               <td>
                 <button className="btn btn-small purple lighten-1" onClick={() => handleEditarProduto(produto.id)}>Editar</button>
                 <button className="btn btn-small red" onClick={() => handleExcluirProduto(produto.id)}>Excluir</button>
