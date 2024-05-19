@@ -15,7 +15,8 @@ interface Cliente {
 interface State {
     produtosConsumidosMasculinos: { nome: string; quantidade: number }[];
     produtosConsumidosFemininos: { nome: string; quantidade: number }[];
-    currentPage: number;
+    currentPageMasculinos: number;
+    currentPageFemininos: number;
     itemsPerPage: number;
 }
 
@@ -27,15 +28,21 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
         this.state = {
             produtosConsumidosMasculinos: [],
             produtosConsumidosFemininos: [],
-            currentPage: 1,
-            itemsPerPage: 5 // Número fixo de itens por página
+            currentPageMasculinos: 1,
+            currentPageFemininos: 1,
+            itemsPerPage: 5
         };
         this.modalRef = React.createRef();
-        this.handlePageChange = this.handlePageChange.bind(this);
+        this.handlePageChangeMasculinos = this.handlePageChangeMasculinos.bind(this);
+        this.handlePageChangeFemininos = this.handlePageChangeFemininos.bind(this);
     }
 
-    handlePageChange = (pageNumber: number) => {
-        this.setState({ currentPage: pageNumber });
+    handlePageChangeMasculinos(pageNumber: number) {
+        this.setState({ currentPageMasculinos: pageNumber });
+    }
+
+    handlePageChangeFemininos(pageNumber: number) {
+        this.setState({ currentPageFemininos: pageNumber });
     }
 
     async componentDidMount() {
@@ -47,7 +54,6 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
         const buscadorClientes = new BuscadorClientes();
         const clientes = await buscadorClientes.buscar();
 
-        // Calcular a soma das quantidades de produtos consumidos por gênero
         const produtosConsumidosMasculinos: { [nome: string]: number } = {};
         const produtosConsumidosFemininos: { [nome: string]: number } = {};
 
@@ -67,11 +73,9 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
             });
         });
 
-        // Converter para arrays de objetos com nome e quantidade
         const produtosArrayMasculinos = Object.entries(produtosConsumidosMasculinos).map(([nome, quantidade]) => ({ nome, quantidade }));
         const produtosArrayFemininos = Object.entries(produtosConsumidosFemininos).map(([nome, quantidade]) => ({ nome, quantidade }));
 
-        // Ordenar os produtos pelo total consumido
         produtosArrayMasculinos.sort((a, b) => b.quantidade - a.quantidade);
         produtosArrayFemininos.sort((a, b) => b.quantidade - a.quantidade);
 
@@ -85,25 +89,25 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
         return quantidade === 1 ? "vez" : "vezes";
     }
 
-    totalPages = () => {
-        const { itemsPerPage } = this.state;
-        const totalMasculinos = this.state.produtosConsumidosMasculinos.length;
-        const totalFemininos = this.state.produtosConsumidosFemininos.length;
-        return Math.ceil((totalMasculinos + totalFemininos) / itemsPerPage);
+    totalPages = (totalItems: number) => {
+        return Math.ceil(totalItems / this.state.itemsPerPage);
     }
 
     render() {
-        const { produtosConsumidosMasculinos, produtosConsumidosFemininos, currentPage } = this.state;
+        const { produtosConsumidosMasculinos, produtosConsumidosFemininos, currentPageMasculinos, currentPageFemininos, itemsPerPage } = this.state;
 
-        // Lógica de Paginação
-        const totalPages = this.totalPages();
-        const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+        const totalPagesMasculinos = this.totalPages(produtosConsumidosMasculinos.length);
+        const totalPagesFemininos = this.totalPages(produtosConsumidosFemininos.length);
+        const pageNumbersMasculinos = Array.from({ length: totalPagesMasculinos }, (_, i) => i + 1);
+        const pageNumbersFemininos = Array.from({ length: totalPagesFemininos }, (_, i) => i + 1);
 
-        // Índices de itens para a página atual
-        const indexOfLastProduct = currentPage * this.state.itemsPerPage;
-        const indexOfFirstProduct = indexOfLastProduct - this.state.itemsPerPage;
-        const allProducts = [...produtosConsumidosMasculinos, ...produtosConsumidosFemininos];
-        const currentProducts = allProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+        const indexOfLastProductMasculinos = currentPageMasculinos * itemsPerPage;
+        const indexOfFirstProductMasculinos = indexOfLastProductMasculinos - itemsPerPage;
+        const currentProductsMasculinos = produtosConsumidosMasculinos.slice(indexOfFirstProductMasculinos, indexOfLastProductMasculinos);
+
+        const indexOfLastProductFemininos = currentPageFemininos * itemsPerPage;
+        const indexOfFirstProductFemininos = indexOfLastProductFemininos - itemsPerPage;
+        const currentProductsFemininos = produtosConsumidosFemininos.slice(indexOfFirstProductFemininos, indexOfLastProductFemininos);
 
         return (
             <div>
@@ -112,7 +116,7 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
 
                 <div>
                     <h6><strong>Clientes Masculinos</strong></h6>
-                    {currentProducts.length === 0 ? (
+                    {currentProductsMasculinos.length === 0 ? (
                         <p>Não existem produtos consumidos pelo gênero masculino.</p>
                     ) : (
                         <table className="striped">
@@ -123,20 +127,28 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
                                 </tr>
                             </thead>
                             <tbody>
-                                {currentProducts.map((produto, index) => (
+                                {currentProductsMasculinos.map((produto, index) => (
                                     <tr key={index}>
                                         <td>{produto.nome}</td>
-                                        <td>{produto.quantidade}  {this.renderQuantidade(produto.quantidade)} </td>
+                                        <td>{produto.quantidade} {this.renderQuantidade(produto.quantidade)}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     )}
+
+                    <ul className="pagination">
+                        {pageNumbersMasculinos.map(number => (
+                            <li key={number} className={currentPageMasculinos === number ? "active" : ""}>
+                                <a href="#!" onClick={() => this.handlePageChangeMasculinos(number)}>{number}</a>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
 
                 <div>
                     <h6><strong>Clientes Femininos</strong></h6>
-                    {currentProducts.length === 0 ? (
+                    {currentProductsFemininos.length === 0 ? (
                         <p>Não existem produtos consumidos pelo gênero feminino.</p>
                     ) : (
                         <table className="striped">
@@ -147,7 +159,7 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
                                 </tr>
                             </thead>
                             <tbody>
-                                {currentProducts.map((produto, index) => (
+                                {currentProductsFemininos.map((produto, index) => (
                                     <tr key={index}>
                                         <td>{produto.nome}</td>
                                         <td>{produto.quantidade} {this.renderQuantidade(produto.quantidade)}</td>
@@ -156,16 +168,15 @@ class ListagemProdutosMaisConsumidosPorGenero extends Component<{}, State> {
                             </tbody>
                         </table>
                     )}
-                </div>
 
-                {/* Paginação */}
-                <ul className="pagination">
-                    {pageNumbers.map(number => (
-                        <li key={number} className={currentPage === number ? "active" : ""}>
-                            <a href="#!" onClick={() => this.handlePageChange(number)}>{number}</a>
-                        </li>
-                    ))}
-                </ul>
+                    <ul className="pagination">
+                        {pageNumbersFemininos.map(number => (
+                            <li key={number} className={currentPageFemininos === number ? "active" : ""}>
+                                <a href="#!" onClick={() => this.handlePageChangeFemininos(number)}>{number}</a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
         );
     }
