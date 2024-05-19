@@ -11,12 +11,14 @@ Este projeto consiste em uma atividade prática para treinar habilidades de dese
 ## Instruções de Uso
 1. Clone este repositório para o seu ambiente de desenvolvimento local.
 2. Certifique-se de ter o Node.js instalado em sua máquina.
-3. Abra o terminal e navegue até o diretório `/executavel`.
-4. Execute o comando `java -jar wbbackend.jar` para subir toda a aplicação back-end.
-5. Abra outro terminal e navegue até o diretório `/frontend`.
-6. Execute o comando `npm install` para instalar as dependências do projeto.
-7. Execute o comando `npm start` para iniciar o servidor de desenvolvimento.
-8. Acesse a aplicação no navegador através do endereço `http://localhost:3000`.
+3. Abra o terminal e navegue até o diretório do projeto.
+4. Certifique-se de que o JDK 17 está instalado e configurado no seu sistema.
+5. Limpe e compile o projeto com o comando ./mvnw clean install.
+6. Execute o comando ./mvnw spring-boot:run para subir toda a aplicação back-end no modo debug.
+7. Abra outro terminal e navegue até o diretório /frontend.
+8. Execute o comando npm install para instalar as dependências do projeto.
+9. Execute o comando npm start para iniciar o servidor de desenvolvimento.
+10. Acesse a aplicação no navegador através do endereço http://localhost:3000.
 
 ## Funcionalidades
 - Listagem de clientes, produtos e serviços cadastrados.
