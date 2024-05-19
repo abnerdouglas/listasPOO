@@ -38,5 +38,4 @@ export default class ListagemServicos extends Listagem{
             console.log(`\n`);
         }
     }
-
 }

@@ -28,5 +28,4 @@ export default class ListagemClientes extends Listagem {
             console.log(`\n`);
         }
     }
-
 }

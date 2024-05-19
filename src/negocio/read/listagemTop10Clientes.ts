@@ -9,10 +9,10 @@ export default class ListagemTop10Clientes extends Listagem {
         this.clientes = clientes;
     }
 
-    public listar(): void {}
-    
+    public listar(): void { }
+
     public listarTop10Clientes(): void {
-    
+
         const top10Clientes = this.listarTop10ClientesInternos();
 
         if (top10Clientes.length === 0) {
@@ -40,7 +40,7 @@ export default class ListagemTop10Clientes extends Listagem {
         this.clientes.forEach(cliente => {
             const quantidadeProdutos = cliente.getProdutosConsumidos.length;
             const frequencia = quantidadeProdutos;
-           
+
             cliente.frequenciaConsumo = frequencia;
             clientesQuantidade.set(cliente, frequencia);
         });

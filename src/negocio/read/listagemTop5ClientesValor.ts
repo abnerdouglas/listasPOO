@@ -3,7 +3,7 @@ import Listagem from "./listagem";
 
 export default class ListagemTop5ClientesValor extends Listagem {
     private clientes: Array<Cliente>;
-    
+
     constructor(clientes: Array<Cliente>) {
         super()
         this.clientes = clientes;
@@ -50,12 +50,11 @@ export default class ListagemTop5ClientesValor extends Listagem {
 
     private calcularValorTotalConsumido(cliente: Cliente): number {
         let total = 0;
-    
+
         cliente.getProdutosConsumidos.forEach(produto => {
             total += parseFloat(produto.getPreco);
         });
-    
+
         return total;
     }
-    
 }

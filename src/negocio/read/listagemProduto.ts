@@ -31,7 +31,6 @@ export default class ListagemProdutos extends Listagem{
                     console.log(`Nenhum cliente associado disponível.`);
                 }
                 
-                
                 console.log(`--------------------------------------`);
             });
             console.log(`\n`);
